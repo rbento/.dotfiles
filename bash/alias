@@ -1,0 +1,29 @@
+# macOS
+alias sc="screencapture -o -W"
+
+# Bash
+alias ..="cd .."
+alias c=clear
+alias d="cd ~/Desktop"
+alias h="cd ~"
+alias l="ls -lahF"
+alias r="cd /"
+alias wo="cd ~/Workspace"
+
+# Git
+alias gg="git l"
+alias g="git status"
+
+# KDiff3
+alias kdiff3="/Applications/kdiff3.app/Contents/MacOS/kdiff3"
+
+# Brew
+which -s brew
+if ! [[ $? != 0 ]] ; then
+    alias u="brew update;brew upgrade;brew upgrade --cask;brew cleanup;"
+fi
+
+# Functions
+function reload() {
+    source ~/.bashrc
+}

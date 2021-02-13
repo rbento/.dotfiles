@@ -1,0 +1,8 @@
+# Add to Windows registry
+reg add "HKCU\Software\Microsoft\Command Processor" /v AutoRun /t REG_EXPAND_SZ /d "%"USERPROFILE"%\init.cmd" /f
+
+# Remove from Windows registry
+reg delete "HKCU\Software\Microsoft\Command Processor" /v AutoRun
+
+# Pass as a parameter to Windows Command Prompt
+%windir%\system32\cmd.exe -cmd /K %USERPROFILE%\init.cmd

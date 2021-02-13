@@ -1,0 +1,38 @@
+[advice]
+    statusHints = false
+[alias]
+    s = status --short --branch
+    l = log --oneline --graph --decorate 
+    ls = log --graph --pretty='%C(yellow)%h%Creset%C(cyan)%d%Creset %s %C(green)(%cr)%Creset %C(cyan)[%an]%Creset'
+    b = branch -avv
+    bm = branch --merged
+[core]
+    editor = vim
+#    excludesfile = %USERPROFILE%/.gitignore-global
+#    excludesfile = ~/.gitignore-global
+[diff]
+    algorithm = histogram
+    submodule = log
+    tool = kdiff3
+[difftool "kdiff3"]
+    prompt = true	
+    keepBackup = false
+    trustExitCode = true
+[fetch]
+    prune = true	
+[init]
+    defaultBranch = main	
+[merge]
+    tool = kdiff3
+    conflictstyle = diff3
+[mergetool "kdiff3"]
+    keepBackup = false
+    trustExitCode = true	
+    prompt = true
+[pull]
+    rebase = true	
+[status]
+    submodulesummary = 1
+[user]
+    name = <YOUR NAME>
+    email = <YOUR.NAME@EMAIL.COM>
