@@ -1,0 +1,5 @@
+. ~/.dotfiles/bash/conf
+. ~/.dotfiles/bash/export
+. ~/.dotfiles/bash/alias
+. ~/.dotfiles/bash/init
+

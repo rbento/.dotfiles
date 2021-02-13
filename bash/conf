@@ -1,0 +1,3 @@
+# Bash
+export TERM="xterm-256color"
+export PS1=" \w $ "

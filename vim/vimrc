@@ -1,0 +1,104 @@
+set nocompatible
+filetype off
+colorscheme tomorrow-night
+syntax on
+
+"
+" vim options
+"
+set autochdir
+set autoindent
+set autoread
+set backspace=indent,eol,start
+set clipboard=unnamed
+set cmdheight=1
+set encoding=utf-8
+set expandtab
+set hidden
+set hlsearch
+set ignorecase
+set incsearch
+set noswapfile
+set notimeout
+set nowrap
+set number
+set path+=**
+set ruler
+set scrolloff=5
+set shiftwidth=4
+set showcmd
+set smartcase
+set smartcase
+set smartindent
+set smarttab
+set softtabstop=4
+set splitbelow
+set splitright
+set t_vb=
+set tabstop=4
+set ttimeout
+set wildignore+=*/tmp/*,*/target/*,*/bin/*,*/build/*,*/__pycache__/*,*.tar,*.gz,*.7z,*.iso,*.so,*.swp,*.zip     
+set wildmenu
+set wildmode=list:longest,full
+
+"
+" gvim options
+"
+set guifont=Hack:h11 " Font
+set guioptions-=m    " Menubar
+set guioptions-=T    " Toolbar
+set guioptions-=r    " Scrollbar
+
+"
+" statusline
+"
+set laststatus=2                             " Show status bar
+set statusline=                              " Clear the statusline for when vimrc is reloaded
+set statusline+=\ %-3.3n\                    " Buffer number
+set statusline+=%f\                          " File name
+set statusline+=%h%m%r%w                     " Flags
+set statusline+=[%{strlen(&ft)?&ft:'none'},  " Filetype
+set statusline+=%{strlen(&fenc)?&fenc:&enc}, " Encoding
+set statusline+=%{&fileformat}]              " File format
+set statusline+=%=                           " Right align
+set statusline+=%c,                          " Cursor column
+set statusline+=%l/%L\                       " Cursor line/total lines
+set statusline+=%b,0x%-2B\                   " Current char
+set statusline+=%<%P\                        " Percentage
+
+" statusline changes according to mode
+if version >= 700
+  au InsertEnter * hi StatusLine term=reverse ctermfg=0 ctermbg=144
+  au InsertLeave * hi StatusLine term=reverse ctermfg=0 ctermbg=247
+endif
+
+"
+" custom cursor
+"
+let &t_SI.="\e[5 q"
+let &t_SR.="\e[4 q"
+let &t_EI.="\e[1 q"
+
+"
+" custom mappings
+"
+let mapleader=","
+map <leader>c :q!<CR>
+map <leader>f :E<CR>
+map <leader>s :w!<CR>
+map <leader>w :w!<CR>
+
+" delete current buffer
+map <F4> :bd<CR>
+
+" open file browser 
+map <F6> :E<CR>
+
+" list buffers
+map <F8> :ls<CR>
+
+" previous buffer
+map <F9> :bp<CR>
+
+" next buffer
+map <F10> :bn<CR>
