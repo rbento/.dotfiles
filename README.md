@@ -6,23 +6,26 @@ My environment settings, tools and more...
 
 ###### Windows
 
-- [Windows Sysinternals][1]
-- [WinDbg][2]
-- [PIX][3]
+- [WinGet][1] 
+- [Windows Sysinternals][2]
+- [WinDbg][3]
+- [PIX][4]
 
 ###### Visual Studio
 
-- [Power Commands for Visual Studio][4]
-- [VSVim][5]
+- [Power Commands for Visual Studio][5]
+- [VSVim][6]
 
 ###### Build
 
-- [Fast Build][6]
+- [Fast Build][7]
 
-[1]: https://docs.microsoft.com/en-us/sysinternals
-[2]: https://docs.microsoft.com/en-us/windows-hardware/drivers/debugger/debugger-download-tools
-[3]: https://devblogs.microsoft.com/pix/introduction
-[4]: https://marketplace.visualstudio.com/items?itemName=VisualStudioPlatformTeam.PowerCommandsforVisualStudio
-[5]: https://github.com/VsVim/VsVim
-[6]: https://www.fastbuild.org/docs/home.html
+[1]: https://docs.microsoft.com/en-us/windows/package-manager/winget
+[2]: https://docs.microsoft.com/en-us/sysinternals
+[3]: https://docs.microsoft.com/en-us/windows-hardware/drivers/debugger/debugger-download-tools
+[4]: https://devblogs.microsoft.com/pix/introduction
+[5]: https://marketplace.visualstudio.com/items?itemName=VisualStudioPlatformTeam.PowerCommandsforVisualStudio
+[6]: https://github.com/VsVim/VsVim
+[7]: https://www.fastbuild.org/docs/home.html
+
 
