@@ -2,6 +2,7 @@
 doskey b=git branch -avv
 doskey c=cls
 doskey d=cd %USERPROFILE%\Desktop
+doskey dbg=remedybg $*
 doskey e=explorer $*
 doskey g=git status
 doskey gg=git ls $*
