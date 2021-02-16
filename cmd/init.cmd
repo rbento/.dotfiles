@@ -9,6 +9,7 @@ doskey gg=git ls $*
 doskey h=cd %USERPROFILE%
 doskey hexdump=powershell Format-Hex $*
 doskey l=ls -alF
+doskey pe=procexp64
 doskey pipenv=python -m pipenv $*
 doskey r=cd \
 doskey touch=powershell New-Item $* -ItemType file
