@@ -20,6 +20,6 @@ doskey vc=python -m venv .venv
 doskey va=.venv\Scripts\activate
 doskey vd=.venv\Scripts\deactivate
 doskey vr=rd /s /q .venv
-doskey vim=start /b "" "C:\Program Files (x86)\Vim\vim82\gvim.exe" $*
+doskey vim=start /b "" "C:\Program Files\Vim\vim82\gvim.exe" $*
 doskey w=cd C:\Workspace
 doskey windbg="C:\Program Files (x86)\Windows Kits\10\Debuggers\x64\windbg.exe" $*
