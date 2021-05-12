@@ -1,6 +1,6 @@
 @echo off
 
-set USERDOTFILES=C:\\Workspace\\.dotfiles
+set USERDOTFILES=D:\\Workspace\\.dotfiles
 
 echo(
 echo + Installing...
@@ -10,7 +10,8 @@ echo + Using DOTFILES at %USERDOTFILES%
 
 echo(
 echo + Changing directory to %USERPROFILE% 
-cd %USERPROFILE%
+cd /D %USERPROFILE%
+echo At %cd%
 echo : OK
 
 echo(
@@ -40,10 +41,10 @@ echo : OK
 
 echo(
 echo + Setting up vim colors
-cd %USERPROFILE%\\vimfiles
+cd /D %USERPROFILE%\\vimfiles
 rd /q colors
 mklink /D colors %USERDOTFILES%\\vim\\colors
-cd %USERPROFILE%
+cd /D %USERPROFILE%
 echo : OK
 
 rem echo(
