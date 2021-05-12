@@ -1,14 +1,14 @@
 @echo off
 doskey b=git branch -avv
 doskey c=cls
-doskey d=cd %USERPROFILE%\Desktop
+doskey d=cd /D %USERPROFILE%\Desktop
 doskey dbg=remedybg $*
 doskey e=explorer $*
 doskey g=git status
 doskey gg=git ls $*
 doskey gca=git add . $T git commit --amend --no-edit
 doskey gcapf=git add . $T git commit --amend --no-edit $T git push -f
-doskey h=cd %USERPROFILE%
+doskey h=cd /D %USERPROFILE%
 doskey hexdump=powershell Format-Hex $*
 doskey l=powershell ls -Force $*
 doskey pe=procexp64
@@ -21,5 +21,5 @@ doskey va=.venv\Scripts\activate
 doskey vd=.venv\Scripts\deactivate
 doskey vr=rd /s /q .venv
 doskey vim=start /b "" "C:\Program Files\Vim\vim82\gvim.exe" $*
-doskey w=cd C:\Workspace
+doskey w=cd /D D:\Workspace
 doskey windbg="C:\Program Files (x86)\Windows Kits\10\Debuggers\x64\windbg.exe" $*
