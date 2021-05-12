@@ -20,13 +20,13 @@
     trustExitCode = true
 [fetch]
     prune = true	
+[filter "lfs"]
+    process = git-lfs filter-process
+    required = true
+    clean = git-lfs clean -- %f
+    smudge = git-lfs smudge -- %f
 [init]
     defaultBranch = main	
-[filter "lfs"]
-	process = git-lfs filter-process
-	required = true
-	clean = git-lfs clean -- %f
-	smudge = git-lfs smudge -- %f
 [merge]
     tool = kdiff3
     conflictstyle = diff3

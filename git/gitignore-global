@@ -26,6 +26,7 @@ Thumbs.db
 .project
 .settings
 .springBeans
+.sts4-cache
 
 # Netbeans
 nbproject/private/
@@ -33,9 +34,11 @@ build/
 nbbuild/
 dist/
 nbdist/
+.nb-gradle/
+!**/src/main/**/build/
+!**/src/test/**/build/
 nb-configuration.xml
 *.nbi
-.nb-gradle
 
 # Intellij IDEA
 .idea
@@ -44,6 +47,9 @@ nb-configuration.xml
 *.ipr
 out/
 
+### VS Code ###
+.vscode/
+
 # Maven
 bin/
 maven/
@@ -51,6 +57,9 @@ target/
 .mvn/
 mvnw
 mvnw.cmd
+!.mvn/wrapper/maven-wrapper.jar
+!**/src/main/**/target/
+!**/src/test/**/target/
  
 # Gradle
 gradle/
