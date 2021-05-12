@@ -1,14 +1,46 @@
-# Visual Studio generated .editorconfig file with C++ settings.
+# EditorConfig is awesome: https://EditorConfig.org
+
+# Top-most EditorConfig file
 root = true
 
+# Baseline
+[*]
+charset = utf-8
+end_of_line=crlf
+indent_style = tab
+indent_size = 4
+insert_final_newline = true
+tab_width = 4
+trim_trailing_whitespace = true
+max_line_length = 120
+
+# MSBuild
+[*.{csproj,proj,projitems,shproj,fsproj,target,props}]
+indent_style = space
+indent_size = 2
+
+# XML config files
+[*.{config,nuspec,resx,natvis}]
+indent_style = space
+indent_size = 2
+
+# Python files
+[*.py]
+indent_style = space
+indent_size = 4
+
+# YAML files
+[*.yaml]
+indent_style = space
+indent_size = 2
+
+# Visual Studio generated .editorconfig file with C++ settings.
 [*.{c++,cc,cpp,cppm,cxx,h,h++,hh,hpp,hxx,inl,ipp,ixx,tlh,tli}]
 
 # Visual C++ Code Style settings
-
 cpp_generate_documentation_comments = xml
 
 # Visual C++ Formatting settings
-
 cpp_indent_size = 4
 cpp_indent_braces = false
 cpp_indent_multi_line_relative_to = innermost_parenthesis
