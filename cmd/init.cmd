@@ -4,6 +4,7 @@ doskey c=cls
 doskey d=cd /D %USERPROFILE%\Desktop
 doskey dbg=remedybg $*
 doskey e=explorer $*
+doskey f=subl $*
 doskey g=git status
 doskey gg=git ls $*
 doskey gca=git add . $T git commit --amend --no-edit
