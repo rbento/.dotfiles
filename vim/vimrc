@@ -87,6 +87,7 @@ map <leader>c :q!<CR>
 map <leader>f :E<CR>
 map <leader>s :w!<CR>
 map <leader>w :w!<CR>
+map <leader>h :nohl<CR>
 
 " delete current buffer
 map <F4> :bd<CR>
