@@ -10,34 +10,43 @@
     editor = vim
 #    excludesfile = %USERPROFILE%/.gitignore-global
 #    excludesfile = ~/.gitignore-global
+	preloadindex = true
+	fscache = true
 [diff]
     algorithm = histogram
     submodule = log
     tool = kdiff3
 [difftool "kdiff3"]
-    prompt = true	
+    prompt = true
     keepBackup = false
     trustExitCode = true
 [fetch]
-    prune = true	
+    prune = true
 [filter "lfs"]
     process = git-lfs filter-process
     required = true
     clean = git-lfs clean -- %f
     smudge = git-lfs smudge -- %f
 [init]
-    defaultBranch = main	
+    defaultBranch = main
 [merge]
     tool = kdiff3
     conflictstyle = diff3
 [mergetool "kdiff3"]
     keepBackup = false
-    trustExitCode = true	
+    trustExitCode = true
     prompt = true
 [pull]
-    rebase = true	
+    rebase = true
 [status]
-    submodulesummary = 1
+	submoduleSummary = false
 [user]
-    name = <YOUR NAME>
-    email = <YOUR.NAME@EMAIL.COM>
+    name = <FIRST_NAME LAST_NAME>
+    email = <EMAIL>
+	signingkey = <SHORT_GPG_KEY>
+[commit]
+	gpgsign = true
+[gpg]
+	program = C:/Program Files (x86)/gnupg/bin/gpg
+[gc]
+	auto = 256
