@@ -1,24 +1,28 @@
+
 # Global
-export PATH="/usr/local/sbin:$PATH"
-export PATH="/usr/local/bin:$PATH"
+#export PATH="/usr/local/sbin:$PATH"
+#export PATH="/usr/local/bin:$PATH"
 
 # Bash
 export BASH_SILENCE_DEPRECATION_WARNING=1
-export BASH="/usr/local/bin/bash"
+export BASH="/opt/homebrew/bin/bash"
 export SHELL="$BASH"
 
 # Brew
-export BREW_HOME="/usr/local"
+export BREW_HOME="/opt/homebrew"
 export PATH="$BREW_HOME/bin:$PATH"
 export HOMEBREW_EDITOR="vim"
 export PATH="$HOMEBREW_EDITOR/bin:$PATH"
+
+# GPG
+export GPG_TTY=$(tty)
 
 # Python
 export PYTHONBREAKPOINT=0
 export PYTHONBREAKPOINT=pudb.set_trace
 
 # Pipenv
-export PIPENV_LOCAL="/Users/<username>/.local"
+export PIPENV_LOCAL="/Users/$USER/.local"
 export PATH="$PIPENV_LOCAL/bin:$PATH"
 export PIPENV_VENV_IN_PROJECT=1
 
