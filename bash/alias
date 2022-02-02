@@ -11,11 +11,19 @@ alias r="cd /"
 alias wo="cd ~/Workspace"
 
 # Git
-alias gg="git l"
 alias g="git status"
+alias gg="git l"
+alias gd="git diff"
+alias gdc="git diff --cached"
+alias b="git branch -avv"
 
 # KDiff3
 alias kdiff3="/Applications/kdiff3.app/Contents/MacOS/kdiff3"
+
+# Kubernetes
+alias k="kubectl"
+alias mk="minikube"
+alias hk="helm"
 
 # Brew
 which -s brew
