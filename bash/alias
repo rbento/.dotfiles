@@ -10,9 +10,20 @@ alias l="ls -lahF"
 alias r="cd /"
 alias wo="cd ~/Workspace"
 
+# Brew
+which -s brew
+if ! [[ $? != 0 ]] ; then
+    alias u="brew update;brew upgrade;brew upgrade --cask;brew cleanup;"
+fi
+
+# Functions
+function reload() {
+    source ~/.bashrc
+}
+
 # Git
 alias g="git status"
-alias gg="git l"
+alias gg="git ls"
 alias gd="git diff"
 alias gdc="git diff --cached"
 alias b="git branch -avv"
@@ -25,13 +36,7 @@ alias k="kubectl"
 alias mk="minikube"
 alias hk="helm"
 
-# Brew
-which -s brew
-if ! [[ $? != 0 ]] ; then
-    alias u="brew update;brew upgrade;brew upgrade --cask;brew cleanup;"
-fi
+# Python
+alias python="python3"
+alias pip="python -m pip"
 
-# Functions
-function reload() {
-    source ~/.bashrc
-}
