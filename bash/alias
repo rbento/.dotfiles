@@ -31,6 +31,11 @@ alias b="git branch -avv"
 # KDiff3
 alias kdiff3="/Applications/kdiff3.app/Contents/MacOS/kdiff3"
 
+# Java
+alias java8="sdk d java 8.0.312-zulu"
+alias java11="sdk d java 11.0.14-zulu"
+alias java17="sdk d java 17.0.2-zulu"
+
 # Kubernetes
 alias k="kubectl"
 alias mk="minikube"
