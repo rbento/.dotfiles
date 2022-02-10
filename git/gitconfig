@@ -6,12 +6,14 @@
     ls = log --graph --pretty='%C(yellow)%h%Creset%C(cyan)%d%Creset %s %C(green)(%cr)%Creset %C(cyan)[%an]%Creset'
     b = branch -avv
     bm = branch --merged
+[commit]
+    gpgsign = true    
 [core]
     editor = vim
-#    excludesfile = %USERPROFILE%/.gitignore-global
-#    excludesfile = ~/.gitignore-global
-	preloadindex = true
-	fscache = true
+#   excludesfile = %USERPROFILE%/.gitignore-global
+#   excludesfile = ~/.gitignore-global
+    preloadindex = true
+    fscache = true
 [diff]
     algorithm = histogram
     submodule = log
@@ -27,6 +29,11 @@
     required = true
     clean = git-lfs clean -- %f
     smudge = git-lfs smudge -- %f
+[gc]
+    auto = 256        
+[gpg]
+#   program = C:/Program Files (x86)/gnupg/bin/gpg
+#   program = /opt/homebrew/bin/gpg
 [init]
     defaultBranch = main
 [merge]
@@ -39,14 +46,8 @@
 [pull]
     rebase = true
 [status]
-	submoduleSummary = false
+    submoduleSummary = false
 [user]
     name = <FIRST_NAME LAST_NAME>
     email = <EMAIL>
-	signingkey = <SHORT_GPG_KEY>
-[commit]
-	gpgsign = true
-[gpg]
-	program = C:/Program Files (x86)/gnupg/bin/gpg
-[gc]
-	auto = 256
+    signingkey = <SHORT_GPG_KEY>
