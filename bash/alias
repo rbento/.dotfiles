@@ -1,6 +1,9 @@
 # macOS
 alias sc="screencapture -o -W"
 
+# Arduino CLI
+alias a="arduino-cli"
+
 # Bash
 alias ..="cd .."
 alias c=clear
@@ -39,8 +42,8 @@ alias java17="sdk d java 17.0.2-zulu"
 alias k="kubectl"
 alias h="helm"
 alias mk="minikube"
+alias t="terraform"
 
 # Python
 alias python="python3"
 alias pip="python -m pip"
-
