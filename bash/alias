@@ -5,7 +5,6 @@ alias sc="screencapture -o -W"
 alias ..="cd .."
 alias c=clear
 alias d="cd ~/Desktop"
-alias h="cd ~"
 alias l="ls -lahF"
 alias r="cd /"
 alias wo="cd ~/Workspace"
@@ -22,11 +21,11 @@ function reload() {
 }
 
 # Git
+alias b="git branch -avv"
 alias g="git status"
-alias gg="git ls"
 alias gd="git diff"
 alias gdc="git diff --cached"
-alias b="git branch -avv"
+alias gg="git ls"
 
 # KDiff3
 alias kdiff3="/Applications/kdiff3.app/Contents/MacOS/kdiff3"
@@ -38,8 +37,8 @@ alias java17="sdk d java 17.0.2-zulu"
 
 # Kubernetes
 alias k="kubectl"
+alias h="helm"
 alias mk="minikube"
-alias hk="helm"
 
 # Python
 alias python="python3"
