@@ -13,6 +13,7 @@ doskey gd=git diff
 doskey gdc=git diff --cached
 doskey h=cd /D %USERPROFILE%
 doskey hexdump=powershell Format-Hex $*
+doskey k=kubectl
 doskey l=powershell ls -Force $*
 doskey pe=procexp64
 doskey pipenv=python -m pipenv $*
