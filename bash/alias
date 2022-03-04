@@ -11,6 +11,7 @@ alias d="cd ~/Desktop"
 alias l="ls -lahF"
 alias r="cd /"
 alias wo="cd ~/Workspace"
+alias ebc="vim ~/.dotfiles/bash/alias"
 
 # Brew
 which -s brew
