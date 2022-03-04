@@ -13,17 +13,6 @@ alias r="cd /"
 alias wo="cd ~/Workspace"
 alias ebc="vim ~/.dotfiles/bash/alias"
 
-# Brew
-which -s brew
-if ! [[ $? != 0 ]] ; then
-    alias u="brew update;brew upgrade;brew upgrade --cask;brew cleanup;"
-fi
-
-# Functions
-function reload() {
-    source ~/.bashrc
-}
-
 # Git
 alias b="git branch -avv"
 alias g="git status"
@@ -48,6 +37,14 @@ alias t="terraform"
 # Python
 alias python="python3"
 alias pip="python -m pip"
+
+# Update
+alias u="brew update;brew upgrade;brew upgrade --cask;brew cleanup;sdk selfupdate force;sdk ug;"
+
+# Functions
+function reload() {
+    source ~/.bashrc
+}
 
 # Bash Completion
 complete -F __start_kubectl k
