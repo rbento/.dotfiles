@@ -20,6 +20,14 @@ alias gd="git diff"
 alias gdc="git diff --cached"
 alias gg="git ls"
 
+# Gradle
+alias ga="./gradlew assemble"
+alias gb="./gradlew build"
+alias gca="./gradlew clean assemble"
+alias gcb="./gradlew clean build"
+alias gct="./gradlew clean test"
+alias gt="./gradlew test"
+
 # KDiff3
 alias kdiff3="/Applications/kdiff3.app/Contents/MacOS/kdiff3"
 
@@ -29,8 +37,8 @@ alias java11="sdk d java 11.0.14-zulu"
 alias java17="sdk d java 17.0.2-zulu"
 
 # Kubernetes
-alias k="kubectl"
 alias h="helm"
+alias k="kubectl"
 alias mk="minikube"
 alias t="terraform"
 
