@@ -6,12 +6,13 @@ alias a="arduino-cli"
 
 # Bash
 alias ..="cd .."
-alias c=clear
+alias c="clear"
+alias cls="clear"
 alias d="cd ~/Desktop"
+alias eb="vim ~/.dotfiles/bash/alias"
 alias l="ls -lahF"
 alias r="cd /"
 alias wo="cd ~/Workspace"
-alias ebc="vim ~/.dotfiles/bash/alias"
 
 # Docker
 alias dps="docker ps"
