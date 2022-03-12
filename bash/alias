@@ -13,6 +13,10 @@ alias r="cd /"
 alias wo="cd ~/Workspace"
 alias ebc="vim ~/.dotfiles/bash/alias"
 
+# Docker
+alias dps="docker ps"
+alias nuke="docker system prune -a -f"
+
 # Git
 alias b="git branch -avv"
 alias g="git status"
@@ -32,7 +36,7 @@ alias gt="./gradlew test"
 alias kdiff3="/Applications/kdiff3.app/Contents/MacOS/kdiff3"
 
 # Java
-alias java8="sdk d java 8.0.312-zulu"
+alias java8="sdk d java 8.0.322-zulu"
 alias java11="sdk d java 11.0.14-zulu"
 alias java17="sdk d java 17.0.2-zulu"
 
@@ -42,6 +46,15 @@ alias k="kubectl"
 alias mk="minikube"
 alias t="terraform"
 
+# Maven
+alias mcc="mvn clean compile"
+alias mci="mvn clean install"
+alias mcl="mvn clean"
+alias mcp="mvn clean package"
+alias mct="mvn clean test"
+alias mc="mvn compile"
+alias mt="mvn test"
+
 # Python
 alias python="python3"
 alias pip="python -m pip"
@@ -49,9 +62,21 @@ alias pip="python -m pip"
 # Update
 alias u="brew update;brew upgrade;brew upgrade --cask;brew cleanup;sdk selfupdate force;sdk ug;"
 
+# Programs
+alias redis="docker run --rm --name redis -p 6379:6379 -d redis:latest"
+alias jaeger="docker run --rm --name jaeger -e COLLECTOR_ZIPKIN_HOST_PORT=:9411 -p 5775:5775/udp -p 6831:6831/udp -p 6832:6832/udp -p 5778:5778 -p 16686:16686 -p 14250:14250 -p 14268:14268 -p 14269:14269 -p 9411:9411 -d jaegertracing/all-in-one:latest"
+
 # Functions
 function reload() {
     source ~/.bashrc
+}
+
+function dsa() {
+    docker stop $(docker ps -q)
+}
+
+function dra() {
+    docker rm $(docker ps -a -q)
 }
 
 # Bash Completion
