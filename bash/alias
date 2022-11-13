@@ -6,17 +6,17 @@ alias ..="cd .."
 alias c="clear"
 alias cls="clear"
 alias d="cd ~/Desktop"
+alias eip="ipconfig getifaddr en0"
 alias esc="vim ~/.dotfiles/bash/alias"
 alias l="ls -lahF"
 alias r="cd /"
 alias wo="cd ~/Workspace"
 alias x="exit"
-alias eip="ipconfig getifaddr en0"
 
 # Docker
+alias devenv="dsa;jaeger;prometheus;redis;grafana"
 alias dps="docker ps"
 alias nuke="docker system prune -a -f"
-alias devenv="dsa;jaeger;prometheus;redis;grafana"
 
 # Gradle
 alias ga="./gradlew assemble"
@@ -68,12 +68,11 @@ alias pip="python -m pip"
 alias u="brew update;brew upgrade;brew upgrade --cask;brew cleanup;sdk selfupdate force;sdk ug;pip install --upgrade pip;"
 
 # Programs
-alias redis="docker run --rm --name redis -p 6379:6379 -v /Users/rbento/Data/redis.txt:/data/data.txt -d redis:latest"
-alias jaeger="docker run --rm --name jaeger -e COLLECTOR_ZIPKIN_HOST_PORT=:9411 -p 5775:5775/udp -p 6831:6831/udp -p 6832:6832/udp -p 5778:5778 -p 16686:16686 -p 14250:14250 -p 14268:14268 -p 14269:14269 -p 9411:9411 -d jaegertracing/all-in-one:latest"
-alias prometheus="docker run --rm --name prometheus -p 9494:9090 -v /Users/rbento/Conf/prometheus.yml:/etc/prometheus/prometheus.yml -d prom/prometheus"
 alias grafana="docker run --rm --name grafana -p 3000:3000 -d grafana/grafana"
+alias jaeger="docker run --rm --name jaeger -e COLLECTOR_ZIPKIN_HOST_PORT=:9411 -p 5775:5775/udp -p 6831:6831/udp -p 6832:6832/udp -p 5778:5778 -p 16686:16686 -p 14250:14250 -p 14268:14268 -p 14269:14269 -p 9411:9411 -d jaegertracing/all-in-one:latest"
 alias jaeger-collector="docker run --rm -e SPAN_STORAGE_TYPE=cassandra -d jaegertracing/jaeger-collector"
-
+alias prometheus="docker run --rm --name prometheus -p 9494:9090 -v /Users/rbento/Conf/prometheus.yml:/etc/prometheus/prometheus.yml -d prom/prometheus"
+alias redis="docker run --rm --name redis -p 6379:6379 -v /Users/rbento/Data/redis.txt:/data/data.txt -d redis:latest"
 
 # Functions
 function reload() {
@@ -88,5 +87,3 @@ function dra() {
     docker rm $(docker ps -a -q)
 }
 
-# Bash Completion
-complete -F __start_kubectl k

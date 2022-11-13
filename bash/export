@@ -6,6 +6,7 @@
 # Bash
 export BASH_SILENCE_DEPRECATION_WARNING=1
 export BASH="/opt/homebrew/bin/bash"
+export EDITOR="vim"
 export SHELL="$BASH"
 
 # Brew
