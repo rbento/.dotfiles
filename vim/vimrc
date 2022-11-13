@@ -23,6 +23,7 @@ set notimeout
 set nowrap
 set number
 set path+=**
+set relativenumber
 set ruler
 set scrolloff=5
 set shiftwidth=4
@@ -44,7 +45,7 @@ set wildmode=list:longest,full
 "
 " gvim options
 "
-set guifont=Hack:h11 " Font
+set guifont=Hack:h13 " Font
 set guioptions-=m    " Menubar
 set guioptions-=T    " Toolbar
 set guioptions-=r    " Scrollbar
