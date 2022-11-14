@@ -1,6 +1,6 @@
 set nocompatible
 filetype off
-colorscheme tomorrow-night
+colorscheme habamax
 syntax on
 
 "
@@ -45,7 +45,7 @@ set wildmode=list:longest,full
 "
 " gvim options
 "
-set guifont=Hack:h13 " Font
+set guifont=Hack:h14 " Font
 set guioptions-=m    " Menubar
 set guioptions-=T    " Toolbar
 set guioptions-=r    " Scrollbar
@@ -90,11 +90,17 @@ map <leader>s :w!<CR>
 map <leader>w :w!<CR>
 map <leader>h :nohl<CR>
 
+" open fuzzy file finder
+map <F3> :Files<CR>
+
 " delete current buffer
 map <F4> :bd<CR>
 
-" open file browser 
+" open netrw file browser 
 map <F6> :E<CR>
+
+" execute make
+map <F7> :make<CR>
 
 " list buffers
 map <F8> :ls<CR>
