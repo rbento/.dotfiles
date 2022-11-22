@@ -84,11 +84,14 @@ let &t_EI.="\e[1 q"
 " custom mappings
 "
 let mapleader=","
-map <leader>c :q!<CR>
+map <leader>b :ls<CR>
+map <leader>c :bd<CR>
 map <leader>f :E<CR>
+map <leader>h :nohl<CR>
+map <leader>q :q<CR>
 map <leader>s :w!<CR>
 map <leader>w :w!<CR>
-map <leader>h :nohl<CR>
+map <leader>x :q!<CR>
 
 " open fuzzy file finder
 map <F3> :Files<CR>
