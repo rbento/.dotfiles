@@ -28,11 +28,13 @@ alias gct="./gradlew clean test"
 alias gt="./gradlew test"
 
 # Git
+alias a="git ls"
 alias b="git branch -avv"
 alias g="git status"
 alias gd="git diff"
 alias gdc="git diff --cached"
 alias gg="git ls"
+alias s="git status"
 
 # KDiff3
 alias kdiff3="/Applications/kdiff3.app/Contents/MacOS/kdiff3"
