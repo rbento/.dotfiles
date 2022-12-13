@@ -69,6 +69,10 @@ alias pip="python -m pip"
 # Update
 alias u="brew update;brew upgrade;brew upgrade --cask;brew cleanup;sdk selfupdate force;sdk ug;pip install --upgrade pip;"
 
+# vim
+alias vim="nvim"
+alias v="vim"
+
 # Programs
 alias grafana="docker run --rm --name grafana -p 3000:3000 -d grafana/grafana"
 alias jaeger="docker run --rm --name jaeger -e COLLECTOR_ZIPKIN_HOST_PORT=:9411 -p 5775:5775/udp -p 6831:6831/udp -p 6832:6832/udp -p 5778:5778 -p 16686:16686 -p 14250:14250 -p 14268:14268 -p 14269:14269 -p 9411:9411 -d jaegertracing/all-in-one:latest"
