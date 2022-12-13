@@ -13,6 +13,10 @@ alias r="cd /"
 alias wo="cd ~/Workspace"
 alias x="exit"
 
+# Ctags
+
+alias ct="ctags -R -f ./.git/tags ."
+
 # Docker
 alias devenv="dsa;jaeger;prometheus;redis;grafana"
 alias dps="docker ps"
