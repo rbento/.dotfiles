@@ -45,6 +45,8 @@
     prompt = true
 [pull]
     rebase = true
+[push]
+    autoSetupRemote = true
 [status]
     submoduleSummary = false
 [user]
