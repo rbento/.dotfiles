@@ -7,14 +7,15 @@ alias c="clear"
 alias cls="clear"
 alias d="cd ~/Desktop"
 alias eip="ipconfig getifaddr en0"
+alias eipc="eip | pbcopy"
 alias esc="vim ~/.dotfiles/bash/alias"
 alias l="ls -lahF"
 alias r="cd /"
 alias wo="cd ~/Workspace"
+alias t="fc -s"
 alias x="exit"
 
 # Ctags
-
 alias ct="ctags -R -f ./.git/tags ."
 
 # Docker
@@ -38,6 +39,9 @@ alias g="git status"
 alias gd="git diff"
 alias gdc="git diff --cached"
 alias gg="git ls"
+alias gpp="git pull --prune"
+alias pk="git cherry-pick"
+alias a="gg"
 alias s="git status"
 
 # KDiff3
