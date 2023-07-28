@@ -59,7 +59,7 @@ alias graalvm="sdk d java 22.3.r19-grl"
 alias h="helm"
 alias k="kubectl"
 alias mk="minikube"
-alias t="terraform"
+alias tf="terraform"
 
 # Maven
 alias mcc="mvn clean compile"
