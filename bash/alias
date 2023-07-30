@@ -26,6 +26,7 @@ alias nuke="docker system prune -a -f"
 # Gradle
 alias ga="./gradlew assemble"
 alias gb="./gradlew build"
+alias gbr="./gradlew bootRun"
 alias gca="./gradlew clean assemble"
 alias gcb="./gradlew clean build"
 alias gcl="./gradlew clean"
