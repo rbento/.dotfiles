@@ -49,12 +49,14 @@ alias s="git status"
 alias kdiff3="/Applications/kdiff3.app/Contents/MacOS/kdiff3"
 
 # Java
-alias java8="sdk d java 8.0.342-zulu"
-alias java11="sdk d java 11.0.16-zulu"
-alias java17="sdk d java 17.0.5-zulu"
+alias jv="java -version"
+alias java8="sdk d java 8.0.382-zulu"
+alias java11="sdk d java 11.0.20-zulu"
+alias java17="sdk d java 17.0.8-zulu"
 alias java18="sdk d java 18.0.2-zulu"
-alias java19="sdk d java 19-zulu"
-alias graalvm="sdk d java 22.3.r19-grl"
+alias java19="sdk d java 19.0.2-zulu"
+alias java19="sdk d java 20.0.2-zulu"
+alias graalvm="sdk d java 20.0.2-graal"
 
 # Kubernetes
 alias h="helm"
