@@ -42,7 +42,6 @@ alias gdc="git diff --cached"
 alias gg="git ls"
 alias gpp="git pull --prune"
 alias pk="git cherry-pick"
-alias a="gg"
 alias s="git status"
 
 # KDiff3
