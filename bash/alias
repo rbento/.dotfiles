@@ -31,6 +31,7 @@ alias gca="./gradlew clean assemble"
 alias gcb="./gradlew clean build"
 alias gcl="./gradlew clean"
 alias gct="./gradlew clean test"
+alias gr="./gradlew run"
 alias gt="./gradlew test"
 
 # Git
