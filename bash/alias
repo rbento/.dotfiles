@@ -17,6 +17,12 @@ alias wo="cd ~/Workspace"
 alias t="fc -s"
 alias x="exit"
 
+# tmux
+alias tas="tmux attach -t"
+alias tls="tmux ls"
+alias tns="tmux new -s"
+alias tks="tmux kill-session -t"
+
 # Ctags
 alias ct="ctags -R -f ./.git/tags ."
 
