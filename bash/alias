@@ -33,6 +33,9 @@ alias gcl="./gradlew clean"
 alias gct="./gradlew clean test"
 alias gr="./gradlew run"
 alias gt="./gradlew test"
+alias client="./gradlew :client:run"
+alias server="./gradlew :server:run"
+
 
 # Git
 alias a="git ls"
