@@ -15,6 +15,8 @@ echo "Setting up vim"
 ln -s .dotfiles/vim/vimrc .vimrc
 ln -s .dotfiles/vim .vim
 ln -s .dotfiles/vim/ideavimrc .ideavimrc
+echo "Setting up tmux"
+ln -s .dotfiles/tmux/tmux.conf .tmux.conf
 echo "Refreshing bash"
 source ~/.bashrc
 echo "Setting up brew"
