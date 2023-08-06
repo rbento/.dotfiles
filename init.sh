@@ -2,7 +2,8 @@ echo "Initializing..."
 cd ~
 echo "At"
 pwd
-rm -rf .bashrc .bash_profile .gitconfig .gitignore-global .emacs .emacs.d .vimrc .vim
+rm -rf .bashrc .bash_profile .gitconfig .gitignore-global .emacs .emacs.d .vimrc .vim .config/nvim .config/tmux
+mkdir .config
 echo "Setting up bash"
 ln -s .dotfiles/bash/bashrc .bashrc
 ln -s .bashrc .bash_profile
@@ -16,10 +17,9 @@ ln -s .dotfiles/vim/vimrc .vimrc
 ln -s .dotfiles/vim .vim
 ln -s .dotfiles/vim/ideavimrc .ideavimrc
 echo "Setting up NeoVim"
-mkdir .config
 ln -s .dotfiles/nvim .config/nvim
 echo "Setting up tmux"
-ln -s .dotfiles/tmux/tmux.conf .tmux.conf
+ln -s .dotfiles/tmux .config/tmux
 echo "Refreshing bash"
 source ~/.bashrc
 echo "Setting up brew"
