@@ -15,6 +15,9 @@ echo "Setting up vim"
 ln -s .dotfiles/vim/vimrc .vimrc
 ln -s .dotfiles/vim .vim
 ln -s .dotfiles/vim/ideavimrc .ideavimrc
+echo "Setting up NeoVim"
+mkdir .config
+ln -s .dotfiles/nvim .config/nvim
 echo "Setting up tmux"
 ln -s .dotfiles/tmux/tmux.conf .tmux.conf
 echo "Refreshing bash"
@@ -25,7 +28,7 @@ if ! [[ $? == 0 ]] ; then
     /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 fi
 echo "Installing tools..."
-brew install bash bash-completion emacs vim git nvim ripgrep
+brew install bash bash-completion emacs vim git neovim ripgrep
 echo "Reviewing..."
 bash --version
 emacs --version
