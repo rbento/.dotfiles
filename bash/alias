@@ -23,6 +23,16 @@ alias tls="tmux ls"
 alias tns="tmux new -s"
 alias tks="tmux kill-session -t"
 
+# C
+function cr() {
+    echo "Compiling $1"
+    gcc $1 -o program
+    echo "  Running $1"
+    ./program
+}
+alias main="cr main.c"
+alias core="cr core.c"
+
 # Ctags
 alias ct="ctags -R -f ./.git/tags ."
 
