@@ -9,12 +9,12 @@ alias d="cd ~/Desktop"
 alias eip="ipconfig getifaddr en0"
 alias eipc="eip | pbcopy"
 alias esc="vim ~/.dotfiles/bash/alias"
+alias kaj="killall -9 java"
 alias l="ls -lahF"
 alias r="cd /"
 alias p="cd -"
 alias rr="fc -s"
 alias wo="cd ~/Workspace"
-alias t="fc -s"
 alias x="exit"
 
 # tmux
@@ -54,13 +54,13 @@ alias gt="./gradlew test"
 alias client="./gradlew :client:run"
 alias server="./gradlew :server:run"
 
-
 # Git
 alias a="git ls"
 alias b="git branch -avv"
 alias g="git status"
 alias gd="git diff"
 alias gdc="git diff --cached"
+alias gdp="git diff HEAD^"
 alias gg="git ls"
 alias gpp="git pull --prune"
 alias pk="git cherry-pick"
@@ -71,6 +71,7 @@ alias kdiff3="/Applications/kdiff3.app/Contents/MacOS/kdiff3"
 
 # Java
 alias jv="java -version"
+alias jvf="java -XX:PrintFlagsFinal -version"
 alias java8="sdk d java 8.0.382-zulu"
 alias java11="sdk d java 11.0.20-zulu"
 alias java17="sdk d java 17.0.8-zulu"
@@ -81,9 +82,13 @@ alias graalvm="sdk d java 20.0.2-graal"
 
 # Kubernetes
 alias h="helm"
-alias k="kubectl"
-alias mk="minikube"
-alias tf="terraform"
+alias k="kubectl $@"
+alias kcc="k config current-context"
+alias mk="minikube $@"
+complete -F __start_kubectl k
+
+# Terraform
+alias tf="terraform $@"
 
 # Maven
 alias mcc="mvn clean compile"
