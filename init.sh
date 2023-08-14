@@ -28,7 +28,7 @@ if ! [[ $? == 0 ]] ; then
     /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 fi
 echo "Installing tools..."
-brew install bash bash-completion emacs vim git neovim ripgrep
+brew install bash bash-completion emacs git iterm2 neovim ripgrep tmux vim
 echo "Reviewing..."
 bash --version
 emacs --version
@@ -36,5 +36,6 @@ git --version
 vim --version
 nvim --version
 rg --version
+tmux -V
 echo "Done"
 
