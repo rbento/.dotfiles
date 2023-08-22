@@ -16,6 +16,7 @@ alias p="cd -"
 alias rr="fc -s"
 alias wo="cd ~/Workspace"
 alias x="exit"
+alias count="ls | wc -l"
 
 # tmux
 alias tas="tmux attach -t"
