@@ -117,6 +117,7 @@ alias jaeger="docker run --rm --name jaeger -e COLLECTOR_ZIPKIN_HOST_PORT=:9411 
 alias jaeger-collector="docker run --rm -e SPAN_STORAGE_TYPE=cassandra -d jaegertracing/jaeger-collector"
 alias prometheus="docker run --rm --name prometheus -p 9494:9090 -v /Users/rbento/Conf/prometheus.yml:/etc/prometheus/prometheus.yml -d prom/prometheus"
 alias redis="docker run --rm --name redis -p 6379:6379 -v /Users/rbento/Data/redis.txt:/data/data.txt -d redis:latest"
+alias postgres="docker run --rm --name postgres -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=admin -e POSTGRES_DB=postgres -v /Users/rbento/Data/postgresql/data:/var/lib/postgresql/data -p 5432:5432 -d postgres"
 
 # Functions
 function reload() {
