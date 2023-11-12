@@ -29,7 +29,7 @@
 (setq frame-title-format '("%f"))
 
 ;; Set the default font
-; (set-default-font "Monaco-13")
+(set-frame-font "Monaco 13" nil t)
 
 ;; Display line numbers
 (global-display-line-numbers-mode 1)
