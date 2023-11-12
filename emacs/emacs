@@ -1,33 +1,12 @@
-;; Add marmalade repo
+
+;; REPOSITORIES
+
+;; Configure melpa package repository
 (require 'package)
-(add-to-list 'package-archives
-    '("marmalade" . "http://marmalade-repo.org/packages/") t)
-;; Add MELPA repo
-(require 'package)
-(add-to-list 'package-archives
-    '("melpa-stable" . "http://melpa-stable.milkbox.net/packages/") t)
+(add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/")) 
 (package-initialize)
 
-(setq frame-title-format '("%f"))
-
-;; Set the default font
-(set-default-font "Monaco-13")
-
-;; Mac ctrl-key-remap
-(setq mac-command-modifier 'control)
-(global-set-key "\C-x\C-m" 'execute-extended-command)
-(global-set-key "\C-c\C-m" 'execute-extended-command)
-
-;; Mac backward-kill-word over backspace
-(global-set-key "\C-w" 'backward-kill-word)
-(global-set-key "\C-x\C-k" 'kill-region)
-(global-set-key "\C-c\C-k" 'kill-region)
-
-;; Show line numbers
-(global-linum-mode 1)
-
-;; Enable automtic pairing of brackets.
-(add-to-list 'auto-mode-alist '("*" . electric-pair-mode))
+;; GLOBAL SETTINGS
 
 ;; Disable the gui. Who uses emacs for toolbars and menus?
 (if (fboundp 'tool-bar-mode) (tool-bar-mode -1)) 
@@ -38,49 +17,42 @@
 (setq inhibit-startup-message t
       inhibit-startup-echo-area-message t)
 
-;; Setup ido-mode
-(require 'ido)
-(ido-mode t)
-(setq ido-enable-prefix nil
-      ido-enable-flex-matching t
-      ido-case-fold nil
-      ido-auto-merge-work-directories-length -1
-      ido-create-new-buffer 'always
-      ido-use-filename-at-point nil
-      ido-max-prospects 10)
+;; macOS - set no encoding of characters in terminal
+(set-keyboard-coding-system nil)
 
-;; Use ido everywhere
-;; (require 'ido-ubiquitous)
-;; (ido-ubiquitous-mode 1)
+;; macOS - backward-kill-word over backspace
+(global-set-key "\C-w" 'backward-kill-word)
+(global-set-key "\C-x\C-k" 'kill-region)
+(global-set-key "\C-c\C-k" 'kill-region)
 
-;; Always rescan buffer for imenu
-(set-default 'imenu-auto-rescan t)
+;; Show absolute file name in the frame title
+(setq frame-title-format '("%f"))
 
-;; Make ido-mode ignore directories
-(add-to-list 'ido-ignore-directories "target")
+;; Set the default font
+; (set-default-font "Monaco-13")
 
-;; Disable ido faces to see flx highlights.
-(setq ido-use-faces nil)
+;; Display line numbers
+(global-display-line-numbers-mode 1)
 
-;; C-n/p is more intuitive in vertical layout
-(defun sd/ido-define-keys ()
-  (define-key ido-completion-map (kbd "C-n") 'ido-next-match)
-  (define-key ido-completion-map (kbd "<down>") 'ido-next-match)
-  (define-key ido-completion-map (kbd "C-p") 'ido-prev-match)
-  (define-key ido-completion-map (kbd "<up>") 'ido-prev-match))
+;; THEMES
 
-;; Setup cua-mode
-(setq cua-highlight-region-shift-only 0)
-
-;; Setup org-mode
-(setq org-fontify-done-headline t)
+;; Configure custom theme 
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(custom-enabled-themes '(deeper-blue))
+ '(package-selected-packages
+   '(toml-mode smalltalk-mode lua-mode lsp-java lsp-mode magit org evil-org evil)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(org-done ((t (:foreground "PaleGreen" :weight normal :strike-through t))) t)
- '(org-headline-done ((((class color) (min-colors 16) (background dark)) (:foreground "LightSalmon" :strike-through t))) t))
+ )
+
+;; MODES - SETTINGS
 
 ;; Setup c++-mode
 (require 'cc-mode)
@@ -89,3 +61,10 @@
       c-basic-offset 4
       tab-width 4
       indent-tabs-mode t)
+
+;; MODES - ENABLED
+
+;; Enable Vim mode
+(require 'evil)
+(evil-mode 1)
+
