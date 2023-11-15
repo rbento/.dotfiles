@@ -65,6 +65,6 @@
 ;; MODES - ENABLED
 
 ;; Enable Vim mode
-(require 'evil)
+(package-install 'evil)
 (evil-mode 1)
 
