@@ -1,3 +1,4 @@
+#!/bin/bash
 echo "Initializing..."
 cd ~
 echo "At"
