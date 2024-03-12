@@ -113,3 +113,6 @@ map <F9> :bp<CR>
 
 " next buffer
 map <F10> :bn<CR>
+
+" use aliases from .bashrc
+set shellcmdflag=-ic
