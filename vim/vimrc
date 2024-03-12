@@ -114,5 +114,5 @@ map <F9> :bp<CR>
 " next buffer
 map <F10> :bn<CR>
 
-" use aliases from .bashrc
+" define shell as interactive (default -c); vim will load .bashrc 
 set shellcmdflag=-ic
