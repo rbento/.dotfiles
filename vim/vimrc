@@ -26,6 +26,7 @@ set path+=**
 set relativenumber
 set ruler
 set scrolloff=5
+set shellcmdflag=-ic " define shell as interactive (default -c); vim will load .bashrc 
 set shiftwidth=4
 set showcmd
 set smartcase
@@ -113,6 +114,3 @@ map <F9> :bp<CR>
 
 " next buffer
 map <F10> :bn<CR>
-
-" define shell as interactive (default -c); vim will load .bashrc 
-set shellcmdflag=-ic
