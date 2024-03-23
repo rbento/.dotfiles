@@ -44,7 +44,7 @@ echo : OK
 
 echo(
 echo + Installing core applications and services
-winget install 7zip.7zip Amazon.Kindle EpicGames.EpicGamesLauncher GNU.Emacs Git.Git GnuPG.GnuPG Google.Chrome Microsoft.PIX Microsoft.VisualStudio.2022.Community Microsoft.VisualStudioCode Microsoft.WinDbg Oracle.JDK.21 Renderdoc Vim.Vim 
+winget install 7zip.7zip Amazon.Kindle EpicGames.EpicGamesLauncher GNU.Emacs Git.Git GitHub.GitLFS GnuPG.GnuPG Google.Chrome Microsoft.PIX Microsoft.VisualStudio.2022.Community Microsoft.VisualStudioCode Microsoft.WinDbg Oracle.JDK.21 Renderdoc Vim.Vim 
 echo : OK
 
 echo(
