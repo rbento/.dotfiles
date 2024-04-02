@@ -132,3 +132,7 @@ function dra() {
     docker rm $(docker ps -a -q)
 }
 
+# Check the default C standard used by gcc
+function gccd() {
+    gcc -dM -E -x c  /dev/null | grep -F __STDC_VERSION__
+}
