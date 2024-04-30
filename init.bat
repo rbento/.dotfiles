@@ -44,7 +44,7 @@ echo : OK
 
 echo(
 echo + Installing core applications and services
-winget install --accept-package-agreements --accept-source-agreements 7zip.7zip Amazon.Kindle DEVCOM.Lua EpicGames.EpicGamesLauncher GNU.Emacs Git.Git GitHub.GitLFS GnuPG.GnuPG Google.Chrome KhronosGroup.VulkanSDK LogMeIn.Hamachi Microsoft.PIX Microsoft.VisualStudio.2022.Community Microsoft.VisualStudioCode Microsoft.WinDbg Oracle.JDK.21 Renderdoc Tiled.Tiled Vim.Vim 
+winget install --accept-package-agreements --accept-source-agreements 7zip.7zip Amazon.Kindle DEVCOM.Lua EpicGames.EpicGamesLauncher GNU.Emacs Git.Git GitHub.GitLFS GnuPG.GnuPG Google.Chrome jqlang.jq KhronosGroup.VulkanSDK LogMeIn.Hamachi Microsoft.PIX Microsoft.VisualStudio.2022.Community Microsoft.VisualStudioCode Microsoft.WinDbg Oracle.JDK.21 Renderdoc Tiled.Tiled Vim.Vim 
 echo : OK
 
 echo(
