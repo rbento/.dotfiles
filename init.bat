@@ -1,6 +1,6 @@
 @echo off
 
-set USERDOTFILES=C:\\Users\\Rodrigo\\.dotfiles
+set USERDOTFILES=C:\\Users\\YOUR_NAME\\.dotfiles
 
 echo(
 echo + Installing...
