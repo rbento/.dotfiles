@@ -1,2 +1,2 @@
 @echo off
-vim %*
+start gvim.exe %*
