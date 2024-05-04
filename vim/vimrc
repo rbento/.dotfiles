@@ -86,25 +86,25 @@ let &t_EI.="\e[1 q"
 "
 let mapleader=","
 map <leader>b :ls<CR>
-map <leader>c :bd<CR>
-map <leader>f :E<CR>
 map <leader>h :nohl<CR>
-map <leader>q :q<CR>
+map <leader>q :bd<CR>
 map <leader>s :w!<CR>
 map <leader>w :w!<CR>
 map <leader>x :q!<CR>
 
+" open fuzzy file history
+map <leader>r :History<CR>
+map <F2> :History<CR>
+
 " open fuzzy file finder
-map <F3> :Files<CR>
+map <leader>t :GFiles<CR>
+map <F3> :GFiles<CR>
 
 " delete current buffer
 map <F4> :bd<CR>
 
-" open netrw file browser 
-map <F6> :E<CR>
-
-" execute make
-map <F7> :make<CR>
+" execute make on the current directory
+map <F5> :make<CR>
 
 " list buffers
 map <F8> :ls<CR>
@@ -114,3 +114,31 @@ map <F9> :bp<CR>
 
 " next buffer
 map <F10> :bn<CR>
+
+"//////////////////////////////////////////////////////////////
+"// plugins
+"//////////////////////////////////////////////////////////////
+
+call plug#begin()
+" The default plugin directory will be as follows:
+"   - Vim (Linux/macOS): '~/.vim/plugged'
+"   - Vim (Windows): '~/vimfiles/plugged'
+"   - Neovim (Linux/macOS/Windows): stdpath('data') . '/plugged'
+" You can specify a custom plugin directory by passing it as the argument
+"   - e.g. `call plug#begin('~/.vim/plugged')`
+"   - Avoid using standard Vim directory names like 'plugin'
+
+" Make sure you use single quotes
+
+" fzf native plugin
+Plug 'junegunn/fzf'
+" fzf.vim
+Plug 'junegunn/fzf.vim'
+
+" Initialize plugin system
+" - Automatically executes `filetype plugin indent on` and `syntax enable`.
+call plug#end()
+" You can revert the settings after the call like so:
+"   filetype indent off   " Disable file-type-specific indentation
+"   syntax off            " Disable syntax highlighting
+
