@@ -15,6 +15,10 @@ export PATH="$BREW_HOME/bin:$PATH"
 export HOMEBREW_EDITOR="vim"
 export PATH="$HOMEBREW_EDITOR/bin:$PATH"
 
+# FZF
+export FZF_DEFAULT_COMMAND="fd --type f --follow"
+export FZF_DEFAULT_OPTS="--border --inline-info"
+
 # GPG
 export GPG_TTY=$(tty)
 

@@ -1,11 +1,16 @@
+"//////////////////////////////////////////////////////////////////////////////
+"// globals
+"//////////////////////////////////////////////////////////////////////////////
+
 set nocompatible
 filetype off
 colorscheme habamax
 syntax on
 
-"
-" vim options
-"
+"//////////////////////////////////////////////////////////////////////////////
+"// vim options
+"//////////////////////////////////////////////////////////////////////////////
+
 set autochdir
 set autoindent
 set autoread
@@ -26,7 +31,6 @@ set path+=**
 set relativenumber
 set ruler
 set scrolloff=5
-set shellcmdflag=-ic " define shell as interactive (default -c); vim will load .bashrc 
 set shiftwidth=4
 set showcmd
 set smartcase
@@ -43,17 +47,19 @@ set wildignore+=*/tmp/*,*/target/*,*/bin/*,*/build/*,*/__pycache__/*,*.tar,*.gz,
 set wildmenu
 set wildmode=list:longest,full
 
-"
-" gvim options
-"
+"//////////////////////////////////////////////////////////////////////////////
+"// gvim options
+"//////////////////////////////////////////////////////////////////////////////
+
 set guifont=Hack:h14 " Font
 set guioptions-=m    " Menubar
 set guioptions-=T    " Toolbar
 set guioptions-=r    " Scrollbar
 
-"
-" statusline
-"
+"//////////////////////////////////////////////////////////////////////////////
+"// statusline
+"//////////////////////////////////////////////////////////////////////////////
+
 set laststatus=2                             " Show status bar
 set statusline=                              " Clear the statusline for when vimrc is reloaded
 set statusline+=\ %-3.3n\                    " Buffer number
@@ -74,16 +80,18 @@ if version >= 700
   au InsertLeave * hi StatusLine term=reverse ctermfg=0 ctermbg=247
 endif
 
-"
-" custom cursor
-"
+"//////////////////////////////////////////////////////////////////////////////
+"// custom cursor
+"//////////////////////////////////////////////////////////////////////////////
+
 let &t_SI.="\e[5 q"
 let &t_SR.="\e[4 q"
 let &t_EI.="\e[1 q"
 
-"
-" custom mappings
-"
+"//////////////////////////////////////////////////////////////////////////////
+"// custom mappings
+"//////////////////////////////////////////////////////////////////////////////
+
 let mapleader=","
 map <leader>b :ls<CR>
 map <leader>h :nohl<CR>
@@ -114,8 +122,8 @@ map <leader>g :GFiles<CR>
 map <F7> :GFiles<CR>
 
 " find/grep in current file if opened or in all files
-map <leader>f :Rg<CR>
-map <F8> :Rg<CR>
+map <leader>f :Rg 
+map <F8> :Rg 
 
 " previous buffer
 map <F9> :bp<CR>
@@ -123,9 +131,9 @@ map <F9> :bp<CR>
 " next buffer
 map <F10> :bn<CR>
 
-"//////////////////////////////////////////////////////////////
+"//////////////////////////////////////////////////////////////////////////////
 "// plugins
-"//////////////////////////////////////////////////////////////
+"//////////////////////////////////////////////////////////////////////////////
 
 call plug#begin()
 " The default plugin directory will be as follows:
@@ -150,3 +158,14 @@ call plug#end()
 "   filetype indent off   " Disable file-type-specific indentation
 "   syntax off            " Disable syntax highlighting
 
+"//////////////////////////////////////////////////////////////////////////////
+"// plugin settings
+"//////////////////////////////////////////////////////////////////////////////
+
+let g:ackprg = 'ag --vimgrep'
+
+let g:fzf_vim = {}
+let g:fzf_vim.preview_bash = 'C:\cygwin64\bin\bash.exe'
+let g:fzf_vim.buffers_jump = 1
+let g:fzf_vim.commits_log_options = '--graph --color=always --format="%C(auto)%h%d %s %C(black)%C(bold)%cr"'
+let g:fzf_vim.tags_command = 'ctags -R'
