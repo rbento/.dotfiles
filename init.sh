@@ -30,6 +30,7 @@ if ! [[ $? == 0 ]] ; then
 fi
 echo "Installing tools..."
 brew install bash bash-completion bat curl emacs fzf git grpcurl jq perl ripgrep ruby the_silver_searcher tmux tree universal-ctags vim
+curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 echo "Reviewing..."
 bash --version
 curl --version
