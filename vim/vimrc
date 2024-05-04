@@ -97,8 +97,8 @@ map <leader>r :History<CR>
 map <F2> :History<CR>
 
 " open fuzzy file finder
-map <leader>t :GFiles<CR>
-map <F3> :GFiles<CR>
+map <leader>t :Files<CR>
+map <F3> :Files<CR>
 
 " delete current buffer
 map <F4> :bd<CR>
@@ -107,7 +107,15 @@ map <F4> :bd<CR>
 map <F5> :make<CR>
 
 " list buffers
-map <F8> :ls<CR>
+map <F6> :ls<CR>
+
+" open fuzzy git file finder
+map <leader>g :GFiles<CR>
+map <F7> :GFiles<CR>
+
+" find/grep in current file if opened or in all files
+map <leader>f :Rg<CR>
+map <F8> :Rg<CR>
 
 " previous buffer
 map <F9> :bp<CR>
