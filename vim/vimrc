@@ -94,7 +94,10 @@ let &t_EI.="\e[1 q"
 
 let mapleader=","
 map <leader>b :ls<CR>
+map <leader>c :Commits<CR>
 map <leader>h :nohl<CR>
+map <leader>l :e!<CR>
+map <leader>m :Marks<CR>
 map <leader>q :bd<CR>
 map <leader>s :w!<CR>
 map <leader>w :w!<CR>
@@ -104,9 +107,9 @@ map <leader>x :q!<CR>
 map <leader>r :History<CR>
 map <F2> :History<CR>
 
-" open fuzzy file finder
-map <leader>t :Files<CR>
-map <F3> :Files<CR>
+" open fuzzy git file finder
+map <leader>t :GFiles<CR>
+map <F3> :GFiles<CR>
 
 " delete current buffer
 map <F4> :bd<CR>
@@ -115,14 +118,15 @@ map <F4> :bd<CR>
 map <F5> :make<CR>
 
 " list buffers
-map <F6> :ls<CR>
+map <leader>e :Buffers<CR>
+map <F6> :Buffers<CR>
 
-" open fuzzy git file finder
-map <leader>g :GFiles<CR>
-map <F7> :GFiles<CR>
+" open fuzzy file finder
+map <leader>f :Files<CR>
+map <F7> :Files<CR>
 
 " find/grep in current file if opened or in all files
-map <leader>f :Rg 
+map <leader>g :Rg 
 map <F8> :Rg 
 
 " previous buffer
