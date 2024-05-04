@@ -92,19 +92,61 @@ let &t_EI.="\e[1 q"
 "// custom mappings
 "//////////////////////////////////////////////////////////////////////////////
 
+" configure command leader
 let mapleader=","
-map <leader>b :ls<CR>
+
+" fzf list buffers
+map <leader>b :Buffers<CR>
+
+" fzf show commits
 map <leader>c :Commits<CR>
+
+" duplicate current line
+map <leader>d Yp
+
+" indent whole file
+map <leader>F maggVG='a
+
+" prepare search on the current line
 map <leader>h :nohl<CR>
+
+" reload current file / undo all changes
 map <leader>l :e!<CR>
+
+" fzf show current marks
 map <leader>m :Marks<CR>
+
+" close current buffer
 map <leader>q :bd<CR>
-map <leader>s :w!<CR>
+
+" prepare for search/replace on the whole file
+map <leader>R :%s/
+
+" prepare for search/replace on the current line
+map <leader>r V:s/
+
+" prepare incremental search forward 
+map <leader>i :/
+
+" save / overwrite
 map <leader>w :w!<CR>
-map <leader>x :q!<CR>
+
+" quit without saving
+map <silent> <leader>x :q!<CR>
+
+" switch buffers
+nnoremap <silent> H :bp<CR>
+nnoremap <silent> L :bn<CR> 
+
+" quick ex mode
+noremap ; :
+
+" move into wrapped lines and keeps cursor centered
+nnoremap j gjzz
+nnoremap k gkzz
 
 " open fuzzy file history
-map <leader>r :History<CR>
+map <leader>H :History<CR>
 map <F2> :History<CR>
 
 " open fuzzy git file finder
@@ -140,36 +182,34 @@ map <F10> :bn<CR>
 "//////////////////////////////////////////////////////////////////////////////
 
 call plug#begin()
+
 " The default plugin directory will be as follows:
 "   - Vim (Linux/macOS): '~/.vim/plugged'
 "   - Vim (Windows): '~/vimfiles/plugged'
 "   - Neovim (Linux/macOS/Windows): stdpath('data') . '/plugged'
-" You can specify a custom plugin directory by passing it as the argument
-"   - e.g. `call plug#begin('~/.vim/plugged')`
-"   - Avoid using standard Vim directory names like 'plugin'
 
 " Make sure you use single quotes
 
 " fzf native plugin
 Plug 'junegunn/fzf'
+
 " fzf.vim
 Plug 'junegunn/fzf.vim'
 
 " Initialize plugin system
 " - Automatically executes `filetype plugin indent on` and `syntax enable`.
 call plug#end()
-" You can revert the settings after the call like so:
-"   filetype indent off   " Disable file-type-specific indentation
-"   syntax off            " Disable syntax highlighting
 
 "//////////////////////////////////////////////////////////////////////////////
 "// plugin settings
 "//////////////////////////////////////////////////////////////////////////////
 
-let g:ackprg = 'ag --vimgrep'
-
+" configure fzf
 let g:fzf_vim = {}
 let g:fzf_vim.preview_bash = 'C:\cygwin64\bin\bash.exe'
 let g:fzf_vim.buffers_jump = 1
 let g:fzf_vim.commits_log_options = '--graph --color=always --format="%C(auto)%h%d %s %C(black)%C(bold)%cr"'
 let g:fzf_vim.tags_command = 'ctags -R'
+"
+" configure the silver searcher
+let g:ackprg = 'ag --vimgrep'
