@@ -95,6 +95,9 @@ let &t_EI.="\e[1 q"
 " configure command leader
 let mapleader=","
 
+" clear the search buffer when hitting return
+nnoremap <space><cr> :nohlsearch<cr>
+
 " fzf list buffers
 map <leader>b :Buffers<CR>
 
