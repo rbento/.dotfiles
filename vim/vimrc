@@ -104,8 +104,14 @@ map <leader>c :Commits<CR>
 " duplicate current line
 map <leader>d Yp
 
+" open fuzzy file finder
+map <leader>f :Files<CR>
+
 " indent whole file
 map <leader>F maggVG='a
+
+" find/grep in current file if opened or in all files
+map <leader>g :Rg 
 
 " prepare search on the current line
 map <leader>h :nohl<CR>
@@ -115,6 +121,12 @@ map <leader>l :e!<CR>
 
 " fzf show current marks
 map <leader>m :Marks<CR>
+
+" jump to next compiler error
+map <leader>n :cn<CR>
+
+" jump to previous compiler error
+map <leader>p :cp<CR>
 
 " close current buffer
 map <leader>q :bd<CR>
@@ -163,13 +175,11 @@ map <F5> :make<CR>
 map <leader>e :Buffers<CR>
 map <F6> :Buffers<CR>
 
-" open fuzzy file finder
-map <leader>f :Files<CR>
-map <F7> :Files<CR>
+" jump to next compiler error
+map <F8> :cn<CR>
 
-" find/grep in current file if opened or in all files
-map <leader>g :Rg 
-map <F8> :Rg 
+" jump to previous compiler error
+map <S-F8> :cp<CR>
 
 " previous buffer
 map <F9> :bp<CR>
