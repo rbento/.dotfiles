@@ -1,3 +1,4 @@
+
 "//////////////////////////////////////////////////////////////////////////////
 "// globals
 "//////////////////////////////////////////////////////////////////////////////
@@ -194,6 +195,8 @@ map <F10> :bn<CR>
 "// plugins
 "//////////////////////////////////////////////////////////////////////////////
 
+" Vim-Plug
+
 call plug#begin()
 
 " The default plugin directory will be as follows:
@@ -210,19 +213,19 @@ Plug 'junegunn/fzf'
 Plug 'junegunn/fzf.vim'
 
 " Initialize plugin system
-" - Automatically executes `filetype plugin indent on` and `syntax enable`.
+" Automatically executes `filetype plugin indent on` and `syntax enable`.
 call plug#end()
 
 "//////////////////////////////////////////////////////////////////////////////
 "// plugin settings
 "//////////////////////////////////////////////////////////////////////////////
 
-" configure fzf
+" fzf
 let g:fzf_vim = {}
 let g:fzf_vim.preview_bash = 'C:\cygwin64\bin\bash.exe'
 let g:fzf_vim.buffers_jump = 1
 let g:fzf_vim.commits_log_options = '--graph --color=always --format="%C(auto)%h%d %s %C(black)%C(bold)%cr"'
 let g:fzf_vim.tags_command = 'ctags -R'
-"
-" configure the silver searcher
+
+" the silver searcher
 let g:ackprg = 'ag --vimgrep'
