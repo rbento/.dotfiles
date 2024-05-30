@@ -29,7 +29,7 @@ if ! [[ $? == 0 ]] ; then
     /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 fi
 echo "Installing tools..."
-brew install bash bash-completion bat curl emacs fzf git grpcurl jq perl pyenv ripgrep ruby the_silver_searcher tmux tree universal-ctags vim
+brew install bash bash-completion bat curl emacs fzf git grpcurl jq perl pyenv ripgrep ruby the_silver_searcher tmux tree universal-ctags
 curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 echo "Reviewing..."
 bash --version
