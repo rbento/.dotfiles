@@ -1,5 +1,6 @@
 complete -F __start_kubectl k
 eval "$(/opt/homebrew/bin/brew shellenv)"
+eval "$(pyenv init -)"
 source /opt/homebrew/etc/profile.d/bash_completion.sh
 source <(kubectl completion bash)
 source "$HOME/.sdkman/bin/sdkman-init.sh"
