@@ -231,7 +231,8 @@ call plug#end()
 
 " fzf
 let g:fzf_vim = {}
-let g:fzf_vim.preview_bash = 'C:\cygwin64\bin\bash.exe'
+" let g:fzf_vim.preview_bash = 'C:\cygwin64\bin\bash.exe'
+let g:fzf_vim.preview_bash = '/opt/homebrew/bin/bash'
 let g:fzf_vim.buffers_jump = 1
 let g:fzf_vim.commits_log_options = '--graph --color=always --format="%C(auto)%h%d %s %C(black)%C(bold)%cr"'
 let g:fzf_vim.tags_command = 'ctags -R'
