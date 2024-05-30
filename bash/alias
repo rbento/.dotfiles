@@ -87,6 +87,11 @@ alias kcc="k config current-context"
 alias mk="minikube $@"
 complete -F __start_kubectl k
 
+# Python
+alias python="python3"
+alias pip="python -m pip"
+alias pipenv="python -m pipenv"
+
 # Update
 alias u="brew update;brew upgrade;brew upgrade --cask;brew cleanup;sdk selfupdate force;sdk ug;pip install --upgrade pip;"
 
