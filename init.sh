@@ -34,15 +34,16 @@ curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.c
 echo "Reviewing..."
 bash --version
 curl --version
+ctags --version
 emacs --version
 fzf --version
 git --version
 grpcurl --version
 jq --version
+perl --version
 pyenv --version
 rg --version
 tmux -V
 tree --version
-vim --version
 echo "Done"
 
