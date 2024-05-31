@@ -32,6 +32,8 @@ set path+=**
 set relativenumber
 set ruler
 set scrolloff=5
+set shell=bash
+" set shell=cmd.exe
 set shiftwidth=4
 set showcmd
 set smartcase
