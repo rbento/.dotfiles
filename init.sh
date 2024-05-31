@@ -41,6 +41,7 @@ fzf --version
 git --version
 grpcurl --version
 jq --version
+mvim --version
 perl --version
 pyenv --version
 rg --version
