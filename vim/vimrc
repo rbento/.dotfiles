@@ -16,6 +16,7 @@ set autochdir
 set autoindent
 set autoread
 set backspace=indent,eol,start
+set belloff=all
 set clipboard=unnamed
 set cmdheight=1
 set encoding=utf-8
