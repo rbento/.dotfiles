@@ -29,6 +29,7 @@ set noswapfile
 set notimeout
 set nowrap
 set number
+set paste
 set path+=**
 set relativenumber
 set ruler
