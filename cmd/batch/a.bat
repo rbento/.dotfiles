@@ -1,2 +1,2 @@
 @echo off
-git ls
+git add %1
