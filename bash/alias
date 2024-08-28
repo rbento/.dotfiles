@@ -120,3 +120,8 @@ function dra() {
 function gccd() {
     gcc -dM -E -x c  /dev/null | grep -F __STDC_VERSION__
 }
+
+# Output raw binary
+function rb() {
+    xxd -b -c 1 $1 | cut -d' ' -f2 | tr -d '\n'
+}
