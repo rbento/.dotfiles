@@ -44,7 +44,7 @@ echo : OK
 
 echo(
 echo + Installing core applications and services
-winget install --accept-package-agreements --accept-source-agreements 7zip.7zip BurntSushi.ripgrep.MSVC Amazon.Kindle cygwin.cygwin dandavison.delta DEVCOM.Lua EpicGames.EpicGamesLauncher JFLarvoire.Ag junegunn.fzf GNU.Emacs Git.Git GitHub.GitLFS GnuPG.GnuPG Google.Chrome jqlang.jq KhronosGroup.VulkanSDK LogMeIn.Hamachi Microsoft.PIX Microsoft.VisualStudio.2022.Community Microsoft.VisualStudioCode Microsoft.WinDbg Oracle.JDK.21 Renderdoc sharkdp.bat sharkdp.fd StrawberryPerl.StrawberryPerl Tiled.Tiled UniversalCtags.Ctags Vim.Vim WiresharkFoundation.Wireshark
+winget install --accept-package-agreements --accept-source-agreements 7zip.7zip BurntSushi.ripgrep.MSVC Amazon.Kindle dandavison.delta DEVCOM.Lua EpicGames.EpicGamesLauncher JFLarvoire.Ag junegunn.fzf Git.Git GitHub.GitLFS GnuPG.GnuPG Google.Chrome jqlang.jq KhronosGroup.VulkanSDK KronosGroup.VulkanRT Microsoft.PIX Microsoft.VisualStudio.2022.Community Oracle.JDK.21 Renderdoc sharkdp.bat sharkdp.fd UniversalCtags.Ctags Vim.Vim WiresharkFoundation.Wireshark
 echo : OK
 
 setx FZF_DEFAULT_COMMAND "fd --type f --follow"
