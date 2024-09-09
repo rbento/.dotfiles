@@ -145,6 +145,9 @@ map <leader>R :%s/
 " prepare for search/replace on the current line
 map <leader>r V:s/
 
+" sort selection
+map <leader>so :sort<CR>
+
 " prepare incremental search forward 
 map <leader>i :/
 
@@ -152,7 +155,7 @@ map <leader>i :/
 map <leader>w :w!<CR>
 
 " quit without saving
-map <silent> <leader>x :q!<CR>
+map <silent> <leader>xx :q!<CR>
 
 " switch buffers
 nnoremap <silent> H :bp<CR>
