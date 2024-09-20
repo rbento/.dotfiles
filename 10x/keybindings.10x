@@ -1,0 +1,71 @@
+###############################################################################
+### CUSTOM KEY BINDINGS
+
+# Find text in the current file
+Alt /:                       FindInFile
+
+# Duplicate the current line
+Alt D:                       DuplicateLine
+
+# Open Search Panel
+Alt E:                       ShowSwitchPanelPanel
+
+# Open Search Panel
+Alt F:                       Search
+
+# Find text in the current file
+Alt J:                       FindInFile
+
+# Show the Find File panel
+Alt T:                       FindFile
+
+# Go to the previous edit location
+Control .:                   PrevEditLocation
+
+# Toggle line comment if no select. Toggle block comment if selection.
+Control /:                   ToggleComment
+
+# Indent the current line or selected lines
+Control >:                   IndentLine
+
+# Unindent the current line or selected lines
+Control <:                   UnindentLine
+
+# Jump to the definition of the current symbol
+Control ]:                   GotoSymbolDefinition
+
+# Toggle between the source .cpp and .h header file
+Control 6:                   CppParser.ToggleSourceHeader
+
+# Show the switch file panel
+Control E:                   ShowSwitchPanelPanel
+
+# Find text in the current file
+Control I:                   FindInFile
+
+# Find text in the current file
+Control J:                   FindInFile
+
+# Go to the previous cursor location
+Control O:                   PrevLocation
+
+# Show the Find File panel
+Control T:                   FindFile
+
+# Go to the next cursor location
+Control Shift O:             NextLocation
+
+# Sort selected lines
+Control S, Control L:        SortLines
+
+# Focus the previous tab in the current panel
+F9:                          PrevPanelTab
+
+# Toggle between the source .cpp and .h header file
+F10:                         CppParser.ToggleSourceHeader
+
+# Focus the next tab in the current panel
+F11:                         NextPanelTab
+
+# Jump to the definition of the current symbol
+F12:                         GotoSymbolDefinition
