@@ -57,14 +57,19 @@ alias server="./gradlew :server:run"
 
 # Git
 alias a="git ls"
+alias add="git add"
+alias amend="git commit --amend"
 alias b="git branch -avv"
+alias cm="git commit"
 alias g="git status"
 alias gd="git diff"
 alias gdc="git diff --cached"
 alias gdp="git diff HEAD^"
 alias gg="git ls"
-alias gpp="git pull --prune"
+alias pf="git push -f"
 alias pk="git cherry-pick"
+alias pp="git pull --prune"
+alias pu="git push"
 alias s="git status"
 
 # KDiff3
@@ -78,7 +83,7 @@ alias java11="sdk d java 11.0.23-zulu"
 alias java17="sdk d java 17.0.11-zulu"
 alias java21="sdk d java 21.0.3-zulu"
 alias java22="sdk d java 22.0.1-zulu"
-alias graalvm="sdk d java 22.0.1-graal"
+alias java23="sdk d java 23.fx-zulu"
 
 # Kubernetes
 alias h="helm"
