@@ -1,2 +1,3 @@
-@echo off
-cd %USERPROFILE%\Documents\"Unreal Projects"
+@ECHO OFF
+CALL uvars.bat || EXIT /B
+CD %UE_PROJECTS_HOME%

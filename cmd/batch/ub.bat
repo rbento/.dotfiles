@@ -1,6 +1,7 @@
-@echo off
-for %%i in ("%cd%") do set "PROJECT=%%~ni"
-set UPROJECTS=%USERPROFILE%\Documents\"Unreal Projects"
-set UBUILD=%UPROJECTS%\Build.bat
-call %UBUILD% %PROJECT%
+@ECHO OFF
+SETLOCAL
+CALL uvars.bat || EXIT /B
+FOR %%i IN ("%CD%") DO SET "PROJECT=%%~ni"
+SET UBUILD=%UE_PROJECTS_HOME%\Build.bat
+CALL %UBUILD% %PROJECT% 
 

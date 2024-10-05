@@ -1,6 +1,7 @@
-@echo off
-for %%i in ("%cd%") do set "PROJECT=%%~ni"
-set UPROJECTS=%USERPROFILE%\Documents\"Unreal Projects"
-set UOPEN=%UPROJECTS%\Open.bat
-call %UOPEN% %PROJECT%
+@ECHO OFF
+SETLOCAL
+CALL uvars.bat || EXIT /B
+FOR %%i IN ("%CD%") DO SET "PROJECT=%%~ni"
+SET UOPEN=%UE_PROJECTS_HOME%\Open.bat
+CALL %UOPEN% %PROJECT%
 
