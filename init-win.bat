@@ -51,22 +51,21 @@ setx FZF_DEFAULT_COMMAND "fd --type f --follow"
 setx FZF_DEFAULT_OPTS "--border"
 
 echo(
+echo + Installing FZF Vim plugin
+
+iwr -useb https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim |`
+    ni $HOME/vimfiles/autoload/plug.vim -Force
+rem echo : OK
+
+echo(
+echo + Removing extraneous Windows components
+
+Get-AppxPackage *XboxGamingOverlay* | Remove-AppxPackage
+Get-AppxPackage *DevHome* | Remove-AppxPackage                                                    
+Get-AppxPackage *CrossDevice* | Remove-AppxPackage
+Get-AppxPackage *Phone* | Remove-AppxPackage
+
+echo : OK
+
+echo(
 echo : Done
-
-rem echo(
-rem echo + Unregistering init.cmd...
-rem reg delete "HKCU\Software\Microsoft\Command Processor" /v AutoRun /f
-rem echo : OK
-
-rem del /q init.cmd 
-rem mklink init.cmd %USERDOTFILES%\\cmd\\init.cmd
-
-rem echo(
-rem echo + Registering init.cmd...
-rem reg add "HKCU\Software\Microsoft\Command Processor" /v AutoRun /t REG_EXPAND_SZ /d "%"USERPROFILE"%\init.cmd" /f
-rem echo : OK
-
-rem echo(
-rem echo : PS
-rem echo : - Run: reg add "HKCU\Software\Microsoft\Command Processor" /v AutoRun /t REG_EXPAND_SZ /d "%"USERPROFILE"%\init.cmd" /f
-rem echo : - Add your name and e-mail to .gitconfig and review the editor and mergetool settings
