@@ -1,0 +1,9 @@
+--recurse=yes
+--exclude=*
+--include=*.s  
+--include=*.h
+--include=*.c
+--include=*.cpp
+--include=*.java
+--include=*.lua
+--include=*.py
