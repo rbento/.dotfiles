@@ -11,6 +11,7 @@ syntax on
 "" vim options
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
+set autochdir
 set autoindent
 set autoread
 set backspace=indent,eol,start
@@ -252,3 +253,6 @@ let g:fzf_vim.tags_command = 'ctags -R'
 let g:ackprg = 'ag --vimgrep'
 
 silent! colorscheme industry
+
+" cd %USERPROFILE%/Workspace
+cd $HOME/Workspace
