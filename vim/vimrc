@@ -5,40 +5,35 @@
 
 set nocompatible
 filetype off
-colorscheme darkblue
 syntax on
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "" vim options
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-set autochdir
 set autoindent
 set autoread
 set backspace=indent,eol,start
-set belloff=all
 set clipboard=unnamed
 set cmdheight=1
 set encoding=utf-8
 set expandtab
+set gp=git\ grep\ -n
 set hidden
 set hlsearch
 set ignorecase
 set incsearch
+set mouse=a
 set noswapfile
 set notimeout
 set nowrap
 set number
 set paste
-set path+=**
-" set relativenumber
 set ruler
-set scrolloff=5
-set shell=bash
-" set shell=cmd.exe
+set scrolloff=999
+set shell=/opt/homebrew/bin/bash
 set shiftwidth=4
 set showcmd
-set smartcase
 set smartcase
 set smartindent
 set smarttab
@@ -47,19 +42,21 @@ set splitbelow
 set splitright
 set t_vb=
 set tabstop=4
+set tags=./tags,tags
 set ttimeout
 set wildignore+=*/tmp/*,*/target/*,*/bin/*,*/build/*,*/__pycache__/*,*.tar,*.gz,*.7z,*.iso,*.so,*.swp,*.zip     
 set wildmenu
+set wildoptions=pum
 set wildmode=list:longest,full
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "" gvim options
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-set guifont=Hack:h14 " Font
-set guioptions-=m    " Menubar
-set guioptions-=T    " Toolbar
-set guioptions-=r    " Scrollbar
+set guifont=Consolas:h18 " Font
+set guioptions-=m        " Menubar
+set guioptions-=T        " Toolbar
+set guioptions-=r        " Scrollbar
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "" statusline
@@ -89,9 +86,13 @@ endif
 "" custom cursor
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-let &t_SI.="\e[5 q"
-let &t_SR.="\e[4 q"
-let &t_EI.="\e[1 q"
+" GUI
+highlight Cursor guifg=white guibg=lightgray
+highlight iCursor guifg=white guibg=green
+set guicursor=n-v-c:block-Cursor
+set guicursor+=i:block-iCursor
+set guicursor+=n-v-c:blinkon0
+set guicursor+=i:blinkon0
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "" custom mappings
@@ -100,41 +101,42 @@ let &t_EI.="\e[1 q"
 " configure command leader
 let mapleader=","
 
+" list buffers
+map <leader>b :ls<CR>
+map <leader>e :Buffers<CR>
+
+" show commits
+map <leader>c :Commits<CR>
+
+" file search
+map <leader>f :Files<CR>
+
+" find/grep in current file if opened or in all files
+map <leader>g :Rg<CR>
+
+" view current marks
+map <leader>M :Marks<CR>
+
+" view current jumps
+map <leader>J :Jumps<CR>
+
+" project file search
+map <leader>t :GFiles<CR>
+
+" view current windows
+map <leader>W :Windows<CR>
+
 " clear the search buffer when hitting return
 nnoremap <space><cr> :nohlsearch<cr>
-
-" fzf list buffers
-map <leader>b :Buffers<CR>
-
-" fzf show commits
-map <leader>c :Commits<CR>
 
 " duplicate current line
 map <leader>d Yp
 
-" open fuzzy file finder
-map <leader>f :Files<CR>
-
 " indent whole file
-map <leader>F maggVG='a
-
-" find/grep in current file if opened or in all files
-map <leader>g :Rg 
+map <leader>L maggVG='a
 
 " prepare search on the current line
 map <leader>h :nohl<CR>
-
-" reload current file / undo all changes
-map <leader>l :e!<CR>
-
-" fzf show current marks
-map <leader>m :Marks<CR>
-
-" jump to next compiler error
-map <leader>n :cn<CR>
-
-" jump to previous compiler error
-map <leader>p :cp<CR>
 
 " close current buffer
 map <leader>q :bd<CR>
@@ -145,58 +147,60 @@ map <leader>R :%s/
 " prepare for search/replace on the current line
 map <leader>r V:s/
 
-" sort selection
-map <leader>so :sort<CR>
-
 " prepare incremental search forward 
-map <leader>i :/
+map <leader>j :/
 
 " save / overwrite
-map <leader>w :w!<CR>
+map <leader>s :w!<CR>
 
 " quit without saving
-map <silent> <leader>xx :q!<CR>
+map <silent> <leader>x :q!<CR>
 
 " switch buffers
 nnoremap <silent> H :bp<CR>
 nnoremap <silent> L :bn<CR> 
 
+" switch headerimpl
+map <leader>k,o e %<.cpp<CR>
+
 " quick ex mode
 noremap ; :
+
+" sort selection
+map <leader>so :sort<CR>
+
+" quit without saving
+map <silent> <leader>xx :q!<CR>
 
 " move into wrapped lines and keeps cursor centered
 nnoremap j gjzz
 nnoremap k gkzz
 
-" open fuzzy file history
-map <leader>H :History<CR>
-map <F2> :History<CR>
+" view help
+map <F1> :Help<CR>
 
-" open fuzzy git file finder
-map <leader>t :GFiles<CR>
-map <F3> :GFiles<CR>
+" view history
+map <F3> :History<CR>
 
 " delete current buffer
 map <F4> :bd<CR>
 
-" execute make on the current directory
-map <F5> :make<CR>
+" reload current file / undo all changes
+map <F5> :e!<CR>
 
-" list buffers
-map <leader>e :Buffers<CR>
-map <F6> :Buffers<CR>
+" generate ctags tags
+map <F6> :Tags<CR>
+
+" execute make on the current directory
+map <F7> :make<CR>
 
 " jump to next compiler error
+map <F2> :cn<CR>
 map <F8> :cn<CR>
 
 " jump to previous compiler error
+map <S-F2> :cp<CR>
 map <S-F8> :cp<CR>
-
-" previous buffer
-map <F9> :bp<CR>
-
-" next buffer
-map <F10> :bn<CR>
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "" automation
@@ -246,3 +250,5 @@ let g:fzf_vim.tags_command = 'ctags -R'
 
 " the silver searcher
 let g:ackprg = 'ag --vimgrep'
+
+silent! colorscheme industry
