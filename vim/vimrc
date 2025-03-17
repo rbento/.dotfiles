@@ -5,7 +5,6 @@
 
 set nocompatible
 filetype off
-syntax on
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "" vim options
@@ -55,10 +54,10 @@ set wildmode=list:longest,full
 "" gvim options
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-set guifont=Consolas:h18 " Font
-set guioptions-=m        " Menubar
-set guioptions-=T        " Toolbar
-set guioptions-=r        " Scrollbar
+set guifont=Hack:h15 " Font
+set guioptions-=m    " Menubar
+set guioptions-=T    " Toolbar
+set guioptions-=r    " Scrollbar
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "" statusline
@@ -83,18 +82,6 @@ if version >= 700
   au InsertEnter * hi StatusLine term=reverse ctermfg=0 ctermbg=144
   au InsertLeave * hi StatusLine term=reverse ctermfg=0 ctermbg=247
 endif
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"" custom cursor
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
-" GUI
-highlight Cursor guifg=white guibg=lightgray
-highlight iCursor guifg=white guibg=green
-set guicursor=n-v-c:block-Cursor
-set guicursor+=i:block-iCursor
-set guicursor+=n-v-c:blinkon0
-set guicursor+=i:blinkon0
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "" custom mappings
@@ -254,6 +241,7 @@ let g:fzf_vim.tags_command = 'ctags -R'
 let g:ackprg = 'ag --vimgrep'
 
 silent! colorscheme industry
+syntax on
 
 " cd %USERPROFILE%/Workspace
 cd $HOME/Workspace
