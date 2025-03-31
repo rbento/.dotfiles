@@ -4,7 +4,7 @@
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 set nocompatible
-filetype off
+filetype plugin indent on
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "" vim options
@@ -29,20 +29,17 @@ set noswapfile
 set notimeout
 set nowrap
 set number
-set paste
 set ruler
-set scrolloff=999
 set shell=/opt/homebrew/bin/bash
-set shiftwidth=4
+set shiftwidth=2
 set showcmd
 set smartcase
-set smartindent
 set smarttab
-set softtabstop=4
+set softtabstop=2
 set splitbelow
 set splitright
 set t_vb=
-set tabstop=4
+set tabstop=2
 set tags=./tags,tags
 set ttimeout
 set wildignore+=*/tmp/*,*/target/*,*/bin/*,*/build/*,*/__pycache__/*,*.tar,*.gz,*.7z,*.iso,*.so,*.swp,*.zip     
