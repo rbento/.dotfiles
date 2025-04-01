@@ -48,13 +48,21 @@ set wildoptions=pum
 set wildmode=list:longest,full
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"" gvim options
+"" gui options (gvim, macvim)
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 set guifont=Hack:h15 " Font
 set guioptions-=m    " Menubar
 set guioptions-=T    " Toolbar
 set guioptions-=r    " Scrollbar
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"" gui cursor
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+au VimEnter * hi Cursor guibg=Red 
+au InsertEnter * hi Cursor guibg=Green 
+au InsertLeave * hi Cursor guibg=Red 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "" statusline
@@ -74,11 +82,15 @@ set statusline+=%l/%L\                       " Cursor line/total lines
 set statusline+=%b,0x%-2B\                   " Current char
 set statusline+=%<%P\                        " Percentage
 
-" statusline changes according to mode
-if version >= 700
-  au InsertEnter * hi StatusLine term=reverse ctermfg=0 ctermbg=144
-  au InsertLeave * hi StatusLine term=reverse ctermfg=0 ctermbg=247
-endif
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"" automation
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+augroup AutoSave
+    au!
+    au BufLeave,FocusLost * silent! write
+augroup END
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "" custom mappings
@@ -189,15 +201,6 @@ map <S-F2> :cp<CR>
 map <S-F8> :cp<CR>
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"" automation
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
-augroup AutoSave
-    au!
-    au BufLeave,FocusLost * silent! write
-augroup END
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "" plugins
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
@@ -228,8 +231,8 @@ call plug#end()
 
 " fzf
 let g:fzf_vim = {}
-" let g:fzf_vim.preview_bash = 'C:\cygwin64\bin\bash.exe'
 let g:fzf_vim.preview_bash = '/opt/homebrew/bin/bash'
+" let g:fzf_vim.preview_bash = 'C:\cygwin64\bin\bash.exe'
 let g:fzf_vim.buffers_jump = 1
 let g:fzf_vim.commits_log_options = '--graph --color=always --format="%C(auto)%h%d %s %C(black)%C(bold)%cr"'
 let g:fzf_vim.tags_command = 'ctags -R'
@@ -237,8 +240,14 @@ let g:fzf_vim.tags_command = 'ctags -R'
 " the silver searcher
 let g:ackprg = 'ag --vimgrep'
 
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"" default settings
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+" set colorscheme
 silent! colorscheme industry
 syntax on
 
+" set working directory
+cd $HOME/Workspace                    
 " cd %USERPROFILE%/Workspace
-cd $HOME/Workspace
