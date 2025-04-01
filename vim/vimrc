@@ -1,6 +1,6 @@
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"" globals
+"" global options
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 set nocompatible
@@ -31,15 +31,15 @@ set nowrap
 set number
 set ruler
 set shell=/opt/homebrew/bin/bash
-set shiftwidth=2
+set shiftwidth=4
 set showcmd
 set smartcase
 set smarttab
-set softtabstop=2
+set softtabstop=4
 set splitbelow
 set splitright
 set t_vb=
-set tabstop=2
+set tabstop=4
 set tags=./tags,tags
 set ttimeout
 set wildignore+=*/tmp/*,*/target/*,*/bin/*,*/build/*,*/__pycache__/*,*.tar,*.gz,*.7z,*.iso,*.so,*.swp,*.zip     
@@ -57,14 +57,6 @@ set guioptions-=T    " Toolbar
 set guioptions-=r    " Scrollbar
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"" gui cursor
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
-au VimEnter * hi Cursor guibg=Red 
-au InsertEnter * hi Cursor guibg=Green 
-au InsertLeave * hi Cursor guibg=Red 
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "" statusline
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
@@ -79,11 +71,75 @@ set statusline+=%{&fileformat}]              " File format
 set statusline+=%=                           " Right align
 set statusline+=%c,                          " Cursor column
 set statusline+=%l/%L\                       " Cursor line/total lines
-set statusline+=%b,0x%-2B\                   " Current char
-set statusline+=%<%P\                        " Percentage
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"" automation
+"" plugins
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+" Vim-Plug
+
+call plug#begin()
+
+" The default plugin directory will be as follows:
+"   - Vim (Linux/macOS): '~/.vim/plugged'
+"   - Vim (Windows): '~/vimfiles/plugged'
+"   - Neovim (Linux/macOS/Windows): stdpath('data') . '/plugged'
+
+" Make sure you use single quotes
+
+" fzf native plugin
+Plug 'junegunn/fzf'
+
+" fzf.vim
+Plug 'junegunn/fzf.vim'
+
+" Initialize plugin system
+" Automatically executes `filetype plugin indent on` and `syntax enable`.
+call plug#end()
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"" plugin settings
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+" fzf
+let g:fzf_vim = {}
+let g:fzf_vim.preview_bash = '/opt/homebrew/bin/bash'
+" let g:fzf_vim.preview_bash = 'C:\cygwin64\bin\bash.exe'
+let g:fzf_vim.buffers_jump = 1
+let g:fzf_vim.commits_log_options = '--graph --color=always --format="%C(auto)%h%d %s %C(black)%C(bold)%cr"'
+let g:fzf_vim.tags_command = 'ctags -R'
+
+" the silver searcher
+let g:ackprg = 'ag --vimgrep'
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"" custom variables
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+let g:normal_bg = ''
+let g:normal_fg = ''
+let g:status_line_bg = ''
+let g:status_line_fg = ''
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"" custom functions
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+function! OnColorSchemeChanged()
+    let g:normal_bg = synIDattr(hlID('Normal'), 'bg#')
+    let g:normal_fg = synIDattr(hlID('Normal'), 'fg#')
+    let g:status_line_bg = synIDattr(hlID('StatusLine'), 'bg#')
+    let g:status_line_fg = synIDattr(hlID('StatusLine'), 'fg#')
+    if mode() == 'i'
+        execute 'hi Cursor guibg=' . g:normal_fg . ' guifg=' . g:normal_bg
+        execute 'hi StatusLine guibg=' . g:status_line_bg . ' guifg=' . g:status_line_fg
+    else
+        execute 'hi Cursor guibg=Red guifg=Black'
+    endif    
+endfunction
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"" custom automation
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 augroup AutoSave
@@ -91,9 +147,37 @@ augroup AutoSave
     au BufLeave,FocusLost * silent! write
 augroup END
 
+augroup ColorSchemeChanges
+    au!
+    au VimEnter * call OnColorSchemeChanged()
+    au ColorScheme * call OnColorSchemeChanged()
+augroup END
+
+augroup ModeChanges
+    au!
+    " set cursor color
+    au InsertEnter * execute 'hi Cursor guibg=' . g:normal_fg . ' guifg=' . g:normal_bg
+    au InsertLeave * hi Cursor guibg=Red guifg=Black
+    " set statusline color
+    au InsertEnter * hi StatusLine guibg=Red guifg=Black
+    au InsertLeave * execute 'hi StatusLine  guibg=' . g:status_line_bg . ' guifg=' . g:status_line_fg
+augroup END
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"" custom settings
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+" set default working directory
+cd $HOME/Workspace                    
+" cd %USERPROFILE%/Workspace
+
+" set default colorscheme
+silent! colorscheme 
+syntax on
+
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "" custom mappings
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"'""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 " configure command leader
 let mapleader=","
@@ -198,55 +282,3 @@ map <F8> :cn<CR>
 " jump to previous compiler error
 map <S-F2> :cp<CR>
 map <S-F8> :cp<CR>
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"" plugins
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
-" Vim-Plug
-
-call plug#begin()
-
-" The default plugin directory will be as follows:
-"   - Vim (Linux/macOS): '~/.vim/plugged'
-"   - Vim (Windows): '~/vimfiles/plugged'
-"   - Neovim (Linux/macOS/Windows): stdpath('data') . '/plugged'
-
-" Make sure you use single quotes
-
-" fzf native plugin
-Plug 'junegunn/fzf'
-
-" fzf.vim
-Plug 'junegunn/fzf.vim'
-
-" Initialize plugin system
-" Automatically executes `filetype plugin indent on` and `syntax enable`.
-call plug#end()
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"" plugin settings
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
-" fzf
-let g:fzf_vim = {}
-let g:fzf_vim.preview_bash = '/opt/homebrew/bin/bash'
-" let g:fzf_vim.preview_bash = 'C:\cygwin64\bin\bash.exe'
-let g:fzf_vim.buffers_jump = 1
-let g:fzf_vim.commits_log_options = '--graph --color=always --format="%C(auto)%h%d %s %C(black)%C(bold)%cr"'
-let g:fzf_vim.tags_command = 'ctags -R'
-
-" the silver searcher
-let g:ackprg = 'ag --vimgrep'
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"" default settings
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
-" set colorscheme
-silent! colorscheme industry
-syntax on
-
-" set working directory
-cd $HOME/Workspace                    
-" cd %USERPROFILE%/Workspace
