@@ -181,6 +181,12 @@ syntax on
 " configure command leader
 let mapleader=","
 
+" go to last edit location 
+map <Leader>. g;
+
+" go to last edit location in insert mode 
+map <Leader>; gi
+
 " list buffers
 map <leader>b :ls<CR>
 map <leader>e :Buffers<CR>
