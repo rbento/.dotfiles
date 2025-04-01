@@ -82,7 +82,6 @@ set statusline+=%l/%L\                       " Cursor line/total lines
 set statusline+=%b,0x%-2B\                   " Current char
 set statusline+=%<%P\                        " Percentage
 
-
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "" automation
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
