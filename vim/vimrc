@@ -77,6 +77,7 @@ set statusline+=%l/%L\                       " Cursor line/total lines
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 " Vim-Plug
+
 call plug#begin()
 
 " The default plugin directory will be as follows:
@@ -221,7 +222,7 @@ map <leader>h :nohl<CR>
 " close current buffer
 map <leader>q :bd<CR>
 
-" prepare for search/replace on the whole file
+" prepare for searc h/replace on the whole file
 map <leader>R :%s/
 
 " prepare for search/replace on the current line
@@ -252,6 +253,15 @@ map <leader>so :sort<CR>
 " quit without saving
 map <silent> <leader>xx :q!<CR>
 
+" cycle windows
+map <leader>w <C-w>w
+
+" close output window
+map <leader><esc> :cclose<CR>
+
+" close current window
+map <S-ESC> :close<CR>
+
 " move into wrapped lines and keeps cursor centered
 nnoremap j gjzz
 nnoremap k gkzz
@@ -265,19 +275,24 @@ map <F3> :History<CR>
 " delete current buffer
 map <F4> :bd<CR>
 
-" reload current file / undo all changes
-map <F5> :e!<CR>
+" execute make run on the current directory
+map <F5> :!make debug<CR>
 
-" generate ctags tags
-map <F6> :Tags<CR>
+" execute make run on the current directory
+map <F6> :!make run<CR>
 
 " execute make on the current directory
-map <F7> :make<CR>
+map <F7> :cclose<CR>:cexpr []<CR>:make<CR>
+map <D-F7> :cclose<CR>:make clean<CR>:cexpr []<CR>:make<CR>
 
 " jump to next compiler error
 map <F2> :cn<CR>
 map <F8> :cn<CR>
+map <D-F8> :cw<CR>
 
 " jump to previous compiler error
 map <S-F2> :cp<CR>
 map <S-F8> :cp<CR>
+
+" reload current file / undo all changes
+map <S-F12> :e!<CR>
