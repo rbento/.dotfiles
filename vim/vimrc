@@ -172,7 +172,7 @@ cd $HOME/Workspace
 " cd %USERPROFILE%/Workspace
 
 " set default colorscheme
-silent! colorscheme 
+silent! colorscheme base16-tomorrow-night
 syntax on
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
