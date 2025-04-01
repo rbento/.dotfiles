@@ -77,7 +77,6 @@ set statusline+=%l/%L\                       " Cursor line/total lines
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 " Vim-Plug
-
 call plug#begin()
 
 " The default plugin directory will be as follows:
