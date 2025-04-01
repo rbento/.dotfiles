@@ -255,7 +255,7 @@ map <silent> <leader>xx :q!<CR>
 " cycle windows
 map <leader>w <C-w>w
 
-" close output window
+" close quickfix window
 map <leader><esc> :cclose<CR>
 
 " close current window
@@ -284,10 +284,12 @@ map <F6> :!make run<CR>
 map <F7> :cclose<CR>:cexpr []<CR>:make<CR>
 map <D-F7> :cclose<CR>:make clean<CR>:cexpr []<CR>:make<CR>
 
+" open quickfix window
+map <D-F8> :cw<CR>
+
 " jump to next compiler error
 map <F2> :cn<CR>
 map <F8> :cn<CR>
-map <D-F8> :cw<CR>
 
 " jump to previous compiler error
 map <S-F2> :cp<CR>
