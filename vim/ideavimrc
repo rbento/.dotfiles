@@ -1,21 +1,24 @@
-"hightlight as we type
+" hightlight as we type
 set hlsearch
 
-"ignore case when searching
+" ignore case when searching
 set ignorecase 
 
-"search incrementally
+" search incrementally
 set incsearch
 
-"show current mode in status bar
+" show current mode in status bar
 set showmode
 
-"prevents having to type u twice to undo
-set undolevels=0
-
-"clear the search buffer when hitting return
-nnoremap <space><cr> :nohlsearch<cr>
-
-"enable surround plugin
+" enable surround plugin
 set surround
 
+" prevents having to type u twice to undo
+set undolevels=0
+
+" clear the search buffer when hitting return
+nnoremap <space><cr> :nohlsearch<cr>
+
+" switch buffers
+nnoremap <silent> H :bp<CR>
+nnoremap <silent> L :bn<CR> 
