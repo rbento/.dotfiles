@@ -4,7 +4,6 @@
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 set nocompatible
-filetype plugin indent on
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "" vim options
@@ -73,45 +72,6 @@ set statusline+=%c,                          " Cursor column
 set statusline+=%l/%L\                       " Cursor line/total lines
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"" plugins
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
-" Vim-Plug
-call plug#begin()
-
-" The default plugin directory will be as follows:
-"   - Vim (Linux/macOS): '~/.vim/plugged'
-"   - Vim (Windows): '~/vimfiles/plugged'
-"   - Neovim (Linux/macOS/Windows): stdpath('data') . '/plugged'
-
-" Make sure you use single quotes
-
-" fzf native plugin
-Plug 'junegunn/fzf'
-
-" fzf.vim
-Plug 'junegunn/fzf.vim'
-
-" Initialize plugin system
-" Automatically executes `filetype plugin indent on` and `syntax enable`.
-call plug#end()
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"" plugin settings
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
-" fzf
-let g:fzf_vim = {}
-let g:fzf_vim.preview_bash = '/opt/homebrew/bin/bash'
-" let g:fzf_vim.preview_bash = 'C:\cygwin64\bin\bash.exe'
-let g:fzf_vim.buffers_jump = 1
-let g:fzf_vim.commits_log_options = '--graph --color=always --format="%C(auto)%h%d %s %C(black)%C(bold)%cr"'
-let g:fzf_vim.tags_command = 'ctags -R'
-
-" the silver searcher
-let g:ackprg = 'ag --vimgrep'
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "" custom variables
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
@@ -135,7 +95,7 @@ function! OnColorSchemeChanged()
         execute 'hi Cursor guibg=' . g:normal_fg . ' guifg=' . g:normal_bg
         execute 'hi StatusLine guibg=' . g:status_line_bg . ' guifg=' . g:status_line_fg
     else
-        execute 'hi Cursor guibg=Red guifg=Black'
+        execute 'hi Cursor guibg=red guifg=black'
     endif    
 endfunction
 
@@ -157,9 +117,9 @@ augroup ModeChanges
     au!
     " set cursor color
     au InsertEnter * execute 'hi Cursor guibg=' . g:normal_fg . ' guifg=' . g:normal_bg
-    au InsertLeave * hi Cursor guibg=Red guifg=Black
+    au InsertLeave * hi Cursor guibg=red guifg=black
     " set statusline color
-    au InsertEnter * hi StatusLine guibg=Red guifg=Black
+    au InsertEnter * hi StatusLine guibg=red guifg=black
     au InsertLeave * execute 'hi StatusLine  guibg=' . g:status_line_bg . ' guifg=' . g:status_line_fg
 augroup END
 
@@ -311,3 +271,41 @@ map <S-F8> :cp<CR>
 " reload current file / undo all changes
 map <S-F12> :e!<CR>
 
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"" plugins
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+" Vim-Plug
+call plug#begin()
+
+" The default plugin directory will be as follows:
+"   - Vim (Linux/macOS): '~/.vim/plugged'
+"   - Vim (Windows): '~/vimfiles/plugged'
+"   - Neovim (Linux/macOS/Windows): stdpath('data') . '/plugged'
+
+" Make sure you use single quotes
+
+" fzf native plugin
+Plug 'junegunn/fzf'
+
+" fzf.vim
+Plug 'junegunn/fzf.vim'
+
+" Initialize plugin system
+" Automatically executes `filetype plugin indent on` and `syntax enable`.
+call plug#end()
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"" plugin settings
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+" fzf
+let g:fzf_vim = {}
+let g:fzf_vim.preview_bash = '/opt/homebrew/bin/bash'
+" let g:fzf_vim.preview_bash = 'C:\cygwin64\bin\bash.exe'
+let g:fzf_vim.buffers_jump = 1
+let g:fzf_vim.commits_log_options = '--graph --color=always --format="%C(auto)%h%d %s %C(black)%C(bold)%cr"'
+let g:fzf_vim.tags_command = 'ctags -R'
+
+" the silver searcher
+let g:ackprg = 'ag --vimgrep'
