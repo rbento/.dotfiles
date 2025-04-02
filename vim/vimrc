@@ -138,13 +138,8 @@ augroup END
 "" custom settings
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-" set default working directory
-                   
-" cd %USERPROFILE%/Workspace
-
 " set default colorscheme
-silent! colorscheme base16-tomorrow-night
-syntax on
+silent! colorscheme habamax
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "" custom mappings
