@@ -29,7 +29,7 @@ set notimeout
 set nowrap
 set number
 set ruler
-set shell=/opt/homebrew/bin/bash
+set shell=/bin/bash
 set shiftwidth=4
 set showcmd
 set smartcase
@@ -125,8 +125,13 @@ augroup END
 
 augroup VimStartup
     au!
-    au VimEnter * execute 'packadd termdebug'
+    " update custom color settings after changing colorscheme
     au VimEnter * call OnColorSchemeChanged()
+    " enable debugger plugin
+    au VimEnter * execute 'packadd termdebug'
+    " set default working directory
+    au VimEnter * execute 'cd $HOME/Workspace'
+    " au VimEnter * execute 'cd %USERPROFILE%/Workspace'
 augroup END
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -134,7 +139,7 @@ augroup END
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 " set default working directory
-cd $HOME/Workspace                    
+                   
 " cd %USERPROFILE%/Workspace
 
 " set default colorscheme
@@ -301,8 +306,8 @@ call plug#end()
 
 " fzf
 let g:fzf_vim = {}
-let g:fzf_vim.preview_bash = '/opt/homebrew/bin/bash'
-" let g:fzf_vim.preview_bash = 'C:\cygwin64\bin\bash.exe'
+let g:fzf_vim.preview_bash = '/bin/bash'
+" let g:fzf_vim.preview_bash = 'C:\Program\ Files\Git\bin\bash.exe'
 let g:fzf_vim.buffers_jump = 1
 let g:fzf_vim.commits_log_options = '--graph --color=always --format="%C(auto)%h%d %s %C(black)%C(bold)%cr"'
 let g:fzf_vim.tags_command = 'ctags -R'
