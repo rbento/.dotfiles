@@ -115,6 +115,8 @@ let g:ackprg = 'ag --vimgrep'
 "" custom variables
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
+let g:termdebugger='/opt/homebrew/bin/gdb'
+
 let g:normal_bg = ''
 let g:normal_fg = ''
 let g:status_line_bg = ''
@@ -148,7 +150,6 @@ augroup END
 
 augroup ColorSchemeChanges
     au!
-    au VimEnter * call OnColorSchemeChanged()
     au ColorScheme * call OnColorSchemeChanged()
 augroup END
 
@@ -160,6 +161,12 @@ augroup ModeChanges
     " set statusline color
     au InsertEnter * hi StatusLine guibg=Red guifg=Black
     au InsertLeave * execute 'hi StatusLine  guibg=' . g:status_line_bg . ' guifg=' . g:status_line_fg
+augroup END
+
+augroup VimStartup
+    au!
+    au VimEnter * execute 'packadd termdebug'
+    au VimEnter * call OnColorSchemeChanged()
 augroup END
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -303,3 +310,4 @@ map <S-F8> :cp<CR>
 
 " reload current file / undo all changes
 map <S-F12> :e!<CR>
+
