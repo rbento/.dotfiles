@@ -1,4 +1,4 @@
-" hightlight as we type
+" highlight as we type to search
 set hlsearch
 
 " ignore case when searching
