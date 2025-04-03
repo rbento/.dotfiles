@@ -4,6 +4,7 @@
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 set nocompatible
+filetype plugin indent on
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "" vim options
@@ -29,7 +30,7 @@ set notimeout
 set nowrap
 set number
 set ruler
-set shell=/bin/bash
+set shell=/opt/homebrew/bin/bash
 set shiftwidth=4
 set showcmd
 set smartcase
@@ -72,206 +73,6 @@ set statusline+=%c,                          " Cursor column
 set statusline+=%l/%L\                       " Cursor line/total lines
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"" custom variables
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
-let g:termdebugger='/opt/homebrew/bin/gdb'
-
-let g:normal_bg = ''
-let g:normal_fg = ''
-let g:status_line_bg = ''
-let g:status_line_fg = ''
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"" custom functions
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
-function! OnColorSchemeChanged()
-    let g:normal_bg = synIDattr(hlID('Normal'), 'bg#')
-    let g:normal_fg = synIDattr(hlID('Normal'), 'fg#')
-    let g:status_line_bg = synIDattr(hlID('StatusLine'), 'bg#')
-    let g:status_line_fg = synIDattr(hlID('StatusLine'), 'fg#')
-    if mode() == 'i'
-        execute 'hi Cursor guibg=' . g:normal_fg . ' guifg=' . g:normal_bg
-        execute 'hi StatusLine guibg=' . g:status_line_bg . ' guifg=' . g:status_line_fg
-    else
-        execute 'hi Cursor guibg=red guifg=black'
-    endif    
-endfunction
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"" custom automation
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
-augroup AutoSave
-    au!
-    au BufLeave,FocusLost * silent! write
-augroup END
-
-augroup ColorSchemeChanges
-    au!
-    au ColorScheme * call OnColorSchemeChanged()
-augroup END
-
-augroup ModeChanges
-    au!
-    " set cursor color
-    au InsertEnter * execute 'hi Cursor guibg=' . g:normal_fg . ' guifg=' . g:normal_bg
-    au InsertLeave * hi Cursor guibg=red guifg=black
-    " set statusline color
-    au InsertEnter * hi StatusLine guibg=red guifg=black
-    au InsertLeave * execute 'hi StatusLine  guibg=' . g:status_line_bg . ' guifg=' . g:status_line_fg
-augroup END
-
-augroup VimStartup
-    au!
-    " update custom color settings after changing colorscheme
-    au VimEnter * call OnColorSchemeChanged()
-    " enable debugger plugin
-    au VimEnter * execute 'packadd termdebug'
-    " set default working directory
-    au VimEnter * execute 'cd $HOME/Workspace'
-    " au VimEnter * execute 'cd %USERPROFILE%/Workspace'
-augroup END
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"" custom settings
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
-" set default colorscheme
-silent! colorscheme habamax
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"" custom mappings
-"'""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
-" configure command leader
-let mapleader=","
-
-" go to last edit location 
-map <Leader>. g;
-
-" go to last edit location in insert mode 
-map <Leader>; gi
-
-" list buffers
-map <leader>b :ls<CR>
-map <leader>e :Buffers<CR>
-
-" show commits
-map <leader>c :Commits<CR>
-
-" file search
-map <leader>f :Files<CR>
-
-" find/grep in current file if opened or in all files
-map <leader>g :Rg<CR>
-
-" view current marks
-map <leader>M :Marks<CR>
-
-" view current jumps
-map <leader>J :Jumps<CR>
-
-" project file search
-map <leader>t :GFiles<CR>
-
-" view current windows
-map <leader>W :Windows<CR>
-
-" clear the search buffer when hitting return
-nnoremap <space><cr> :nohlsearch<cr>
-
-" duplicate current line
-map <leader>d Yp
-
-" indent whole file
-map <leader>L maggVG='a
-
-" prepare search on the current line
-map <leader>h :nohl<CR>
-
-" close current buffer
-map <leader>q :bd<CR>
-
-" prepare for searc h/replace on the whole file
-map <leader>R :%s/
-
-" prepare for search/replace on the current line
-map <leader>r V:s/
-
-" prepare incremental search forward 
-map <leader>j :/
-
-" save / overwrite
-map <leader>s :w!<CR>
-
-" quit without saving
-map <silent> <leader>x :q!<CR>
-
-" switch buffers
-nnoremap <silent> H :bp<CR>
-nnoremap <silent> L :bn<CR> 
-
-" switch headerimpl
-map <leader>k,o e %<.cpp<CR>
-
-" quick ex mode
-noremap ; :
-
-" sort selection
-map <leader>so :sort<CR>
-
-" quit without saving
-map <silent> <leader>xx :q!<CR>
-
-" cycle windows
-map <leader>w <C-w>w
-
-" close quickfix window
-map <leader><esc> :cclose<CR>
-
-" close current window
-map <S-ESC> :close<CR>
-
-" move into wrapped lines and keeps cursor centered
-nnoremap j gjzz
-nnoremap k gkzz
-
-" view help
-map <F1> :Help<CR>
-
-" view history
-map <F3> :History<CR>
-
-" delete current buffer
-map <F4> :bd<CR>
-
-" execute make run on the current directory
-map <F5> :!make debug<CR>
-
-" execute make run on the current directory
-map <F6> :!make run<CR>
-
-" execute make on the current directory
-map <F7> :cclose<CR>:cexpr []<CR>:make<CR>
-map <D-F7> :cclose<CR>:make clean<CR>:cexpr []<CR>:make<CR>
-
-" open quickfix window
-map <D-F8> :cw<CR>
-
-" jump to next compiler error
-map <F2> :cn<CR>
-map <F8> :cn<CR>
-
-" jump to previous compiler error
-map <S-F2> :cp<CR>
-map <S-F8> :cp<CR>
-
-" reload current file / undo all changes
-map <S-F12> :e!<CR>
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "" plugins
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
@@ -301,11 +102,245 @@ call plug#end()
 
 " fzf
 let g:fzf_vim = {}
-let g:fzf_vim.preview_bash = '/bin/bash'
-" let g:fzf_vim.preview_bash = 'C:\Program\ Files\Git\bin\bash.exe'
+let g:fzf_vim.preview_bash = '/opt/homebrew/bin/bash'
+" let g:fzf_vim.preview_bash = 'C:\cygwin64\bin\bash.exe'
 let g:fzf_vim.buffers_jump = 1
 let g:fzf_vim.commits_log_options = '--graph --color=always --format="%C(auto)%h%d %s %C(black)%C(bold)%cr"'
 let g:fzf_vim.tags_command = 'ctags -R'
 
 " the silver searcher
 let g:ackprg = 'ag --vimgrep'
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"" custom variables
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+let g:termdebugger='/opt/homebrew/bin/gdb'
+
+let g:normal_bg = ''
+let g:normal_fg = ''
+let g:status_line_bg = ''
+let g:status_line_fg = ''
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"" custom functions
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+function! OnColorSchemeChanged()
+    let g:normal_bg = synIDattr(hlID('Normal'), 'bg#')
+    let g:normal_fg = synIDattr(hlID('Normal'), 'fg#')
+    let g:status_line_bg = synIDattr(hlID('StatusLine'), 'bg#')
+    let g:status_line_fg = synIDattr(hlID('StatusLine'), 'fg#')
+    if mode() == 'i'
+        execute 'hi Cursor guibg=' . g:normal_fg . ' guifg=' . g:normal_bg
+        execute 'hi StatusLine guibg=' . g:status_line_bg . ' guifg=' . g:status_line_fg
+    else
+        execute 'hi Cursor guibg=Red guifg=Black'
+    endif    
+endfunction
+
+function! SetMarkAtCurrentLine()
+    let l:letters = 'abcdefghijklmnopqrstuvwxyz'
+    let l:current_line = line('.')
+    " check if the current line already has a mark
+    for l:letter in split(l:letters, '\zs')
+        if getpos("'" . l:letter)[1] == l:current_line
+            echo "Mark " . l:letter . " already set at line " . l:current_line 
+            return
+        endif
+    endfor
+    " find an unused mark
+    for l:letter in split(l:letters, '\zs')
+        if getpos("'" . l:letter)[1] == 0  " mark is unused if line == 0
+            execute "mark " . l:letter
+            echo "Mark " . l:letter . " set at line " . l:current_line 
+            return
+        endif
+    endfor
+    echo "No unused marks available"
+endfunction
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"" custom automation
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+augroup AutoSave
+    au!
+    au BufLeave,FocusLost * silent! write
+augroup END
+
+augroup ColorSchemeChanges
+    au!
+    au ColorScheme * call OnColorSchemeChanged()
+augroup END
+
+augroup ModeChanges
+    au!
+    " set cursor color
+    au InsertEnter * execute 'hi Cursor guibg=' . g:normal_fg . ' guifg=' . g:normal_bg
+    au InsertLeave * hi Cursor guibg=Red guifg=Black
+    " set statusline color
+    au InsertEnter * hi StatusLine guibg=Red guifg=Black
+    au InsertLeave * execute 'hi StatusLine  guibg=' . g:status_line_bg . ' guifg=' . g:status_line_fg
+augroup END
+
+augroup VimStartup
+    au!
+    au VimEnter * execute 'packadd termdebug'
+    au VimEnter * call OnColorSchemeChanged()
+augroup END
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"" custom settings
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+" set default working directory
+cd $HOME/Workspace                    
+" cd %USERPROFILE%/Workspace
+
+" set default colorscheme
+silent! colorscheme base16-tomorrow-night
+syntax on
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"" custom key mappings
+"'""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+" quick ex mode
+noremap ; :
+
+" move into wrapped lines and keeps cursor centered
+nnoremap j gjzz
+nnoremap k gkzz
+
+" clear the search buffer when hitting return
+nnoremap <space><cr> :nohlsearch<cr>
+
+" configure command leader
+let mapleader=","
+
+" go to last edit location 
+nnoremap <leader>. g;
+
+" go to last edit location in insert mode 
+nnoremap <leader>; gi
+
+" list buffers
+nnoremap <leader>b :ls<CR>
+nnoremap <leader>e :Buffers<CR>
+
+" show commits
+nnoremap <leader>c :Commits<CR>
+
+" file search
+nnoremap <leader>f :Files<CR>
+
+" find/grep in current file if opened or in all files
+nnoremap <leader>g :Rg<CR>
+
+" view current marks
+nnoremap <leader>M :Marks<CR>
+
+" view current jumps
+nnoremap <leader>J :Jumps<CR>
+
+" project file search
+nnoremap <leader>t :GFiles<CR>
+
+" view current windows
+nnoremap <leader>W :Windows<CR>
+
+" duplicate current line
+nnoremap <leader>d Yp
+
+" indent whole file
+nnoremap <leader>L maggVG='a
+
+" prepare search on the current line
+nnoremap <leader>h :nohl<CR>
+
+" close current buffer
+nnoremap <leader>q :bd<CR>
+
+" prepare for searc h/replace on the whole file
+nnoremap <leader>R :%s/
+
+" prepare for search/replace on the current line
+nnoremap <leader>r V:s/
+
+" prepare incremental search forward 
+nnoremap <leader>j :/
+
+" save / overwrite
+nnoremap <leader>s :w!<CR>
+
+" quit without saving
+nnoremap <silent> <leader>x :q!<CR>
+
+" switch buffers
+nnoremap <silent> H :bp<CR>
+nnoremap <silent> L :bn<CR> 
+
+" switch headerimpl
+nnoremap <leader>k,o e %<.cpp<CR>
+
+" sort selection
+nnoremap <leader>so :sort<CR>
+
+" quit without saving
+nnoremap <silent> <leader>xx :q!<CR>
+
+" cycle windows
+nnoremap <leader>w <C-w>w
+
+" close quickfix window
+nnoremap <leader><esc> :cclose<CR>
+
+" close current window
+nnoremap <S-ESC> :close<CR>
+
+" view help
+nnoremap <F1> :Help<CR>
+
+" view history
+nnoremap <F3> :History<CR>
+
+" delete current buffer
+nnoremap <F4> :bd<CR>
+
+" execute make run on the current directory
+nnoremap <F5> :!make debug<CR>
+
+" execute make run on the current directory
+nnoremap <F6> :!make run<CR>
+
+" execute make on the current directory
+nnoremap <F7> :cclose<CR>:cexpr []<CR>:make<CR>
+nnoremap <D-F7> :cclose<CR>:make clean<CR>:cexpr []<CR>:make<CR>
+
+" open quickfix window
+nnoremap <D-F8> :cw<CR>
+
+" jump to next compiler error
+nnoremap <F8> :cn<CR>
+
+" jump to previous compiler error
+nnoremap <S-F8> :cp<CR>
+
+" reload current file / undo all changes
+nnoremap <S-F12> :e!<CR>
+
+" set random mark at current buffer line
+nnoremap <leader>mm :call SetMarkAtCurrentLine()<CR>
+
+" show marks
+nnoremap <leader>ml :Marks<CR>
+
+" delete all marks
+nnoremap <leader>mr :delmarks!<CR>:delmark A-Z<CR>:echo "All marks deleted"<CR>
+
+" go to next mark in current buffer
+nnoremap <F2> ]`
+
+" go to previous mark in current buffer
+nnoremap <S-F2> [`
