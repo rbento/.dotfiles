@@ -10,11 +10,12 @@ set incsearch
 " show current mode in status bar
 set showmode
 
-" enable surround plugin
-set surround
-
 " prevents having to type u twice to undo
 set undolevels=0
+
+" enable ideavim plugins
+set ideajoin
+set surround
 
 " clear the search buffer when hitting return
 nnoremap <space><cr> :nohlsearch<cr>
