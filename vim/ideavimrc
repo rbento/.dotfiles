@@ -1,4 +1,4 @@
-" highlight as we type to search
+" highlight as we type
 set hlsearch
 
 " ignore case when searching
@@ -22,3 +22,10 @@ nnoremap <space><cr> :nohlsearch<cr>
 " switch buffers
 nnoremap <silent> H :bp<CR>
 nnoremap <silent> L :bn<CR> 
+
+" quick ex mode
+noremap ; :
+
+" move into wrapped lines and keeps cursor centered
+nnoremap j gjzz
+nnoremap k gkzz
