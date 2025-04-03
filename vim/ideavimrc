@@ -1,3 +1,8 @@
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"" custom vim options
+"'""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
 " highlight as we type
 set hlsearch
 
@@ -13,16 +18,19 @@ set showmode
 " prevents having to type u twice to undo
 set undolevels=0
 
-" enable ideavim plugins
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"" custom ideavim options
+"'""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+" enable join lines with shift + J
 set ideajoin
+
+" enable surround plugin
 set surround
 
-" clear the search buffer when hitting return
-nnoremap <space><cr> :nohlsearch<cr>
-
-" switch buffers
-nnoremap <silent> H :bp<CR>
-nnoremap <silent> L :bn<CR> 
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"" custom key mappings
+"'""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 " quick ex mode
 noremap ; :
@@ -30,3 +38,53 @@ noremap ; :
 " move into wrapped lines and keeps cursor centered
 nnoremap j gjzz
 nnoremap k gkzz
+
+" clear the search buffer when hitting return
+nnoremap <space><cr> :nohlsearch<cr>
+
+" configure command leader
+let mapleader=","
+
+" go to last edit location 
+nnoremap <leader>. g;
+
+" go to last edit location in insert mode 
+nnoremap <leader>; gi
+
+" list buffers
+nnoremap <leader>b :ls<CR>
+
+" list marks
+nnoremap <leader>m :marks<CR>
+
+" duplicate current line
+nnoremap <leader>d Yp
+
+" prepare search on the current line
+nnoremap <leader>h :nohl<CR>
+
+" prepare for searc h/replace on the whole file
+nnoremap <leader>R :%s/
+
+" prepare for search/replace on the current line
+nnoremap <leader>r V:s/
+
+" prepare incremental search forward 
+nnoremap <leader>j :/
+
+" save / overwrite
+nnoremap <leader>s :w!<CR>
+
+" sort selection
+nnoremap <leader>so :sort<CR>
+
+" cycle windows
+nnoremap <leader>w <C-w>w
+
+" delete current buffer
+nnoremap <leader>q :bd<CR>
+nnoremap <F4> :bd<CR>
+
+" switch buffers
+nnoremap <silent> H :bp<CR>
+nnoremap <silent> L :bn<CR>
