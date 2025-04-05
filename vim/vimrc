@@ -25,6 +25,7 @@ set hlsearch
 set ignorecase
 set incsearch
 set mouse=a
+set noerrorbells visualbell t_vb=
 set noswapfile
 set notimeout
 set nowrap
