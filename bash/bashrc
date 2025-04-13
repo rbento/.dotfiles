@@ -40,4 +40,5 @@ if [ -f ~/.bash_aliases ]; then
 fi
 
 # Execute on startup
-source "$HOME/.sdkman/bin/sdkman-init.sh"
+export SDKMAN_DIR="$HOME/.sdkman"
+[[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"
