@@ -1,0 +1,114 @@
+# macOS
+alias sc="screencapture -o -W"
+
+# Bash
+alias ..="cd .."
+alias c="clear"
+alias cls="clear"
+alias d="cd ~/Desktop"
+alias eip="ipconfig getifaddr en0"
+alias eipc="eip | pbcopy"
+alias esc="vim ~/.dotfiles/bash/alias"
+alias kaj="killall -9 java"
+alias l="ls -lahF"
+alias r="cd /"
+alias p="cd -"
+alias rr="fc -s"
+alias wo="cd ~/Workspace"
+alias x="exit"
+alias count="ls | wc -l"
+
+# TMUX
+alias tas="tmux attach -t"
+alias tls="tmux ls"
+alias tns="tmux new -s"
+alias tks="tmux kill-session -t"
+
+# CTAGS
+alias ct="ctags -R -f ./.git/tags ."
+
+# Docker
+alias devenv="dsa;jaeger;prometheus;redis;grafana"
+alias dps="docker ps"
+alias nuke="docker system prune -a -f"
+
+# Gradle
+alias ga="./gradlew assemble"
+alias gb="./gradlew build"
+alias gbr="./gradlew bootRun"
+alias gca="./gradlew clean assemble"
+alias gcb="./gradlew clean build"
+alias gcl="./gradlew clean"
+alias gct="./gradlew clean test"
+alias gr="./gradlew run"
+alias gt="./gradlew test"
+
+# Git
+alias a="git ls"
+alias add="git add"
+alias amend="git commit --amend"
+alias b="git branch -avv"
+alias cm="git commit"
+alias g="git status"
+alias gd="git diff"
+alias gdc="git diff --cached"
+alias gdp="git diff HEAD^"
+alias gg="git ls"
+alias pf="git push -f"
+alias pk="git cherry-pick"
+alias pp="git pull --prune"
+alias pu="git push"
+alias s="git status"
+
+# Java
+alias jv="java -version"
+alias jvf="java -XX:PrintFlagsFinal -version"
+alias java8="sdk d java 8.0.412-zulu"
+alias java24="sdk d java 24.fx-zulu"
+
+# Kubernetes
+alias h="helm"
+alias k="kubectl $@"
+alias kcc="k config current-context"
+alias mk="minikube $@"
+complete -F __start_kubectl k
+
+# Python
+alias python="python3"
+alias pip="python -m pip"
+alias pipenv="python -m pipenv"
+
+# Update
+alias u="brew update;brew upgrade;brew upgrade --cask;brew cleanup;sdk selfupdate force;sdk ug;pip install --upgrade pip;"
+#alias u="sudo apt update -y && sudo apt upgrade -y"
+
+# Programs
+alias grafana="docker run --rm --name grafana -p 3000:3000 -d grafana/grafana"
+alias jaeger="docker run --rm --name jaeger -e COLLECTOR_ZIPKIN_HOST_PORT=:9411 -p 5775:5775/udp -p 6831:6831/udp -p 6832:6832/udp -p 5778:5778 -p 16686:16686 -p 14250:14250 -p 14268:14268 -p 14269:14269 -p 9411:9411 -d jaegertracing/all-in-one:latest"
+alias jaeger-collector="docker run --rm -e SPAN_STORAGE_TYPE=cassandra -d jaegertracing/jaeger-collector"
+alias prometheus="docker run --rm --name prometheus -p 9494:9090 -v $HOME/Conf/prometheus.yml:/etc/prometheus/prometheus.yml -d prom/prometheus"
+alias redis="docker run --rm --name redis -p 6379:6379 -v $HOME/Data/redis.txt:/data/data.txt -d redis:latest"
+alias postgres="docker run --rm --name postgres -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=admin -e POSTGRES_DB=postgres -v $HOME/Data/postgresql/data:/var/lib/postgresql/data -p 5432:5432 -d postgres"
+
+# Functions
+function reload() {
+    source ~/.bashrc
+}
+
+function dsa() {
+    docker stop $(docker ps -q)
+}
+
+function dra() {
+    docker rm $(docker ps -a -q)
+}
+
+# Check the default C standard used by gcc
+function gccd() {
+    gcc -dM -E -x c  /dev/null | grep -F __STDC_VERSION__
+}
+
+# Output raw binary
+function rb() {
+    xxd -b -c 1 $1 | cut -d' ' -f2 | tr -d '\n'
+}
