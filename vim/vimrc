@@ -26,7 +26,8 @@ set notimeout
 set nowrap
 set number
 set ruler
-set shell=/opt/homebrew/bin/bash
+set shell=/bin/bash
+"set shell=cmd.exe
 set shiftwidth=4
 set showcmd
 set smartcase
@@ -38,19 +39,18 @@ set t_vb=
 set tabstop=4
 set tags=./tags,tags
 set ttimeout
-set wildignore+=*/tmp/*,*/target/*,*/bin/*,*/build/*,*/__pycache__/*,*.tar,*.gz,*.7z,*.iso,*.so,*.swp,*.zip     
+set wildignore+='*/tmp/*,*/target/*,*/bin/*,*/build/*,*/__pycache__/*,*.tar,*.gz,*.7z,*.iso,*.so,*.swp,*.zip'
 set wildmenu
-set wildoptions=pum
 set wildmode=list:longest,full
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "" gui options (gvim, macvim)
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-set guifont=Hack:h15 " Font
-set guioptions-=m    " Menubar
-set guioptions-=T    " Toolbar
-set guioptions-=r    " Scrollbar
+set guifont=Jetbrains\ Mono:h15 " Font
+set guioptions-=m               " Menubar
+set guioptions-=T               " Toolbar
+set guioptions-=r               " Scrollbar
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "" statusline
@@ -98,7 +98,7 @@ call plug#end()
 
 " fzf
 let g:fzf_vim = {}
-let g:fzf_vim.preview_bash = '/opt/homebrew/bin/bash'
+let g:fzf_vim.preview_bash = '/bin/bash'
 " let g:fzf_vim.preview_bash = 'C:\Program Files\Git\bin\bash.exe'
 let g:fzf_vim.buffers_jump = 1
 let g:fzf_vim.commits_log_options = '--graph --color=always --format="%C(auto)%h%d %s %C(black)%C(bold)%cr"'
@@ -111,7 +111,7 @@ let g:ackprg = 'ag --vimgrep'
 "" custom variables
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-let g:termdebugger='/opt/homebrew/bin/gdb'
+let g:termdebugger='/bin/gdb'
 
 let g:normal_bg = ''
 let g:normal_fg = ''
@@ -127,12 +127,28 @@ function! OnColorSchemeChanged()
     let g:normal_fg = synIDattr(hlID('Normal'), 'fg#')
     let g:status_line_bg = synIDattr(hlID('StatusLine'), 'bg#')
     let g:status_line_fg = synIDattr(hlID('StatusLine'), 'fg#')
-    if mode() == 'i'
+    if has("gui_running")
+        if mode() == 'i'
+            execute 'hi Cursor guibg=' . g:normal_fg . ' guifg=' . g:normal_bg
+            execute 'hi StatusLine guibg=' . g:status_line_bg . ' guifg=' . g:status_line_fg
+        else
+            execute 'hi Cursor guibg=red guifg=black'
+        endif    
+    endif
+endfunction
+
+function! OnInsertEnter()
+    if has("gui_running")
         execute 'hi Cursor guibg=' . g:normal_fg . ' guifg=' . g:normal_bg
-        execute 'hi StatusLine guibg=' . g:status_line_bg . ' guifg=' . g:status_line_fg
-    else
+        execute 'hi StatusLine guibg=red guifg=black'
+    endif
+endfunction
+
+function! OnInsertLeave()
+    if has("gui_running")
         execute 'hi Cursor guibg=red guifg=black'
-    endif    
+        execute 'hi StatusLine  guibg=' . g:status_line_bg . ' guifg=' . g:status_line_fg
+    endif
 endfunction
 
 function! SetMarkAtCurrentLine()
@@ -172,12 +188,8 @@ augroup END
 
 augroup ModeChanges
     au!
-    " set cursor color
-    au InsertEnter * execute 'hi Cursor guibg=' . g:normal_fg . ' guifg=' . g:normal_bg
-    au InsertLeave * hi Cursor guibg=red guifg=black
-    " set statusline color
-    au InsertEnter * hi StatusLine guibg=red guifg=black
-    au InsertLeave * execute 'hi StatusLine  guibg=' . g:status_line_bg . ' guifg=' . g:status_line_fg
+    au InsertEnter * call OnInsertEnter()
+    au InsertEnter * call OnInsertLeave()
 augroup END
 
 augroup VimStartup
@@ -192,8 +204,8 @@ augroup END
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 " set default working directory
-cd $HOME/Workspace                    
-" cd %USERPROFILE%/Workspace
+cd $HOME/Workspace
+" cd 'C:\Users\username\Workspace'
 
 " set default colorscheme
 silent! colorscheme industry
