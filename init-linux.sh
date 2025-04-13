@@ -5,7 +5,7 @@ echo "At"
 pwd
 cp .bashrc .bashrc.bck
 mkdir .config
-sudo apt update -y && sudo apt upgrade
+sudo apt update -y && sudo apt upgrade -y
 rm -rf .bashrc .bash_profile .bash_aliases .gitconfig .gitignore-global .emacs .emacs.d .vimrc .vim .config/tmux
 echo "Setting up bash"
 ln -s .dotfiles/bash/bashrc .bashrc
