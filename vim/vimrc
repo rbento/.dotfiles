@@ -47,7 +47,7 @@ set wildmode=list:longest,full
 "" gui options (gvim, macvim)
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-set guifont=Jetbrains\ Mono:h15 " Font
+set guifont=Jetbrains\ Mono:h16 " Font
 set guioptions-=m               " Menubar
 set guioptions-=T               " Toolbar
 set guioptions-=r               " Scrollbar
@@ -122,35 +122,6 @@ let g:status_line_fg = ''
 "" custom functions
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-function! OnColorSchemeChanged()
-    let g:normal_bg = synIDattr(hlID('Normal'), 'bg#')
-    let g:normal_fg = synIDattr(hlID('Normal'), 'fg#')
-    let g:status_line_bg = synIDattr(hlID('StatusLine'), 'bg#')
-    let g:status_line_fg = synIDattr(hlID('StatusLine'), 'fg#')
-    if has("gui_running")
-        if mode() == 'i'
-            execute 'hi Cursor guibg=' . g:normal_fg . ' guifg=' . g:normal_bg
-            execute 'hi StatusLine guibg=' . g:status_line_bg . ' guifg=' . g:status_line_fg
-        else
-            execute 'hi Cursor guibg=red guifg=black'
-        endif    
-    endif
-endfunction
-
-function! OnInsertEnter()
-    if has("gui_running")
-        execute 'hi Cursor guibg=' . g:normal_fg . ' guifg=' . g:normal_bg
-        execute 'hi StatusLine guibg=red guifg=black'
-    endif
-endfunction
-
-function! OnInsertLeave()
-    if has("gui_running")
-        execute 'hi Cursor guibg=red guifg=black'
-        execute 'hi StatusLine  guibg=' . g:status_line_bg . ' guifg=' . g:status_line_fg
-    endif
-endfunction
-
 function! SetMarkAtCurrentLine()
     let l:letters = 'abcdefghijklmnopqrstuvwxyz'
     let l:current_line = line('.')
@@ -181,22 +152,10 @@ augroup AutoSave
     au BufLeave,FocusLost * silent! write
 augroup END
 
-augroup ColorSchemeChanges
-    au!
-    au ColorScheme * call OnColorSchemeChanged()
-augroup END
-
-augroup ModeChanges
-    au!
-    au InsertEnter * call OnInsertEnter()
-    au InsertEnter * call OnInsertLeave()
-augroup END
-
 augroup VimStartup
     au!
     au GUIEnter * set visualbell t_vb=
     au VimEnter * packadd termdebug
-    au VimEnter * call OnColorSchemeChanged()
 augroup END
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
