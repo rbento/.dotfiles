@@ -5,9 +5,11 @@ echo "At"
 pwd
 cp .bashrc .bashrc.bck
 mkdir .config
-rm -rf .bashrc .bash_profile .gitconfig .gitignore-global .emacs .emacs.d .vimrc .vim .config/tmux
+sudo apt update -y && sudo apt upgrade
+rm -rf .bashrc .bash_profile .bash_aliases .gitconfig .gitignore-global .emacs .emacs.d .vimrc .vim .config/tmux
 echo "Setting up bash"
 ln -s .dotfiles/bash/bashrc .bashrc
+ln -s .dotfiles/bash/aliases .bash_aliases
 ln -s .bashrc .bash_profile
 echo "Setting up emacs"
 ln -s .dotfiles/emacs/emacs .emacs
@@ -23,11 +25,11 @@ ln -s .dotfiles/tmux .config/tmux
 echo "Refreshing bash"
 source ~/.bashrc
 echo "Installing tools..."
-sudo yum install bash bash-completion bat curl ctags emacs fd-find fzf gcc gdb git git-lfs jq kubernetes perl ripgrep ruby tmux tree wget
+sudo apt install bash bash-completion bat curl universal-ctags emacs fd-find fzf gcc gdb git git-lfs jq kubernetes perl python-3-pip ripgrep ruby tmux tree vim wget
 curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 curl -s "https://get.sdkman.io" | bash
 wget -P ~ https://github.com/cyrus-and/gdb-dashboard/raw/master/.gdbinit
-pip install pygments
+pip install pipenv pygments
 echo "Reviewing..."
 bash --version
 curl --version
