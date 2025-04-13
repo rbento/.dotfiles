@@ -47,10 +47,10 @@ set wildmode=list:longest,full
 "" gui options (gvim, macvim)
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-set guifont=Jetbrains\ Mono:h16 " Font
-set guioptions-=m               " Menubar
-set guioptions-=T               " Toolbar
-set guioptions-=r               " Scrollbar
+set guifont=Hack:h15 " Font
+set guioptions-=m    " Menubar
+set guioptions-=T    " Toolbar
+set guioptions-=r    " Scrollbar
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "" statusline
@@ -99,7 +99,7 @@ call plug#end()
 " fzf
 let g:fzf_vim = {}
 let g:fzf_vim.preview_bash = '/bin/bash'
-" let g:fzf_vim.preview_bash = 'C:\Program Files\Git\bin\bash.exe'
+"let g:fzf_vim.preview_bash = 'C:\Program Files\Git\bin\bash.exe'
 let g:fzf_vim.buffers_jump = 1
 let g:fzf_vim.commits_log_options = '--graph --color=always --format="%C(auto)%h%d %s %C(black)%C(bold)%cr"'
 let g:fzf_vim.tags_command = 'ctags -R'
@@ -164,7 +164,7 @@ augroup END
 
 " set default working directory
 cd $HOME/Workspace
-" cd 'C:\Users\username\Workspace'
+"cd 'C:\Users\username\Workspace'
 
 " set default colorscheme
 silent! colorscheme industry
