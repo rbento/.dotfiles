@@ -30,6 +30,9 @@ curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.c
 curl -s "https://get.sdkman.io" | bash
 wget -P ~ https://github.com/cyrus-and/gdb-dashboard/raw/master/.gdbinit
 pip install pipenv pygments
+echo "Configuring..."
+echo "Remap Caps Lock to Escape"
+gsettings set org.gnome.desktop.input-sources xkb-options "['caps:escape']"
 echo "Reviewing..."
 bash --version
 curl --version
