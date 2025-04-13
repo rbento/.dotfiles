@@ -25,7 +25,7 @@ ln -s .dotfiles/tmux .config/tmux
 echo "Refreshing bash"
 source ~/.bashrc
 echo "Installing tools..."
-sudo apt install bash bash-completion bat curl universal-ctags emacs fd-find fzf gcc gdb git git-lfs jq kubernetes nmap perl python-3-pip ripgrep ruby tmux tree vim wget
+sudo apt install bash bash-completion bat curl universal-ctags emacs fd-find fzf gcc gdb git git-lfs jq kubernetes nmap perl python-3-pip ripgrep ruby tmux tree vim wget xclip
 curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 curl -s "https://get.sdkman.io" | bash
 wget -P ~ https://github.com/cyrus-and/gdb-dashboard/raw/master/.gdbinit
