@@ -45,6 +45,12 @@ alias gct="./gradlew clean test"
 alias gr="./gradlew run"
 alias gt="./gradlew test"
 
+# Maven
+alias sa="mvn spotless:apply"
+alias sb="mvn clean verify -DskipTests; mvn spotbugs:gui"
+alias sc="mvn spotless:check"
+alias v="mvn clean verify"
+
 # Git
 alias a="git ls"
 alias add="git add"
