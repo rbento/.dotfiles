@@ -49,6 +49,7 @@ alias gt="./gradlew test"
 alias sa="mvn spotless:apply"
 alias sb="mvn clean verify -DskipTests; mvn spotbugs:gui"
 alias sc="mvn spotless:check"
+alias t="mvn clean test"
 alias v="mvn clean verify"
 
 # Git
