@@ -288,6 +288,9 @@ nnoremap <leader>. g;
 " go to last edit location in insert mode 
 nnoremap <leader>; gi
 
+" browse files
+nnoremap <leader>E :Ex<CR>
+
 " list buffers
 nnoremap <leader>b :ls<CR>
 nnoremap <leader>e :Buffers<CR>
