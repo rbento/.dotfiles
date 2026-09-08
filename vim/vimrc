@@ -5,13 +5,12 @@
 
 set nocompatible
 
-set autochdir
 set autoindent
 set autoread
 set backspace=indent,eol,start
 set cindent
-set clipboard=unnamed
-set cmdheight=1
+set clipboard=unnamedplus
+set cmdheight=2
 set encoding=utf-8
 set expandtab
 set gp=git\ grep\ -n
@@ -21,8 +20,9 @@ set ignorecase
 set incsearch
 set mouse=a
 set noerrorbells visualbell t_vb=
+set nobackup
 set noswapfile
-set notimeout
+set noundofile
 set nowrap
 set number
 set ruler
@@ -38,7 +38,7 @@ set splitright
 set t_vb=
 set tabstop=4
 set tags=./tags,tags
-set ttimeout
+set timeout timeoutlen=500 ttimeoutlen=10
 set wildignore+='*/tmp/*,*/target/*,*/bin/*,*/build/*,*/__pycache__/*,*.tar,*.gz,*.7z,*.iso,*.so,*.swp,*.zip'
 set wildmenu
 set wildmode=list:longest,full
@@ -47,7 +47,7 @@ set wildmode=list:longest,full
 "" gui options (gvim, macvim)
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-set guifont=Hack:h15 " Font
+"set guifont=Hack:h18 " Font
 set guioptions-=m    " Menubar
 set guioptions-=T    " Toolbar
 set guioptions-=r    " Scrollbar
@@ -56,7 +56,7 @@ set guioptions-=r    " Scrollbar
 "" statusline
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-set laststatus=2                             " Show status bar
+set laststatus=3                             " Show status bar
 set statusline=                              " Clear the statusline for when vimrc is reloaded
 set statusline+=\ %-3.3n\                    " Buffer number
 set statusline+=%f\                          " File name
@@ -67,6 +67,19 @@ set statusline+=%{&fileformat}]              " File format
 set statusline+=%=                           " Right align
 set statusline+=%c,                          " Cursor column
 set statusline+=%l/%L\                       " Cursor line/total lines
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"" package settings
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+packadd! cfilter
+packadd! comment
+packadd! editorconfig
+packadd! hlyank
+packadd! matchit
+packadd! nohlsearch
+packadd! osc52
+packadd! termdebug
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "" plugins
@@ -81,12 +94,11 @@ call plug#begin()
 "   - Neovim (Linux/macOS/Windows): stdpath('data') . '/plugged'
 
 " Make sure you use single quotes
-
-" fzf native plugin
 Plug 'junegunn/fzf'
-
-" fzf.vim
 Plug 'junegunn/fzf.vim'
+Plug 'derekwyatt/vim-fswitch'
+Plug 'airblade/vim-rooter'
+Plug 'yegappan/lsp'
 
 " Initialize plugin system
 " Automatically executes `filetype plugin indent on` and `syntax enable`.
@@ -104,19 +116,22 @@ let g:fzf_vim.buffers_jump = 1
 let g:fzf_vim.commits_log_options = '--graph --color=always --format="%C(auto)%h%d %s %C(black)%C(bold)%cr"'
 let g:fzf_vim.tags_command = 'ctags -R'
 
-" the silver searcher
+" fzf - the silver searcher
 let g:ackprg = 'ag --vimgrep'
+
+" vim-rooter - remove: set autochdir
+let g:rooter_patterns = ['.git', 'CMakeLists.txt', 'Makefile', 'pom.xml']
+
+" lsp
+let s:lspServers = [
+    \ #{ name: 'clangd', filetype: ['c', 'cpp'], path: 'clangd', args: ['--background-index'] },
+    \ ]
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "" custom variables
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-let g:termdebugger='/bin/gdb'
-
-let g:normal_bg = ''
-let g:normal_fg = ''
-let g:status_line_bg = ''
-let g:status_line_fg = ''
+let $RIPGREP_CONFIG_PATH = expand('~/.config/ripgrep/ripgreprc')
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "" custom functions
@@ -143,20 +158,104 @@ function! SetMarkAtCurrentLine()
     echo "No unused marks available"
 endfunction
 
+function! s:on_lsp_buffer_enabled() abort
+    setlocal tagfunc=lsp#lsp#TagFunc
+    " navigation
+    nnoremap <buffer> <silent> gf :LspGotoDefinition<CR>
+    nnoremap <buffer> <silent> gd :LspGotoDeclaration<CR>
+    nnoremap <buffer> <silent> gb :LspGotoImpl<CR>
+    nnoremap <buffer> <silent> gt :LspGotoTypeDef<CR>
+    nnoremap <buffer> <silent> gr :LspShowReferences<CR>
+    " peek (popup, cursor stays)
+    nnoremap <buffer> <silent> gp :LspPeekDefinition<CR>
+    " info
+    nnoremap <buffer> <silent> K  :LspHover<CR>
+    nnoremap <buffer> <silent> <leader>k :LspShowSignature<CR>
+    " symbols / structure
+    nnoremap <buffer> <silent> <F12> :LspDocumentSymbol<CR>
+    nnoremap <buffer> <silent> <leader>m :LspSymbolSearch<CR>
+    nnoremap <buffer> <silent> <leader>ci :LspIncomingCalls<CR>
+    nnoremap <buffer> <silent> <leader>co :LspOutgoingCalls<CR>
+    " refactor / edit
+    nnoremap <buffer> <silent> <leader>rr :LspRename<CR>
+    nnoremap <buffer> <silent> <leader>F :LspFormat<CR>
+    xnoremap <buffer> <silent> <leader>v :LspSelectionExpand<CR>
+endfunction
+
+" ---- termdebug (gdb) key mappings ----
+" F5 starts a session (build debug + launch on this project's binary).
+" All other debug keys are installed ONLY while a session is active and
+" reverted to their normal editing meaning when the session ends.
+
+function! s:DebugLayout() abort
+    let l:gdbwin = bufwinid('gdb')
+    let l:prgwin = bufwinid('debugged-program')
+    " console to full-width bottom
+    if l:prgwin != -1
+        call win_gotoid(l:prgwin)
+        wincmd J
+    endif
+    " gdb to the right of source
+    if l:gdbwin != -1
+        call win_gotoid(l:gdbwin)
+        wincmd L
+    endif
+    " focus back to source
+    if exists('g:debug_return_win')
+        call win_gotoid(g:debug_return_win)
+    endif
+endfunction
+
+" F5: build debug binary, then launch termdebug on this project's target
+function! s:DebugStart() abort
+    let g:debug_return_win = win_getid()
+    silent make debug
+    execute 'Termdebug ./' . trim(system('make print-target'))
+endfunction
+
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "" custom automation
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-augroup AutoSave
-    au!
-    au BufLeave,FocusLost * silent! write
-augroup END
+" NASM x86-64
+autocmd BufRead,BufNewFile *.asm set filetype=nasm
+autocmd FileType nasm setlocal noexpandtab
+autocmd FileType nasm setlocal commentstring=;\ %s
+
+" C/C++
+autocmd FileType c,cpp setlocal commentstring=//\ %s
+autocmd FileType c,cpp setlocal errorformat=%f:%l:%c:\ %t%*[^:]:\ %m,%f:%l:\ %t%*[^:]:\ %m,%-G%.%#
+autocmd FileType c,cpp setlocal makeprg=make
+
+" Java
+autocmd FileType java setlocal commentstring=//\ %s
+autocmd FileType java setlocal errorformat=[ERROR]\ %f:[%l\,%c]\ %m,%-G%.%#
+autocmd FileType java setlocal makeprg=mvn\ -q\ compile
+
+" Do not list .cache in buffers
+autocmd BufReadPost,BufNewFile */.cache/* setlocal nobuflisted
 
 augroup VimStartup
     au!
     au GUIEnter * set visualbell t_vb=
-    au VimEnter * packadd termdebug
 augroup END
+
+autocmd User LspSetup call LspAddServer(s:lspServers)
+
+augroup lsp_buffer
+    au!
+    autocmd User LspAttached call s:on_lsp_buffer_enabled()
+augroup END
+
+" terminal buffers wipe when their window closes - leaves no dead buffers
+autocmd TerminalOpen * setlocal bufhidden=wipe
+
+augroup TermdebugMaps
+    au!
+    autocmd User TermdebugStartPost call s:DebugMapsOn()
+    autocmd User TermdebugStopPost  call s:DebugMapsOff()
+augroup END
+
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "" custom settings
@@ -173,16 +272,12 @@ syntax on
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "" custom key mappings
 "'""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
 " quick ex mode
 noremap ; :
 
-" move into wrapped lines and keeps cursor centered
-nnoremap j gjzz
-nnoremap k gkzz
-
-" clear the search buffer when hitting return
-nnoremap <space><cr> :nohlsearch<cr>
+" move into wrapped lines
+nnoremap j gj
+nnoremap k gk
 
 " configure command leader
 let mapleader=","
@@ -198,7 +293,7 @@ nnoremap <leader>b :ls<CR>
 nnoremap <leader>e :Buffers<CR>
 
 " show commits
-nnoremap <leader>c :Commits<CR>
+nnoremap <leader>C :Commits<CR>
 
 " file search
 nnoremap <leader>f :Files<CR>
@@ -206,26 +301,14 @@ nnoremap <leader>f :Files<CR>
 " find/grep in current file if opened or in all files
 nnoremap <leader>g :Rg<CR>
 
-" view current marks
-nnoremap <leader>M :Marks<CR>
-
-" view current jumps
-nnoremap <leader>J :Jumps<CR>
-
 " project file search
 nnoremap <leader>t :GFiles<CR>
-
-" view current windows
-nnoremap <leader>W :Windows<CR>
 
 " duplicate current line
 nnoremap <leader>d Yp
 
 " indent whole file
 nnoremap <leader>L maggVG='a
-
-" prepare search on the current line
-nnoremap <leader>h :nohl<CR>
 
 " close current buffer
 nnoremap <leader>q :bd<CR>
@@ -242,61 +325,69 @@ nnoremap <leader>j :/
 " save / overwrite
 nnoremap <leader>s :w!<CR>
 
-" quit without saving
-nnoremap <silent> <leader>x :q!<CR>
-
 " switch buffers
 nnoremap <silent> H :bp<CR>
 nnoremap <silent> L :bn<CR> 
 
-" switch headerimpl
-nnoremap <leader>k,o e %<.cpp<CR>
-
-" sort selection
-nnoremap <leader>so :sort<CR>
-
-" quit without saving
-nnoremap <silent> <leader>xx :q!<CR>
-
 " cycle windows
 nnoremap <leader>w <C-w>w
 
-" close quickfix window
-nnoremap <leader><esc> :cclose<CR>
-
-" close current window
-nnoremap <S-ESC> :close<CR>
+" close all other windows (keep current)
+nnoremap <silent> <leader><space> :only<CR>
 
 " view help
 nnoremap <F1> :Help<CR>
 
-" view history
-nnoremap <F3> :History<CR>
+" fuzzy jump search in current file
+nnoremap <F3> :BLines<CR>
+
+" go to next mark in current buffer
+nnoremap <F2> ]`
+
+" go to previous mark in current buffer
+nnoremap <S-F2> [`
 
 " delete current buffer
 nnoremap <F4> :bd<CR>
 
-" execute make run on the current directory
-nnoremap <F5> :!make debug<CR>
+" start debug session
+nnoremap <silent> <S-F5> :call <SID>DebugStart()<CR>
 
-" execute make run on the current directory
-nnoremap <F6> :!make run<CR>
+" view changed files history
+nnoremap <F6> :History<CR>
 
-" execute make on the current directory
-nnoremap <F7> :cclose<CR>:cexpr []<CR>:make<CR>
-nnoremap <D-F7> :cclose<CR>:make clean<CR>:cexpr []<CR>:make<CR>
+" build
+nnoremap <F7> :make<CR>
+
+" clean build
+nnoremap <S-F7> :make clean all<CR>
+
+" clean build and run in a terminal buffer
+nnoremap <A-F7> :make clean all<CR>:terminal make run<CR>
+
+" jump to first LSP error
+nnoremap <A-F8> :LspDiag first<CR>
+
+" jump to next LSP error
+nnoremap <F8> :LspDiag next<CR>
+
+" jump to previous LSP error
+nnoremap <S-F8> :LspDiag prev<CR>
 
 " open quickfix window
-nnoremap <D-F8> :cw<CR>
+nnoremap <A-F9> :cw<CR>
 
 " jump to next compiler error
-nnoremap <F8> :cn<CR>
+nnoremap <F9> :cn<CR>
 
 " jump to previous compiler error
-nnoremap <S-F8> :cp<CR>
+nnoremap <S-F9> :cp<CR>
 
 " reload current file / undo all changes
-nnoremap <S-F12> :e!<CR>
+nnoremap <A-F12> :e!<CR>
+
+" show header file in right vertical-split
+nnoremap <silent> <leader>a :FSSplitRight<CR>
 
 " set random mark at current buffer line
 nnoremap <leader>mm :call SetMarkAtCurrentLine()<CR>
@@ -307,8 +398,31 @@ nnoremap <leader>ml :Marks<CR>
 " delete all marks
 nnoremap <leader>mr :delmarks!<CR>:delmark A-Z<CR>:echo "All marks deleted"<CR>
 
-" go to next mark in current buffer
-nnoremap <F2> ]`
+" installed when a debug session starts
+function! s:DebugMapsOn() abort
+    nnoremap <silent> <F5>    :Run<CR>
+    nnoremap <silent> <F8>    :Break<CR>
+    nnoremap <silent> <S-F8>  :Clear<CR>
+    nnoremap <silent> <F9>    :Over<CR>
+    nnoremap <silent> <F10>   :Step<CR>
+    nnoremap <silent> <S-F10> :Finish<CR>
+    nnoremap <silent> <F11>   :Continue<CR>
+    nnoremap <silent> <S-F11> :call TermDebugSendCommand('quit')<CR>
+    nnoremap <silent> <S-F12> :Asm<CR>
+    call s:DebugLayout()
+endfunction
 
-" go to previous mark in current buffer
-nnoremap <S-F2> [`
+" restored when the debug session ends
+function! s:DebugMapsOff() abort
+    nnoremap <silent> <F8>   :LspDiag next<CR>
+    nnoremap <silent> <S-F8> :LspDiag prev<CR>
+    nnoremap <silent> <F9>   :cn<CR>
+    nnoremap <silent> <S-F9> :cp<CR>
+    silent! nunmap <F5>
+    silent! nunmap <F10>
+    silent! nunmap <S-F10>
+    silent! nunmap <F11>
+    silent! nunmap <S-F11>
+    silent! nunmap <S-F12>
+endfunction
+
