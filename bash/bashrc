@@ -34,6 +34,9 @@ export PIPENV_LOCAL="/Users/$USER/.local"
 export PATH="$PIPENV_LOCAL/bin:$PATH"
 export PIPENV_VENV_IN_PROJECT=1
 
+# Ripgrep
+export RIPGREP_CONFIG_PATH="$HOME/.config/ripgrep/ripgreprc"
+
 # Aliases
 if [ -f ~/.bash_aliases ]; then
     . ~/.bash_aliases

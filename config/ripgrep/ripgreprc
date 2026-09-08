@@ -1,0 +1,3 @@
+--glob=!tags
+--glob=!.git
+

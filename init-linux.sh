@@ -25,6 +25,7 @@ ln -sfn .bashrc                        .bash_profile
 ln -sfn .dotfiles/emacs/emacs          .emacs
 ln -sfn .dotfiles/git/gitconfig        .gitconfig
 ln -sfn .dotfiles/git/gitignore-global .gitignore-global
+ln -sfn .dotfiles/config/ripgrep       .config/ripgrep
 ln -sfn .dotfiles/vim/vimrc            .vimrc
 ln -sfn .dotfiles/vim                  .vim
 ln -sfn .dotfiles/vim/ideavimrc        .ideavimrc
