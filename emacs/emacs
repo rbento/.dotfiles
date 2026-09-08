@@ -1,70 +1,199 @@
+;;; init.el --- rbento's personal Emacs configuration 
 
-;; REPOSITORIES
+;; ===========================================================================
+;; Package setup: gnu + nongnu + melpa archives, use-package, quelpa
+;; ===========================================================================
 
-;; Configure melpa package repository
 (require 'package)
-(add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/")) 
+(setq package-archives
+      '(("gnu"    . "https://elpa.gnu.org/packages/")
+        ("nongnu" . "https://elpa.nongnu.org/nongnu/")
+        ("melpa"  . "https://melpa.org/packages/")))
 (package-initialize)
+(unless package-archive-contents
+  (package-refresh-contents))
 
-;; GLOBAL SETTINGS
+(require 'use-package)
+(setq use-package-always-ensure t)
 
-;; Disable the gui. Who uses emacs for toolbars and menus?
-(if (fboundp 'tool-bar-mode) (tool-bar-mode -1)) 
-(if (fboundp 'menu-bar-mode) (menu-bar-mode -1)) 
-(setq menu-prompting nil)
+;; Keep Customize's auto-written settings in a separate file.
+(setq custom-file (locate-user-emacs-file "custom.el"))
+(when (file-exists-p custom-file)
+  (load custom-file))
 
-;; Hide splash screen
-(setq inhibit-startup-message t
-      inhibit-startup-echo-area-message t)
+;; --- Quelpa: build packages from git ---
+(unless (package-installed-p 'quelpa)
+  (package-install 'quelpa))
+(require 'quelpa)
+(unless (package-installed-p 'quelpa-use-package)
+  (quelpa
+   '(quelpa-use-package
+     :fetcher git
+     :url "https://github.com/quelpa/quelpa-use-package.git")))
+(require 'quelpa-use-package)
+
+;; Import shell PATH so Emacs finds clangd, make, rg, gdb, etc.
+(use-package exec-path-from-shell
+  :config
+  (exec-path-from-shell-initialize))
+
+;; ===========================================================================
+;; UI
+;; ===========================================================================
+(setq inhibit-startup-message t)
+(scroll-bar-mode -1)
+(tool-bar-mode -1)
+(tooltip-mode -1)
+(menu-bar-mode -1)
+(column-number-mode t)
+(global-display-line-numbers-mode t)
+(setq native-comp-async-report-warnings-errors 'silent)
+(setq ring-bell-function 'ignore)
+(setq visible-bell t)
+(setq frame-title-format '("%f"))
+(when (member "Inconsolata" (font-family-list))
+  (set-frame-font "Inconsolata 14" nil t))
+(global-set-key "\C-w" 'backward-kill-word)
 
 ;; macOS - set no encoding of characters in terminal
 (set-keyboard-coding-system nil)
 
-;; macOS - backward-kill-word over backspace
-(global-set-key "\C-w" 'backward-kill-word)
-(global-set-key "\C-x\C-k" 'kill-region)
-(global-set-key "\C-c\C-k" 'kill-region)
+;; ===========================================================================
+;; Completion UI: vertico + posframe + orderless + marginalia + consult
+;; Centered floating completion box (fzf-style), GUI only.
+;; ===========================================================================
+(use-package savehist
+  :ensure nil
+  :init (savehist-mode 1))
 
-;; Show absolute file name in the frame title
-(setq frame-title-format '("%f"))
+(use-package vertico
+  :init (vertico-mode 1)
+  :custom
+  (vertico-count 15)
+  (vertico-resize nil)
+  (vertico-cycle t))
 
-;; Set the default font
-(set-frame-font "Consolas 13" nil t)
+(use-package vertico-posframe
+  :after vertico
+  :init (vertico-posframe-mode 1)
+  :custom
+  (vertico-posframe-poshandler #'posframe-poshandler-frame-center)
+  (vertico-posframe-width 120)
+  (vertico-posframe-height 20)
+  (vertico-posframe-border-width 2)
+  (vertico-posframe-parameters
+   '((left-fringe  . 12)
+     (right-fringe . 12))))
 
-;; Display line numbers
-(global-display-line-numbers-mode 1)
+(use-package orderless
+  :custom
+  (completion-styles '(orderless basic))
+  (completion-category-defaults nil)
+  (completion-category-overrides '((file (styles partial-completion)))))
 
-;; THEMES
+(use-package marginalia
+  :init (marginalia-mode 1))
 
-;; Configure custom theme 
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(custom-enabled-themes '(deeper-blue))
- '(package-selected-packages
-   '(toml-mode smalltalk-mode lua-mode lsp-java lsp-mode magit org evil-org evil)))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- )
+(use-package consult
+  :bind
+  (("C-c b" . consult-buffer)
+   ("C-c B" . consult-buffer-other-window)
+   ("C-c l" . consult-line)
+   ("C-c L" . consult-line-multi)
+   ("C-c o" . consult-outline)
+   ("C-c i" . consult-imenu)
+   ("C-c I" . consult-imenu-multi)
+   ("C-c g" . consult-goto-line)
+   ("C-c r" . consult-ripgrep)
+   ("C-c f" . consult-find)
+   ("C-c y" . consult-yank-pop)
+   ("C-c m" . consult-mark)
+   ("C-c k" . consult-bookmark)
+   ("C-c e" . consult-flymake))
+  :custom
+  (consult-narrow-key "<")
+  :config
+  (consult-customize
+   consult-ripgrep consult-find
+   :preview-key '(:debounce 0.3 any)))
 
-;; MODES - SETTINGS
+;; ===========================================================================
+;; In-buffer completion popup (as you type)
+;; ===========================================================================
+(use-package corfu
+  :init (global-corfu-mode)
+  :custom
+  (corfu-auto t)
+  (corfu-auto-prefix 2)
+  (corfu-auto-delay 0.1)
+  (corfu-cycle t)
+  (corfu-quit-no-match 'separator)
+  :bind
+  (:map corfu-map
+        ("TAB"     . corfu-next)
+        ([tab]     . corfu-next)
+        ("S-TAB"   . corfu-previous)
+        ([backtab] . corfu-previous)
+        ("RET"     . corfu-insert)))
 
-;; Setup c++-mode
-(require 'cc-mode)
-(define-key c-mode-base-map (kbd "RET") 'newline-and-indent)
-(setq c-default-style "stroustrup"
-      c-basic-offset 4
-      tab-width 4
-      indent-tabs-mode t)
+(use-package cape
+  :init
+  (add-to-list 'completion-at-point-functions #'cape-dabbrev)
+  (add-to-list 'completion-at-point-functions #'cape-file)
+  (add-to-list 'completion-at-point-functions #'cape-keyword))
 
-;; MODES - ENABLED
+;; ===========================================================================
+;; Eglot (LSP): clangd for C/C++ only.
+;; ===========================================================================
+(require 'eglot)
+(add-hook 'c-mode-hook      #'eglot-ensure)
+(add-hook 'c++-mode-hook    #'eglot-ensure)
+(add-hook 'c-ts-mode-hook   #'eglot-ensure)
+(add-hook 'c++-ts-mode-hook #'eglot-ensure)
 
-;; Enable Vim mode
-(package-install 'evil)
-(evil-mode 1)
+(with-eval-after-load 'eglot
+  (add-to-list 'eglot-server-programs
+               '((c-mode c++-mode c-ts-mode c++-ts-mode)
+                 . ("clangd" "--background-index")))
+  (define-key eglot-mode-map (kbd "C-c c r") #'eglot-rename)
+  (define-key eglot-mode-map (kbd "C-c c f") #'eglot-format)
+  (define-key eglot-mode-map (kbd "C-c c a") #'eglot-code-actions))
 
+(setq eldoc-echo-area-use-multiline-p nil)
+
+;; ===========================================================================
+;; Project awareness + build 
+;; ===========================================================================
+(require 'project)
+(setq project-vc-extra-root-markers '("Makefile" "compile_commands.json"))
+
+(defun my/project-root ()
+  "Root of the current project, or `default-directory' as a fallback."
+  (if-let ((proj (project-current)))
+      (project-root proj)
+    default-directory))
+
+(defun my/compile-at-root (command)
+  "Run COMMAND from the project root."
+  (let ((default-directory (my/project-root)))
+    (compile command)))
+
+(defun my/make ()           (interactive) (my/compile-at-root "make"))
+(defun my/make-clean-all () (interactive) (my/compile-at-root "make clean all"))
+(defun my/make-run ()       (interactive) (my/compile-at-root "make run"))
+
+(setq compilation-scroll-output t
+      compilation-always-kill t
+      compilation-ask-about-save nil)
+
+(global-set-key (kbd "<f7>")   #'my/make)         ; build
+(global-set-key (kbd "<S-f7>") #'my/make-clean-all) ; clean build
+(global-set-key (kbd "<M-f7>") #'my/make-run)     ; build + run
+
+(global-set-key (kbd "<f9>")   #'next-error)      ; next compiler error
+(global-set-key (kbd "<S-f9>") #'previous-error)  ; prev compiler error
+(global-set-key (kbd "<f8>")   #'flymake-goto-next-error) ; next clangd diagnostic
+(global-set-key (kbd "<S-f8>") #'flymake-goto-prev-error) ; prev clangd diagnostic
+
+(provide 'init)
+;;; init.el ends here
