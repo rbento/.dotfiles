@@ -47,26 +47,10 @@ set wildmode=list:longest,full
 "" gui options (gvim, macvim)
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-"set guifont=Hack:h18 " Font
+" set guifont=Hack:h18 " Font
 set guioptions-=m    " Menubar
 set guioptions-=T    " Toolbar
 set guioptions-=r    " Scrollbar
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"" statusline
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
-set laststatus=3                             " Show status bar
-set statusline=                              " Clear the statusline for when vimrc is reloaded
-set statusline+=\ %-3.3n\                    " Buffer number
-set statusline+=%f\                          " File name
-set statusline+=%h%m%r%w                     " Flags
-set statusline+=[%{strlen(&ft)?&ft:'none'},  " Filetype
-set statusline+=%{strlen(&fenc)?&fenc:&enc}, " Encoding
-set statusline+=%{&fileformat}]              " File format
-set statusline+=%=                           " Right align
-set statusline+=%c,                          " Cursor column
-set statusline+=%l/%L\                       " Cursor line/total lines
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "" package settings
@@ -256,7 +240,6 @@ augroup TermdebugMaps
     autocmd User TermdebugStopPost  call s:DebugMapsOff()
 augroup END
 
-
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "" custom settings
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -266,8 +249,7 @@ cd $HOME/Workspace
 "cd 'C:\Users\username\Workspace'
 
 " set default colorscheme
-silent! colorscheme industry
-syntax on
+silent! colorscheme habamax
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "" custom key mappings
@@ -288,7 +270,7 @@ nnoremap <leader>. g;
 " go to last edit location in insert mode 
 nnoremap <leader>; gi
 
-" browse files
+" open a file
 nnoremap <leader>E :Ex<CR>
 
 " list buffers
@@ -356,6 +338,9 @@ nnoremap <F4> :bd<CR>
 " start debug session
 nnoremap <silent> <S-F5> :call <SID>DebugStart()<CR>
 
+" clean build and run in a terminal buffer
+nnoremap <F5> :make clean all<CR>:terminal make run<CR>
+
 " view changed files history
 nnoremap <F6> :History<CR>
 
@@ -364,9 +349,6 @@ nnoremap <F7> :make<CR>
 
 " clean build
 nnoremap <S-F7> :make clean all<CR>
-
-" clean build and run in a terminal buffer
-nnoremap <A-F7> :make clean all<CR>:terminal make run<CR>
 
 " jump to first LSP error
 nnoremap <A-F8> :LspDiag first<CR>
@@ -417,11 +399,11 @@ endfunction
 
 " restored when the debug session ends
 function! s:DebugMapsOff() abort
+    nnoremap <F5> :make clean all<CR>:terminal make run<CR>
     nnoremap <silent> <F8>   :LspDiag next<CR>
     nnoremap <silent> <S-F8> :LspDiag prev<CR>
     nnoremap <silent> <F9>   :cn<CR>
     nnoremap <silent> <S-F9> :cp<CR>
-    silent! nunmap <F5>
     silent! nunmap <F10>
     silent! nunmap <S-F10>
     silent! nunmap <F11>
