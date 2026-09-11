@@ -1,5 +1,5 @@
 # macOS
-alias sc="screencapture -o -W"
+# alias sc="screencapture -o -W"
 
 # Bash
 alias ..="cd .."
@@ -20,12 +20,6 @@ alias rr="fc -s"
 alias wo="cd ~/Workspace"
 alias x="exit"
 
-# TMUX
-alias tas="tmux attach -t"
-alias tls="tmux ls"
-alias tns="tmux new -s"
-alias tks="tmux kill-session -t"
-
 # CTAGS
 alias ct="ctags -R -f ./.git/tags ."
 
@@ -34,27 +28,10 @@ alias devenv="dsa;jaeger;prometheus;redis;grafana"
 alias dps="docker ps"
 alias nuke="docker system prune -a -f"
 
-# Gradle
-alias ga="./gradlew assemble"
-alias gb="./gradlew build"
-alias gbr="./gradlew bootRun"
-alias gca="./gradlew clean assemble"
-alias gcb="./gradlew clean build"
-alias gcl="./gradlew clean"
-alias gct="./gradlew clean test"
-alias gr="./gradlew run"
-alias gt="./gradlew test"
-
-# Maven
-alias sa="mvn spotless:apply"
-alias sb="mvn clean verify -DskipTests; mvn spotbugs:gui"
-alias sc="mvn spotless:check"
-alias t="mvn clean test"
-alias v="mvn clean verify"
-
 # Git
 alias a="git ls"
 alias add="git add"
+alias apply="git stash apply"
 alias amend="git commit --amend"
 alias b="git branch -avv"
 alias cm="git commit"
@@ -62,13 +39,13 @@ alias commit="git commit"
 alias g="git status"
 alias gd="git diff"
 alias gdc="git diff --cached"
-alias gdp="git diff HEAD^"
+alias gdh="git diff HEAD^"
 alias gg="git ls"
 alias ne="git commit --amend --no-edit"
-alias pf="git push -f"
 alias pk="git cherry-pick"
 alias pp="git pull --prune"
 alias pu="git push"
+alias puf="git push -f"
 alias rh="git reset --hard"
 alias rs="git reset HEAD^^ --soft"
 alias restore="git restore"
@@ -79,7 +56,15 @@ alias undo="git restore"
 alias jv="java -version"
 alias jvf="java -XX:PrintFlagsFinal -version"
 alias java8="sdk d java 8.0.412-zulu"
-alias java24="sdk d java 24.fx-zulu"
+alias java21="sdk d java 21.0.12-oracle"
+alias java25="sdk d java 25.0.4-oracle"
+
+# Maven
+alias sa="mvn spotless:apply"
+alias sb="mvn clean verify -DskipTests; mvn spotbugs:gui"
+alias sc="mvn spotless:check"
+alias t="mvn clean test"
+alias v="mvn clean verify"
 
 # Kubernetes
 alias h="helm"
@@ -93,9 +78,12 @@ alias python="python3"
 alias pip="python -m pip"
 alias pipenv="python -m pipenv"
 
+alias vim="gvim"
+# alias vim="mvim"
+
 # Update
 alias u="brew update;brew upgrade;brew upgrade --cask;brew cleanup;sdk selfupdate force;sdk ug;pip install --upgrade pip;"
-#alias u="sudo apt update -y && sudo apt upgrade -y"
+# alias u="sudo apt update -y && sudo apt upgrade -y"
 
 # Programs
 alias grafana="docker run --rm --name grafana -p 3000:3000 -d grafana/grafana"
