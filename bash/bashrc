@@ -19,7 +19,7 @@ export HOMEBREW_EDITOR="vim"
 export PATH="$HOMEBREW_EDITOR/bin:$PATH"
 
 # FZF
-export FZF_DEFAULT_COMMAND="fd --type f --follow"
+export FZF_DEFAULT_COMMAND="fd --type f --follow --exclude '*~' --exclude '*#' --exclude '*.o' --exclude '*.class'"
 export FZF_DEFAULT_OPTS="--border --inline-info"
 
 # GPG
