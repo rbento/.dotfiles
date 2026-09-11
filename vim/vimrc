@@ -330,7 +330,7 @@ nnoremap <silent> L :bn<CR>
 nnoremap <leader>w <C-w>w
 
 " close all other windows (keep current)
-nnoremap <silent> <leader><space> :only<CR>
+nnoremap <silent> <leader><esc> :only<CR>
 
 " view help
 nnoremap <F1> :Help<CR>
