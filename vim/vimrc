@@ -39,7 +39,7 @@ set t_vb=
 set tabstop=4
 set tags=./tags,tags
 set timeout timeoutlen=500 ttimeoutlen=10
-set wildignore+='*/tmp/*,*/target/*,*/bin/*,*/build/*,*/__pycache__/*,*.tar,*.gz,*.7z,*.iso,*.so,*.swp,*.zip'
+set wildignore+=*/tmp/*,*/target/*,*/bin/*,*/build/*,*/__pycache__/*,*.tar,*.gz,*.7z,*.iso,*.so,*.swp,*.zip,*.class,*#,*~,*.o
 set wildmenu
 set wildmode=list:longest,full
 
@@ -64,6 +64,14 @@ packadd! matchit
 packadd! nohlsearch
 packadd! osc52
 packadd! termdebug
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"" netrw
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+" hide build artifacts + backup/temp files
+let g:netrw_hide = 1
+let g:netrw_list_hide = '.*\~$,.*#$,.*\.o$,.*\.class$,.*\.swp$'
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "" plugins
@@ -115,6 +123,7 @@ let s:lspServers = [
 "" custom variables
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
+let $FZF_DEFAULT_COMMAND = "fd --type f --follow --exclude '*~' --exclude '*#' --exclude '*.o' --exclude '*.class'"
 let $RIPGREP_CONFIG_PATH = expand('~/.config/ripgrep/ripgreprc')
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -205,6 +214,7 @@ endfunction
 autocmd BufRead,BufNewFile *.asm set filetype=nasm
 autocmd FileType nasm setlocal noexpandtab
 autocmd FileType nasm setlocal commentstring=;\ %s
+autocmd FileType nasm setlocal makeprg=make
 
 " C/C++
 autocmd FileType c,cpp setlocal commentstring=//\ %s
@@ -216,8 +226,8 @@ autocmd FileType java setlocal commentstring=//\ %s
 autocmd FileType java setlocal errorformat=[ERROR]\ %f:[%l\,%c]\ %m,%-G%.%#
 autocmd FileType java setlocal makeprg=mvn\ -q\ compile
 
-" Do not list .cache in buffers
-autocmd BufReadPost,BufNewFile */.cache/* setlocal nobuflisted
+" Do not list cache or build artifacts in buffers
+autocmd BufReadPost,BufNewFile */.cache/*,*.o,*.obj,*.a,*.so,*.class,*.d,*#,*~ setlocal nobuflisted
 
 augroup VimStartup
     au!
@@ -231,8 +241,9 @@ augroup lsp_buffer
     autocmd User LspAttached call s:on_lsp_buffer_enabled()
 augroup END
 
-" terminal buffers wipe when their window closes - leaves no dead buffers
-autocmd TerminalOpen * setlocal bufhidden=wipe
+" keep non-file buffers out of :Buffers (they stay reachable, just not listed)
+autocmd TerminalOpen * if &buftype ==# 'terminal' | setlocal nobuflisted | endif
+autocmd FileType qf setlocal nobuflisted
 
 augroup TermdebugMaps
     au!
@@ -254,6 +265,7 @@ silent! colorscheme habamax
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "" custom key mappings
 "'""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
 " quick ex mode
 noremap ; :
 
