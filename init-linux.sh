@@ -60,6 +60,7 @@ sudo dnf install -y --skip-unavailable git git-lfs
 
 # ── Packages: debugging & profiling ───────────────────────────────────────────
 sudo dnf install -y --skip-unavailable binutils cppcheck gdb hotspot lldb perf rr
+sudo dnf install -y --enablerepo='*debug*' glibc-debuginfo
 
 # ── Packages: GPU & graphics tools ────────────────────────────────────────────
 sudo dnf install -y --skip-unavailable corectrl mangohud radeontop renderdoc
