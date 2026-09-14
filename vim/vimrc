@@ -1,48 +1,48 @@
-
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "" vim options
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-set nocompatible
+set nocompatible                           " use vim defaults, not vi
+set autoindent                             " copy indent from current line on new line
+set autoread                               " reload files changed outside vim
+set backspace=indent,eol,start             " let backspace cross indent, eol, insert start
+set cindent                                " c-style automatic indenting
+set clipboard=unnamedplus                  " yank/paste through the system clipboard
+set cmdheight=2                            " command line is two rows tall
+set encoding=utf-8                         " internal character encoding
+set expandtab                              " insert spaces instead of tabs
+set gp=git\ grep\ -n                       " :grep uses git grep with line numbers
+set hidden                                 " keep modified buffers when switching away
+set hlsearch                               " highlight all search matches
+set ignorecase                             " case-insensitive search
+set incsearch                              " jump to matches while typing
+set mouse=a                                " enable mouse in all modes
+set noerrorbells visualbell t_vb=          " no beep, no flash
+set nobackup                               " no backup files
+set noswapfile                             " no swap files
+set noundofile                             " no persistent undo files
+set nowrap                                 " don't wrap long lines
+set number                                 " show line numbers
+set ruler                                  " show cursor position
+set shell=/bin/bash                        " shell used for :! and :terminal
+"set shell=cmd.exe                         " (windows alternative)
+set shiftwidth=4                           " indent width for >> and autoindent
+set showcmd                                " show partial command in the last line
+set smartcase                              " case-sensitive if search has uppercase
+set smarttab                               " tab respects shiftwidth at line start
+set softtabstop=4                          " tab/backspace feel like 4 spaces
+set splitbelow                             " horizontal splits open below
+set splitright                             " vertical splits open right
+set t_vb=                                  " clear visual bell terminal code
+set tabstop=4                              " a tab renders as 4 columns
+set tags=./tags,tags                       " tag files: file dir first, then cwd
+set timeout timeoutlen=500 ttimeoutlen=10  " mapping / key-code timeouts (ms)
+set wildmenu                               " enhanced command-line completion menu
+set wildmode=list:longest,full             " complete longest match, then cycle full
 
-set autoindent                         " example comment
-set autoread
-set backspace=indent,eol,start
-set cindent
-set clipboard=unnamedplus
-set cmdheight=2
-set encoding=utf-8
-set expandtab
-set gp=git\ grep\ -n
-set hidden
-set hlsearch
-set ignorecase
-set incsearch
-set mouse=a
-set noerrorbells visualbell t_vb=
-set nobackup
-set noswapfile
-set noundofile
-set nowrap
-set number
-set ruler
-set shell=/bin/bash
-"set shell=cmd.exe
-set shiftwidth=4
-set showcmd
-set smartcase
-set smarttab
-set softtabstop=4
-set splitbelow
-set splitright
-set t_vb=
-set tabstop=4
-set tags=./tags,tags
-set timeout timeoutlen=500 ttimeoutlen=10
-set wildignore+=*/tmp/*,*/target/*,*/bin/*,*/build/*,*/__pycache__/*,*.tar,*.gz,*.7z,*.iso,*.so,*.swp,*.zip,*.class,*#,*~,*.o
-set wildmenu
-set wildmode=list:longest,full
-"
+" ignore these in completion/globs
+set wildignore+=*/tmp/*,*/target/*,*/bin/*,*/build/*,*/__pycache__/*,*.tar,*.gz,*.7z,*.iso,*.so,*.swp,*.zip,*.class,*#,*~,*.o  
+
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "" custom settings
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -59,30 +59,29 @@ silent! colorscheme habamax
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 " set guifont=Hack:h18 " Font
-set guioptions-=m    " Menubar
-set guioptions-=T    " Toolbar
-set guioptions-=r    " Scrollbar
+set guioptions-=m                      " hide menubar
+set guioptions-=T                      " hide toolbar
+set guioptions-=r                      " hide scrollbar
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "" package settings
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-packadd! cfilter
-packadd! comment
-packadd! editorconfig
-packadd! hlyank
-packadd! matchit
-packadd! nohlsearch
-packadd! osc52
-packadd! termdebug
+packadd! cfilter                       " filter quickfix/location lists
+packadd! comment                       " gc comment operator
+packadd! editorconfig                  " honor .editorconfig files
+packadd! hlyank                        " briefly highlight yanked text
+packadd! matchit                       " % jumps between matching keywords
+packadd! nohlsearch                    " auto-clear search highlight
+packadd! osc52                         " yank to clipboard over ssh (osc52)
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "" netrw
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 " hide build artifacts + backup/temp files
-let g:netrw_hide = 1
-let g:netrw_list_hide = '.*\~$,.*#$,.*\.o$,.*\.class$,.*\.swp$'
+let g:netrw_hide = 1                    " start in hide mode
+let g:netrw_list_hide = '.*\~$,.*#$,.*\.o$,.*\.class$,.*\.swp$'  " patterns to hide
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "" plugins
@@ -97,11 +96,11 @@ call plug#begin()
 "   - Neovim (Linux/macOS/Windows): stdpath('data') . '/plugged'
 
 " Make sure you use single quotes
-Plug 'junegunn/fzf'
-Plug 'junegunn/fzf.vim'
-Plug 'derekwyatt/vim-fswitch'
-Plug 'airblade/vim-rooter'
-Plug 'yegappan/lsp'
+Plug 'junegunn/fzf'                    " fuzzy finder core
+Plug 'junegunn/fzf.vim'                " fzf vim commands (:Files, :RG, ...)
+Plug 'derekwyatt/vim-fswitch'          " switch header/source
+Plug 'airblade/vim-rooter'             " cd to project root
+Plug 'yegappan/lsp'                    " lsp client
 
 " Initialize plugin system
 " Automatically executes `filetype plugin indent on` and `syntax enable`.
@@ -113,33 +112,38 @@ call plug#end()
 
 " fzf
 let g:fzf_vim = {}
-let g:fzf_vim.preview_bash = '/bin/bash'
-"let g:fzf_vim.preview_bash = 'C:\Program Files\Git\bin\bash.exe'
-let g:fzf_vim.buffers_jump = 1
-let g:fzf_vim.commits_log_options = '--graph --color=always --format="%C(auto)%h%d %s %C(black)%C(bold)%cr"'
-let g:fzf_vim.tags_command = 'ctags -R'
+let g:fzf_vim.buffers_jump = 1                                     " jump to existing window for a buffer
+let g:fzf_vim.commits_log_options = '--graph --color=always --format="%C(auto)%h%d %s %C(black)%C(bold)%cr"'  " :Commits log format
+let g:fzf_vim.tags_command = 'ctags -R'                            " command to generate tags
+let g:fzf_vim.preview_bash = '/bin/bash'                           " bash for preview script
+"let g:fzf_vim.preview_bash = 'C:\Program Files\Git\bin\bash.exe'  " (windows alternative)
 
-" fzf - the silver searcher
+" fzf - the silver searcher - ack.vim backend command
 let g:ackprg = 'ag --vimgrep'
 
-" vim-rooter - remove: set autochdir
-let g:rooter_patterns = ['.git', 'CMakeLists.txt', 'Makefile', 'pom.xml']
+" vim-rooter - set root markers - remove: set autochdir
+let g:rooter_patterns = ['.git', 'CMakeLists.txt', 'Makefile', 'pom.xml']  
 
 " lsp
 let s:lspServers = [
     \ #{ name: 'clangd', filetype: ['c', 'cpp'], path: 'clangd', args: ['--background-index'] },
     \ ]
 
-" termdebug
-let g:termdebug_config = {}
-let g:termdebug_config['wide'] = 1
+" how terminal emulator runs a command:
+"   gnome-terminal : ['gnome-terminal', '--']
+"   konsole        : ['konsole', '-e']
+"   xterm          : ['xterm', '-e']
+"   alacritty      : ['alacritty', '-e']
+"   kitty          : ['kitty']
+"   wezterm        : ['wezterm', 'start', '--']
+let g:debug_terminal = ['konsole', '-e']  " emulator + run-command flag
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "" custom variables
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-let $FZF_DEFAULT_COMMAND = "fd --type f --follow --exclude '*~' --exclude '*#' --exclude '*.o' --exclude '*.class'"
-let $RIPGREP_CONFIG_PATH = expand('~/.config/ripgrep/ripgreprc')
+let $FZF_DEFAULT_COMMAND = "fd --type f --follow --exclude '*~' --exclude '*#' --exclude '*.o' --exclude '*.class'"  " fzf file source
+let $RIPGREP_CONFIG_PATH = expand('~/.config/ripgrep/ripgreprc')  " ripgrep config file
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "" custom automation
@@ -168,18 +172,12 @@ augroup CustomAutomation
     autocmd BufReadPost,BufNewFile */.cache/*,*.o,*.obj,*.a,*.so,*.class,*.d,*#,*~ setlocal nobuflisted
 
     " quit hidden buffers - keep non-file buffers out of :Buffers
-    autocmd TerminalOpen * if &buftype ==# 'terminal' && !get(g:, 'in_debug', 0)
-        \ | setlocal nobuflisted bufhidden=wipe | endif
-
+    autocmd TerminalOpen * if &buftype ==# 'terminal' | setlocal nobuflisted bufhidden=wipe | endif
     autocmd FileType qf setlocal nobuflisted
 
     " LSP: register servers, wire buffer-local maps on attach
     autocmd User LspSetup call LspAddServer(s:lspServers)
     autocmd User LspAttached call s:OnLspBufferEnabled()
-
-    " termdebug: swap in debug keys during a session, restore them after
-    autocmd User TermdebugStartPost call s:OnDebugMapsOn()
-    autocmd User TermdebugStopPost  call s:OnDebugMapsOff()
 
     " GUI: silence the bell
     au GUIEnter * set visualbell t_vb=
@@ -239,59 +237,22 @@ function! s:OnLspBufferEnabled() abort
     xnoremap <buffer> <silent> <leader>V :LspSelectionShrink<CR>
 endfunction
 
-" ---- termdebug (gdb) key mappings ----
-" F5 starts a session (build debug + launch on this project's binary).
-" All other debug keys are installed ONLY while a session is active and
-" reverted to their normal editing meaning when the session ends.
-
-" F5: build debug binary, then launch termdebug on this project's target
+" build debug binary, open gdb in an external terminal, stopped at first instruction
 function! s:DebugStart() abort
-    let g:debug_return_win = win_getid()
     silent make debug
-    execute 'Termdebug ./' . trim(system('make print-target'))
-endfunction
-
-function! s:OnDebugLayout() abort
-    " focus back on the code, same line
-    if exists('g:debug_return_win')
-        call win_gotoid(g:debug_return_win)
+    let l:target = trim(system('make print-target'))
+    if empty(l:target) || !filereadable(l:target)
+        echo 'debug target not found: ' . l:target
+        return
     endif
-endfunction
-
-" installed when a debug session starts
-function! s:OnDebugMapsOn() abort
-    let g:in_debug = 1
-    nnoremap <silent> <F5>    :Run<CR>
-    nnoremap <silent> <F8>    :Break<CR>
-    nnoremap <silent> <S-F8>  :Clear<CR>
-    nnoremap <silent> <F9>    :Over<CR>
-    nnoremap <silent> <F10>   :Step<CR>
-    nnoremap <silent> <S-F10> :Finish<CR>
-    nnoremap <silent> <F11>   :Continue<CR>
-    nnoremap <silent> <S-F11> :call TermDebugSendCommand('quit')<CR>
-    nnoremap <silent> <S-F12> :Asm<CR>
-    call s:OnDebugLayout()
-endfunction
-
-" restored when the debug session ends
-function! s:OnDebugMapsOff() abort
-    let g:in_debug = 0
-    " start debug session
-    nnoremap <silent> <F5>   :call <SID>DebugStart()<CR>
-    nnoremap <silent> <F8>   :LspDiag next<CR>
-    nnoremap <silent> <S-F8> :LspDiag prev<CR>
-    nnoremap <silent> <F9>   :cn<CR>
-    nnoremap <silent> <S-F9> :cp<CR>
-    silent! nunmap <F10>
-    silent! nunmap <S-F10>
-    silent! nunmap <F11>
-    silent! nunmap <S-F11>
-    silent! nunmap <S-F12>
+    let l:bin = fnamemodify(l:target, ':p')
+    let l:cmd = 'gdb -ex "set pagination off" -ex "set confirm off" -ex "break _start" -ex run ' . shellescape(l:bin) . '; exec bash'
+    call job_start(g:debug_terminal + ['bash', '-c', l:cmd], #{stoponexit: 'term'})
 endfunction
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "" custom key mappings
-"'""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 " move into wrapped lines
 nnoremap j gj
@@ -300,7 +261,7 @@ nnoremap k gk
 " configure command leader
 let mapleader=","
 
-" go to last edit location 
+" go to last edit location
 nnoremap <leader>. g;
 
 " duplicate current line
@@ -308,7 +269,7 @@ nnoremap <leader>d Yp
 
 " open a file
 nnoremap <silent> <leader>E :Ex<CR>
-"
+
 " open a file (fuzzy, from current file's dir)
 nnoremap <silent> <leader>O :Files <C-r>=expand('%:h')<CR><CR>
 
@@ -335,12 +296,15 @@ nnoremap <silent> <leader>f :Files<CR>
 " find in project files (grep for term)
 nnoremap <silent> <leader>F :RG<CR>
 
+" fuzzy find in project files (grep for term)
+nnoremap <silent> <leader>i :Rg<CR>
+
 " view changed files history
 nnoremap <silent> <leader>h :History<CR>
 
-" prepare incremental search forward 
+" prepare incremental search forward
 nnoremap <leader>j :/
-"
+
 " fuzzy jump search in current file
 nnoremap <silent> <leader>J :BLines<CR>
 
@@ -349,14 +313,14 @@ nnoremap <silent> <leader>q :bd<CR>
 
 " switch buffers
 nnoremap <silent> H :bp<CR>
-nnoremap <silent> L :bn<CR> 
+nnoremap <silent> L :bn<CR>
 
 " cycle windows
 nnoremap <leader>w <C-w>w
 
 " close all other windows (keep current)
-nnoremap <silent> <leader><esc> :only!<CR>
-nnoremap <silent> <leader><space> :only!<CR>
+nnoremap <silent> <leader><Esc> :only!<CR>
+nnoremap <silent> <leader><Space> :only!<CR>
 
 " save / overwrite
 nnoremap <leader>s :w!<CR>
@@ -423,4 +387,3 @@ nnoremap <silent> <leader>ml :Marks<CR>
 
 " delete all marks
 nnoremap <silent> <leader>mr :delmarks!<CR>:delmark A-Z<CR>:echo "All marks deleted"<CR>
-
