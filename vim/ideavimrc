@@ -2,87 +2,51 @@
 "" ideavim settings
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-" highlight as we type
-set hlsearch
+set hlsearch                           " highlight all search matches
+set ignorecase                         " case-insensitive search
+set incsearch                          " jump to matches while typing
+set showmode                           " show current mode in status bar
+set undolevels=0                       " undo in one step (no double-u)
 
-" ignore case when searching
-set ignorecase
-
-" search incrementally
-set incsearch
-
-" show current mode in status bar
-set showmode
-
-" prevents having to type u twice to undo
-set undolevels=0
-
-" disable bell sound
-set visualbell
-set noerrorbells
-set t_vb=
+set visualbell                         " no beep, flash instead
+set noerrorbells                       " no error beep
+set t_vb=                              " clear visual bell terminal code
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "" ideavim options
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-" enable join lines with shift + J
-set ideajoin
-
-" stay in normal mode during rename refactors
-set idearefactormode=keep
-
-" quieter status-bar icon
-set ideastatusicon=gray
+set ideajoin                           " join lines via IDE (shift + J)
+set idearefactormode=keep              " stay in normal mode during rename
+set ideastatusicon=gray                " quieter status-bar icon
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "" ideavim plugins
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-" enable NERDTree plugin
-set NERDTree
-
-" enable surround plugin
-set surround
+set NERDTree                           " file tree plugin
+set surround                           " surround plugin
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "" leader + ex mode
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-" quick ex mode
-noremap ; :
-
-" configure command leader 
-let mapleader=","
+noremap ; :                            " quick ex mode
+let mapleader=","                      " command leader
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"" key mappings - core (native vim, matches vimrc)
+"" key mappings - core (matches vimrc)
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-" move into wrapped lines and keep the cursor centered (ideavim-only zz)
+" move into wrapped lines
 nnoremap j gj
 nnoremap k gk
-
-" clear the search buffer when hitting return
-nnoremap <space><cr> :nohlsearch<cr>
-
-" clear search highlight
-nnoremap <leader>h :nohl<CR>
 
 " go to last edit location
 nnoremap <leader>. g;
 
-" go to last edit location in insert mode
-nnoremap <leader>; gi
-
 " duplicate current line
 nnoremap <leader>d Yp
-
-" prepare for search/replace on the whole file
-nnoremap <leader>rf :%s/
-
-" prepare for search/replace on the current line
-nnoremap <leader>rl V:s/
 
 " prepare incremental search forward
 nnoremap <leader>j :/
@@ -96,82 +60,97 @@ nnoremap <leader>w <C-w>w
 " list buffers
 nnoremap <leader>b :ls<CR>
 
-" marks
-nnoremap <leader>M :marks<CR>
-nnoremap <leader>Md :delmarks!<CR>   
+" show marks                                       [vimrc <leader>ml]
+nnoremap <leader>ml :marks<CR>
 
-" delete current buffer
-nnoremap <leader>q :bd<CR>
+" delete all marks                                 [vimrc <leader>mr]
+nnoremap <leader>mr :delmarks!<CR>
+
+" delete current buffer                            [vimrc <F4>]
 nnoremap <F4> :bd<CR>
 
 " switch buffers
 nnoremap <silent> H :bp<CR>
 nnoremap <silent> L :bn<CR>
 
-" close all other splits, keep current [vimrc :only]
-nmap <silent> <leader><space> <Action>(HideActiveWindow)
+" close all other splits, keep current             [vimrc :only]
+nmap <silent> <leader><Space> <Action>(HideActiveWindow)
 
-" format whole file + organize imports 
-nmap <leader>L <Action>(ReformatCode)<Action>(OptimizeImports)
+" format whole file + organize imports             [vimrc <leader>l]
+nmap <leader>l <Action>(ReformatCode)<Action>(OptimizeImports)
 
-" bookmarks
+" next bookmark
 nmap <F2>   <Action>(GotoNextBookmark)
+
+" toggle bookmark
 nmap <S-F2> <Action>(ToggleBookmark)
+
+" show bookmarks
 nmap <A-F2> <Action>(ShowBookmarks)
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"" key mappings - search & navigation 
+"" key mappings - search & navigation
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-" open file 
+" open file
 nmap <leader>O <Action>(OpenFile)
 
 " file explorer, reveal current file               [vimrc :Ex]
 nmap <leader>E :NERDTreeFind<CR>
 
-" find in files                                    [vimrc :Rg]
+" find in files (regex)                            [vimrc <leader>F :RG]
 nmap <leader>F <Action>(FindInPath)
 
 " replace in files
 nmap <leader>R <Action>(ReplaceInPath)
 
-" file search (project-wide)                       [vimrc :Files]
+" file search (project-wide)                       [vimrc <leader>f :Files]
 nmap <leader>f <Action>(GotoFile)
 
-" class search (project-wide)                      [vimrc :GFiles]
+" class search (project-wide)
 nmap <leader>t <Action>(GotoClass)
 
-" grep (project-wide)                              [vimrc :Rg]
+" text search (project-wide)                       [vimrc <leader>i :Rg]
 nmap <leader>i <Action>(TextSearchAction)
 
 " symbol search (project-wide)                     [vimrc <leader>m]
 nmap <leader>m <Action>(GotoSymbol)
 
-" go to line:colunm                                [vimrc <number>G]
-nmap <leader>G <Action>(GotoLine)
+" go to line:column                                [vimrc <number>G]
+nmap <leader>g <Action>(GotoLine)
 
-" open buffers / switcher                          [vimrc :Buffers]
+" open buffers / switcher                          [vimrc <leader>e :Buffers]
 nmap <leader>e <Action>(Switcher)
 
-" show commits                                     [vimrc :Commits]
-nmap <leader>C <Action>(Vcs.Show.Log)
+" recently opened files                            [vimrc <leader>h :History]
+nmap <leader>h <Action>(RecentFiles)
+nmap <F3> <Action>(RecentFiles)
 
-" recently opened files                            [vimrc :History]
-nmap <F6> <Action>(RecentFiles)
+" recently changed files
+nmap <leader>H <Action>(RecentChangedFiles)
+nmap <S-F3> <Action>(RecentChangedFiles)
+
+" show commits                                     [vimrc <leader>0 :Commits]
+nmap <leader>0 <Action>(Vcs.Show.Log)
+
+" show console                                     [vimrc <leader>1 :messages]
+nmap <leader>1 <Action>(Vcs.Show.Console)
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"" key mappings - (LSP -> IDE actions)
+"" key mappings - lsp -> ide actions
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-" goto definition                                  [vimrc gf]
-nmap gf <Action>(GotoDeclaration)
+" goto implementation                              [vimrc gb]
+nmap gb <Action>(GotoImplementation)
+
+" goto super method                                [vimrc gu]
+nmap gu <Action>(GotoSuperMethod)
 
 " goto declaration                                 [vimrc gd]
 nmap gd <Action>(GotoDeclaration)
 
-" goto implementation                              [vimrc gb]
-nmap gb <Action>(GotoImplementation)
-nmap gu <Action>(GotoSuperMethod)
+" goto definition                                  [vimrc gf]
+nmap gf <Action>(GotoDefinition)
 
 " goto type definition                             [vimrc gt]
 nmap gt <Action>(GotoTypeDeclaration)
@@ -182,7 +161,7 @@ nmap gr <Action>(FindUsages)
 " peek / quick definition popup                    [vimrc gp]
 nmap gp <Action>(QuickImplementations)
 
-" hover / quick doc (works for C/C++ too)          [vimrc K]
+" hover / quick doc                                [vimrc K]
 nmap K <Action>(QuickJavaDoc)
 
 " signature / parameter info                       [vimrc <leader>k]
@@ -191,37 +170,34 @@ nmap <leader>k <Action>(ParameterInfo)
 " file structure / document symbols                [vimrc <F12>]
 nmap <F12> <Action>(FileStructurePopup)
 
-" call hierarchy                                   [vimrc <leader>ci/co]
-nmap <leader>ci <Action>(CallHierarchy)
-nmap <leader>co <Action>(CallHierarchy)
+" call hierarchy                                   [vimrc <leader>ic/oc]
+nmap <leader>ic <Action>(CallHierarchy)
+nmap <leader>oc <Action>(CallHierarchy)
 
 " rename                                           [vimrc <leader>rr]
 nmap <leader>rr <Action>(RenameElement)
 
-" format                                           [vimrc <leader>F]
-nmap <leader>l <Action>(ReformatCode)
-
 " expand selection (visual)                        [vimrc <leader>v]
 vmap <leader>v <Action>(EditorSelectWord)
 
-" switch header/source (CLion)
+" switch header/source (CLion)                     [vimrc <leader>a]
 " nmap <leader>a <Action>(CIDR.Lang.SwitchHeaderSource)
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"" key mappings - build / run 
+"" key mappings - build / run / debug (ide-native)
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-" build                                            [vimrc <F7> :make]
-nmap <F7> <Action>(CompileDirty)
+" build
+nmap <F6> <Action>(CompileDirty)
 
-" clean / build                                    [vimrc <A-F7>]
-nmap <S-F7> <Action>(CompileProject)
+" clean / build
+nmap <S-F6> <Action>(CompileProject)
 
-" start debug session                              [vimrc <F5>]
-nmap <F5> <Action>(Run)
+" run
+nmap <F7> <Action>(Run)
 
-" start debug session                              [vimrc <S-F5>]
-nmap <S-F5> <Action>(Debug)
+" debug
+nmap <F5> <Action>(Debug)
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "" key mappings - diagnostics
@@ -233,9 +209,5 @@ nmap <F8> <Action>(GotoNextError)
 " previous error                                   [vimrc <S-F8>]
 nmap <S-F8> <Action>(GotoPreviousError)
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"" key mappings - debugging
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
-" toggle breakpoint                                [vimrc :Break]
-nmap <A-F8>  <Action>(ToggleLineBreakpoint)
+" toggle breakpoint
+nmap <A-F8> <Action>(ToggleLineBreakpoint)
