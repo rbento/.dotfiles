@@ -280,15 +280,15 @@ nnoremap <leader>N :e <C-r>=empty(expand('%')) ? '' : expand('%:h').'/'<CR>
 nnoremap <silent> <leader>b :ls<CR>
 nnoremap <silent> <leader>e :Buffers<CR>
 
-" show commits
-nnoremap <silent> <leader>0 :Commits<CR>
-
 " show messages
 nnoremap <silent> <leader>1 :messages<CR>
 
 " show terminal
 nnoremap <silent> <leader>2 :term<CR>
 nnoremap <silent> <leader>3 :vert term<CR>
+
+" show structure / outline
+nnoremap <silent> <leader>7 :LspOutline<CR>
 
 " project file search
 nnoremap <silent> <leader>f :Files<CR>
