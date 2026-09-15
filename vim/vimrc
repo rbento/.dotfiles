@@ -246,7 +246,7 @@ function! s:DebugStart() abort
         return
     endif
     let l:bin = fnamemodify(l:target, ':p')
-    let l:cmd = 'gdb -ex "set pagination off" -ex "set confirm off" -ex "break _start" -ex run ' . shellescape(l:bin) . '; exec bash'
+    let l:cmd = 'gdb -ex "break _start" -ex run ' . shellescape(l:bin) . '; exec bash'
     call job_start(g:debug_terminal + ['bash', '-c', l:cmd], #{stoponexit: 'term'})
 endfunction
 
