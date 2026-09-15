@@ -1,8 +1,8 @@
 ;;; init.el --- rbento's personal Emacs configuration 
 
-;; ===========================================================================
-;; Package setup: gnu + nongnu + melpa archives, use-package, quelpa
-;; ===========================================================================
+;; ============================================================================
+;; 1. PACKAGE SYSTEM & BOOTSTRAP
+;; ============================================================================
 
 (require 'package)
 (setq package-archives
@@ -10,190 +10,313 @@
         ("nongnu" . "https://elpa.nongnu.org/nongnu/")
         ("melpa"  . "https://melpa.org/packages/")))
 (package-initialize)
-(unless package-archive-contents
-  (package-refresh-contents))
+(unless package-archive-contents (package-refresh-contents))
 
 (require 'use-package)
 (setq use-package-always-ensure t)
 
-;; Keep Customize's auto-written settings in a separate file.
 (setq custom-file (locate-user-emacs-file "custom.el"))
-(when (file-exists-p custom-file)
-  (load custom-file))
+(when (file-exists-p custom-file) (load custom-file))
 
-;; --- Quelpa: build packages from git ---
-(unless (package-installed-p 'quelpa)
-  (package-install 'quelpa))
-(require 'quelpa)
-(unless (package-installed-p 'quelpa-use-package)
-  (quelpa
-   '(quelpa-use-package
-     :fetcher git
-     :url "https://github.com/quelpa/quelpa-use-package.git")))
-(require 'quelpa-use-package)
-
-;; Import shell PATH so Emacs finds clangd, make, rg, gdb, etc.
 (use-package exec-path-from-shell
-  :config
-  (exec-path-from-shell-initialize))
+  :config (exec-path-from-shell-initialize))
 
-;; ===========================================================================
-;; UI
-;; ===========================================================================
+(setq native-comp-async-report-warnings-errors 'silent)
+
+;; ============================================================================
+;; 2. USER INTERFACE (UI) OPTIONS
+;; ============================================================================
+
 (setq inhibit-startup-message t)
+
 (scroll-bar-mode -1)
 (tool-bar-mode -1)
-(tooltip-mode -1)
 (menu-bar-mode -1)
-(column-number-mode t)
-(global-display-line-numbers-mode t)
-(setq native-comp-async-report-warnings-errors 'silent)
+(tooltip-mode 1)
+
+(column-number-mode 1)
+(global-display-line-numbers-mode 1)
 (setq ring-bell-function 'ignore)
-(setq visible-bell t)
-(setq frame-title-format '("%f"))
-(when (member "Inconsolata" (font-family-list))
-  (set-frame-font "Inconsolata 14" nil t))
-(global-set-key "\C-w" 'backward-kill-word)
+(load-theme 'deeper-blue t)
 
-;; macOS - set no encoding of characters in terminal
-(set-keyboard-coding-system nil)
+;; ============================================================================
+;; 3. EDITOR DEFAULTS (VIM "SET" EQUIVALENTS)
+;; ============================================================================
 
-;; ===========================================================================
-;; Completion UI: vertico + posframe + orderless + marginalia + consult
-;; Centered floating completion box (fzf-style), GUI only.
-;; ===========================================================================
+(setq-default indent-tabs-mode nil
+              tab-width 4
+              c-basic-offset 4
+              truncate-lines t)
+
+(setq make-backup-files nil
+      auto-save-default nil
+      create-lockfiles nil)
+
+(setq select-enable-clipboard t
+      case-fold-search t
+      shell-file-name "/bin/bash")
+
+(setq evil-split-window-below t
+      evil-vsplit-window-right t)
+
+(setq ff-always-in-other-window t)
+
+(setq inhibit-compacting-font-caches t)
+(recentf-mode 1)
+(show-paren-mode 1)
+(electric-pair-mode 1)
+
+;; Compilation settings: open at bottom
+(setq compilation-read-command nil
+      compile-command "make"
+      compilation-scroll-output t
+      compilation-ask-about-save nil)
+
+(add-to-list 'display-buffer-alist
+             '("^\\*compilation\\*$"
+               (display-buffer-reuse-window display-buffer-below-selected)
+               (window-height . 0.33)))
+
+
+;; ============================================================================
+;; 4. EVIL MODE & VIM EMULATION PACKAGES
+;; ============================================================================
+
+(use-package evil
+  :init
+  (setq evil-want-keybinding nil
+        evil-want-C-u-scroll t
+        evil-want-C-i-jump t
+        evil-undo-system 'undo-redo
+        evil-search-module 'evil-search
+        evil-ex-search-case 'smart
+        evil-shift-width 4)
+  :config
+  (evil-mode 1))
+
+(use-package evil-collection
+  :after evil
+  :config
+  (evil-collection-init))
+
+(use-package evil-commentary
+  :after evil
+  :config
+  (evil-commentary-mode 1))
+
+(use-package evil-matchit
+  :after evil
+  :config
+  (global-evil-matchit-mode 1))
+
+(use-package evil-goggles
+  :after evil
+  :config
+  (evil-goggles-mode 1))
+
+(use-package editorconfig
+  :config
+  (editorconfig-mode 1))
+
+
+;; ============================================================================
+;; 5. LEADER KEY INFRASTRUCTURE
+;; ============================================================================
+
+(use-package which-key
+  :init
+  (which-key-mode 1))
+
+(use-package general
+  :after evil
+  :config
+  (general-create-definer leader-def
+    :states '(normal visual)
+    :keymaps 'override
+    :prefix ","))
+
+
+;; ============================================================================
+;; 6. COMPLETION UI & CENTRALIZED SEARCH (VERTICO / FZF ECOSYSTEM)
+;; ============================================================================
+
 (use-package savehist
   :ensure nil
-  :init (savehist-mode 1))
+  :init
+  (savehist-mode 1))
 
 (use-package vertico
-  :init (vertico-mode 1)
+  :init
+  (vertico-mode 1)
   :custom
-  (vertico-count 15)
-  (vertico-resize nil)
-  (vertico-cycle t))
+  (vertico-cycle t)
+  (vertico-count 15))
 
 (use-package vertico-posframe
   :after vertico
-  :init (vertico-posframe-mode 1)
+  :init
+  (vertico-posframe-mode 1)
   :custom
-  (vertico-posframe-poshandler #'posframe-poshandler-frame-center)
-  (vertico-posframe-width 120)
-  (vertico-posframe-height 20)
-  (vertico-posframe-border-width 2)
-  (vertico-posframe-parameters
-   '((left-fringe  . 12)
-     (right-fringe . 12))))
+  (vertico-posframe-poshandler #'posframe-poshandler-frame-center))
 
 (use-package orderless
   :custom
   (completion-styles '(orderless basic))
-  (completion-category-defaults nil)
   (completion-category-overrides '((file (styles partial-completion)))))
 
 (use-package marginalia
-  :init (marginalia-mode 1))
+  :init
+  (marginalia-mode 1))
 
 (use-package consult
-  :bind
-  (("C-c b" . consult-buffer)
-   ("C-c B" . consult-buffer-other-window)
-   ("C-c l" . consult-line)
-   ("C-c L" . consult-line-multi)
-   ("C-c o" . consult-outline)
-   ("C-c i" . consult-imenu)
-   ("C-c I" . consult-imenu-multi)
-   ("C-c g" . consult-goto-line)
-   ("C-c r" . consult-ripgrep)
-   ("C-c f" . consult-find)
-   ("C-c y" . consult-yank-pop)
-   ("C-c m" . consult-mark)
-   ("C-c k" . consult-bookmark)
-   ("C-c e" . consult-flymake))
   :custom
-  (consult-narrow-key "<")
-  :config
-  (consult-customize
-   consult-ripgrep consult-find
-   :preview-key '(:debounce 0.3 any)))
+  ;; Exclude build artifacts, temp files, and caches cleanly from search/find
+  (consult-find-args "fd --type f --hidden --follow --exclude .git --exclude tmp --exclude target --exclude bin --exclude build --exclude __pycache__ --exclude '*.o' --exclude '*.class' --exclude '*.swp' --exclude '*~' --exclude '*#'"))
 
-;; ===========================================================================
-;; In-buffer completion popup (as you type)
-;; ===========================================================================
 (use-package corfu
-  :init (global-corfu-mode)
+  :init
+  (global-corfu-mode)
   :custom
   (corfu-auto t)
-  (corfu-auto-prefix 2)
   (corfu-auto-delay 0.1)
-  (corfu-cycle t)
-  (corfu-quit-no-match 'separator)
-  :bind
-  (:map corfu-map
-        ("TAB"     . corfu-next)
-        ([tab]     . corfu-next)
-        ("S-TAB"   . corfu-previous)
-        ([backtab] . corfu-previous)
-        ("RET"     . corfu-insert)))
+  (corfu-cycle t))
 
 (use-package cape
   :init
   (add-to-list 'completion-at-point-functions #'cape-dabbrev)
-  (add-to-list 'completion-at-point-functions #'cape-file)
-  (add-to-list 'completion-at-point-functions #'cape-keyword))
+  (add-to-list 'completion-at-point-functions #'cape-file))
 
-;; ===========================================================================
-;; Eglot (LSP): clangd for C/C++ only.
-;; ===========================================================================
+
+;; ============================================================================
+;; 7. LANGUAGE SERVER PROTOCOL (LSP) & TOOLS VIA EGLOT
+;; ============================================================================
+
 (require 'eglot)
-(add-hook 'c-mode-hook      #'eglot-ensure)
-(add-hook 'c++-mode-hook    #'eglot-ensure)
-(add-hook 'c-ts-mode-hook   #'eglot-ensure)
+
+(add-hook 'c-mode-hook #'eglot-ensure)
+(add-hook 'c++-mode-hook #'eglot-ensure)
+(add-hook 'c-ts-mode-hook #'eglot-ensure)
 (add-hook 'c++-ts-mode-hook #'eglot-ensure)
 
 (with-eval-after-load 'eglot
   (add-to-list 'eglot-server-programs
-               '((c-mode c++-mode c-ts-mode c++-ts-mode)
-                 . ("clangd" "--background-index")))
-  (define-key eglot-mode-map (kbd "C-c c r") #'eglot-rename)
-  (define-key eglot-mode-map (kbd "C-c c f") #'eglot-format)
+               '((c-mode c++-mode c-ts-mode c++-ts-mode) . ("clangd" "--background-index")))
   (define-key eglot-mode-map (kbd "C-c c a") #'eglot-code-actions))
 
-(setq eldoc-echo-area-use-multiline-p nil)
+(use-package eglot-java
+  :hook ((java-mode java-ts-mode) . eglot-java-mode))
 
-;; ===========================================================================
-;; Project awareness + build 
-;; ===========================================================================
-(require 'project)
-(setq project-vc-extra-root-markers '("Makefile" "compile_commands.json"))
+(use-package consult-eglot
+  :after (consult eglot))
 
-(defun my/project-root ()
-  "Root of the current project, or `default-directory' as a fallback."
-  (if-let ((proj (project-current)))
-      (project-root proj)
-    default-directory))
+(use-package expand-region)
 
-(defun my/compile-at-root (command)
-  "Run COMMAND from the project root."
-  (let ((default-directory (my/project-root)))
-    (compile command)))
+(use-package nasm-mode
+  :mode "\\.asm\\'")
 
-(defun my/make ()           (interactive) (my/compile-at-root "make"))
-(defun my/make-clean-all () (interactive) (my/compile-at-root "make clean all"))
-(defun my/make-run ()       (interactive) (my/compile-at-root "make run"))
+(use-package avy
+  :bind (("C-;" . avy-goto-char-timer)))
 
-(setq compilation-scroll-output t
-      compilation-always-kill t
-      compilation-ask-about-save nil)
+;; ============================================================================
+;; 8. KEYBINDINGS & MAPPINGS
+;; ============================================================================
 
-(global-set-key (kbd "<f7>")   #'my/make)         ; build
-(global-set-key (kbd "<S-f7>") #'my/make-clean-all) ; clean build
-(global-set-key (kbd "<M-f7>") #'my/make-run)     ; build + run
+(defun cfg/format-and-organize ()
+  "Format buffer and organize imports (eglot)."
+  (interactive)
+  (eglot-format-buffer)
+  (ignore-errors
+    (eglot-code-actions nil nil "source.organizeImports" t)))
 
-(global-set-key (kbd "<f9>")   #'next-error)      ; next compiler error
-(global-set-key (kbd "<S-f9>") #'previous-error)  ; prev compiler error
-(global-set-key (kbd "<f8>")   #'flymake-goto-next-error) ; next clangd diagnostic
-(global-set-key (kbd "<S-f8>") #'flymake-goto-prev-error) ; prev clangd diagnostic
+(general-define-key
+ :states '(normal visual)
+ "j" #'evil-next-visual-line
+ "k" #'evil-previous-visual-line
+ "H" #'previous-buffer
+ "L" #'next-buffer)
+
+(leader-def
+  "."  #'goto-last-change
+  "b"  #'ibuffer
+  "e"  #'consult-buffer
+  "E"  #'consult-line
+  "f"  #'consult-find
+  "F"  #'project-find-file
+  "C"  #'vc-print-root-log
+  "i"  #'consult-ripgrep
+  "d"  (general-simulate-key "yyp")
+  "l"  #'cfg/format-and-organize
+  "O"  #'dired-jump
+  "rr" #'eglot-rename
+  "j"  #'evil-ex-search-forward
+  "s"  #'save-buffer
+  "w"  #'evil-window-next
+  "<escape>" #'delete-other-windows
+  "a"  #'ff-find-other-file
+  "k"  #'eldoc-doc-buffer
+  "m"  #'consult-eglot-symbols
+  "1"  (lambda () (interactive) (pop-to-buffer "*scratch*" '(display-buffer-below-selected (window-height . 0.33))))
+  "0"  (lambda () (interactive) (pop-to-buffer "*Messages*" '(display-buffer-below-selected (window-height . 0.33)))))
+
+(leader-def
+  :states 'visual
+  "v"  #'er/expand-region)
+
+(with-eval-after-load 'eglot
+  (general-define-key
+   :states 'normal :keymaps 'eglot-mode-map
+   "gb" #'eglot-find-implementation
+   "gd" #'eglot-find-declaration
+   "gf" #'xref-find-definitions
+   "gp" #'xref-find-definitions-other-window
+   "gr" #'xref-find-references
+   "gt" #'eglot-find-typeDefinition
+   "K"  #'eldoc-doc-buffer))
+
+(global-set-key (kbd "<f1>")    #'consult-info)
+(global-set-key (kbd "<f3>")    #'consult-recent-file)
+(global-set-key (kbd "<f4>")    #'kill-current-buffer)
+(global-set-key (kbd "<f6>")    #'project-compile)
+(global-set-key (kbd "<f8>")    #'flymake-goto-next-error)
+(global-set-key (kbd "<S-f8>")  #'flymake-goto-prev-error)
+(global-set-key (kbd "<M-f8>")  #'consult-flymake)
+(global-set-key (kbd "<f9>")    #'next-error)
+(global-set-key (kbd "<S-f9>")  #'previous-error)
+(global-set-key (kbd "<M-f9>")  #'consult-compile-error)
+(global-set-key (kbd "<f12>")   #'consult-imenu)
+(global-set-key (kbd "<M-f12>") #'revert-buffer-quick)
+
+(setq ff-search-directories
+      '("." ".." "../include" "include" "../inc" "inc" "../src" "src"
+        "/usr/include" "/usr/local/include"))
+
+(defun cfg/build-and-run ()
+  "Clean-build and execute the project interactively."
+  (interactive)
+  (let ((default-directory (project-root (project-current t))))
+    (compile "make clean all && make run" t)))
+
+(global-set-key (kbd "<f7>") #'cfg/build-and-run)
+
+;; ============================================================================
+;; 9. DEBUGGER (external gdb in konsole)
+;; ============================================================================
+(defun cfg/debug-external ()
+  "Launch gdb in a separate konsole window (vim parity)."
+  (interactive)
+  (let* ((default-directory (project-root (project-current t)))
+         (bin (string-trim (shell-command-to-string "make print-target"))))
+    (start-process "gdb-external" nil
+                   "konsole" "-e" "bash" "-c"
+                   (format "gdb -ex 'break _start' -ex run ./%s; exec bash" bin))))
+
+(global-set-key (kbd "<f5>") #'cfg/debug-external)
+
+;; ============================================================================
+;; 10. INITIALIZATION DIRECTORY
+;; ============================================================================
+
+(when (file-directory-p "~/Workspace") (cd "~/Workspace"))
 
 (provide 'init)
 ;;; init.el ends here
