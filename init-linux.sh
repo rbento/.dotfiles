@@ -32,6 +32,9 @@ ln -sfn .dotfiles/vim/ideavimrc        .ideavimrc
 
 echo "Installing..."
 
+# ── Packages: Add repositories repositories ─────────────────────────────────────────
+flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
+
 # ── Packages: RPM Fusion repositories ─────────────────────────────────────────
 sudo dnf install -y --skip-unavailable \
   https://mirrors.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm \
@@ -82,6 +85,9 @@ sudo dnf install -y --skip-unavailable glslang glslc spirv-cross spirv-tools
 
 # ── Packages: gamedev libraries ───────────────────────────────────────────────
 sudo dnf install -y --skip-unavailable glm-devel SDL3-devel
+
+# ── Packages: flatpak applications ────────────────────────────────────────────
+flatpak install flathub com.jgraph.drawio.desktop
 
 # ── Video: swap to RPM Fusion codecs ──────────────────────────────────────────
 sudo dnf swap -y --allowerasing mesa-va-drivers mesa-va-drivers-freeworld
