@@ -319,6 +319,7 @@ nnoremap <silent> L :bn<CR>
 nnoremap <leader>w <C-w>w
 
 " close all other windows (keep current)
+nnoremap <silent> <S-Esc> :only!<CR>
 nnoremap <silent> <leader><Esc> :only!<CR>
 nnoremap <silent> <leader><Space> :only!<CR>
 
