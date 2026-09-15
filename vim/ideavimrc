@@ -73,8 +73,10 @@ nnoremap <F4> :bd<CR>
 nnoremap <silent> H :bp<CR>
 nnoremap <silent> L :bn<CR>
 
-" close all other splits, keep current             [vimrc :only]
-nmap <silent> <leader><Space> <Action>(HideActiveWindow)
+" close all other splits, keep current             [vimrc :only!]
+nnoremap <silent> <leader><Esc> :only!<CR>
+nnoremap <silent> <leader><Space> :only!<CR>
+nmap <silent> <S-Esc> <Action>(HideActiveWindow)
 
 " format whole file + organize imports             [vimrc <leader>l]
 nmap <leader>l <Action>(ReformatCode)<Action>(OptimizeImports)
