@@ -16,6 +16,7 @@ set hidden                                 " keep modified buffers when switchin
 set hlsearch                               " highlight all search matches
 set ignorecase                             " case-insensitive search
 set incsearch                              " jump to matches while typing
+set laststatus=2                           " always show the statusline
 set mouse=a                                " enable mouse in all modes
 set noerrorbells visualbell t_vb=          " no beep, no flash
 set nobackup                               " no backup files
@@ -42,17 +43,6 @@ set wildmode=list:longest,full             " complete longest match, then cycle 
 
 " ignore these in completion/globs
 set wildignore+=*/tmp/*,*/target/*,*/bin/*,*/build/*,*/__pycache__/*,*.tar,*.gz,*.7z,*.iso,*.so,*.swp,*.zip,*.class,*#,*~,*.o  
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"" custom settings
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
-" set default working directory
-cd $HOME/Workspace
-"cd 'C:\Users\username\Workspace'
-
-" set default colorscheme
-silent! colorscheme habamax
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "" gui options (gvim, macvim)
@@ -175,6 +165,10 @@ augroup CustomAutomation
     autocmd TerminalOpen * if &buftype ==# 'terminal' | setlocal nobuflisted bufhidden=wipe | endif
     autocmd FileType qf setlocal nobuflisted
 
+    " statusline: inverse of the background, on every colorscheme
+    autocmd ColorScheme * highlight StatusLine   gui=reverse cterm=reverse guifg=NONE guibg=NONE ctermfg=NONE ctermbg=NONE
+    autocmd ColorScheme * highlight StatusLineNC gui=reverse cterm=reverse guifg=NONE guibg=NONE ctermfg=NONE ctermbg=NONE
+
     " LSP: register servers, wire buffer-local maps on attach
     autocmd User LspSetup call LspAddServer(s:lspServers)
     autocmd User LspAttached call s:OnLspBufferEnabled()
@@ -249,6 +243,17 @@ function! s:DebugStart() abort
     let l:cmd = 'gdb -ex "break _start" -ex run ' . shellescape(l:bin) . '; exec bash'
     call job_start(g:debug_terminal + ['bash', '-c', l:cmd], #{stoponexit: 'term'})
 endfunction
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"" custom settings
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+" set default working directory
+cd $HOME/Workspace
+"cd 'C:\Users\username\Workspace'
+
+" set default colorscheme
+silent! colorscheme habamax
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "" custom key mappings
