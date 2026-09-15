@@ -23,7 +23,7 @@ set ideastatusicon=gray                " quieter status-bar icon
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "" ideavim plugins
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
+set commentary                         " gc / gcc comment toggle
 set NERDTree                           " file tree plugin
 set surround                           " surround plugin
 
@@ -130,11 +130,17 @@ nmap <F3> <Action>(RecentFiles)
 nmap <leader>H <Action>(RecentChangedFiles)
 nmap <S-F3> <Action>(RecentChangedFiles)
 
-" show commits                                     [vimrc <leader>0 :Commits]
-nmap <leader>0 <Action>(Vcs.Show.Log)
+" show problems / errors                           [vimrc <leader>0 area]
+nmap <leader>0 <Action>(ActivateProblemsViewToolWindow)
 
-" show console                                     [vimrc <leader>1 :messages]
-nmap <leader>1 <Action>(Vcs.Show.Console)
+" show messages / event log                        [vimrc <leader>1 :messages]
+nmap <leader>1 <Action>(ActivateEventLogToolWindow)
+
+" show terminal                                    [vimrc <leader>2 :term]
+nmap <leader>2 <Action>(ActivateTerminalToolWindow)
+
+" show structure / outline                         [vimrc <leader>7 :LspOutline]
+nmap <leader>7 <Action>(ActivateStructureToolWindow)
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "" key mappings - lsp -> ide actions
@@ -172,7 +178,6 @@ nmap <F12> <Action>(FileStructurePopup)
 
 " call hierarchy                                   [vimrc <leader>ic/oc]
 nmap <leader>ic <Action>(CallHierarchy)
-nmap <leader>oc <Action>(CallHierarchy)
 
 " rename                                           [vimrc <leader>rr]
 nmap <leader>rr <Action>(RenameElement)
