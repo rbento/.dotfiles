@@ -98,8 +98,11 @@ sudo dnf swap -y --allowerasing ffmpeg-free ffmpeg
 sudo usermod -aG render,video $USER
 
 # ── Config: Vim plugin manager ────────────────────────────────────────────────
-curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
-  https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+
+# ── Config: Vim pack plugins  ────────────────────────────────────────────────
+mkdir -p ~/.vim/pack/plugins/start
+git clone https://github.com/editorconfig/editorconfig-vim.git ~/.vim/pack/plugins/start/editorconfig-vim
 
 # ── Config: SDKMAN (Java) ─────────────────────────────────────────────────────
 curl -s "https://get.sdkman.io" | bash
