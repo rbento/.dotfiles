@@ -101,8 +101,10 @@ sudo usermod -aG render,video $USER
 curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 
 # ── Config: Vim pack plugins  ────────────────────────────────────────────────
-mkdir -p ~/.vim/pack/plugins/start
-git clone https://github.com/editorconfig/editorconfig-vim.git ~/.vim/pack/plugins/start/editorconfig-vim
+mkdir -p ~/.vim/pack/plugins/start && git clone https://github.com/editorconfig/editorconfig-vim.git ~/.vim/pack/plugins/start/editorconfig-vim
+
+# ── Config: vim-lsp language servers
+mkdir -p ~/.config/jdtls && curl -fL "https://download.eclipse.org/jdtls/snapshots/jdt-language-server-latest.tar.gz" | tar -xz -C ~/.config/jdtls && chmod +x ~/.config/jdtls/bin/jdtls
 
 # ── Config: SDKMAN (Java) ─────────────────────────────────────────────────────
 curl -s "https://get.sdkman.io" | bash
