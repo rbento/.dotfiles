@@ -6,7 +6,6 @@ set nocompatible                           " use vim defaults, not vi
 set autoindent                             " copy indent from current line on new line
 set autoread                               " reload files changed outside vim
 set backspace=indent,eol,start             " let backspace cross indent, eol, insert start
-set cindent                                " c-style automatic indenting
 set clipboard=unnamedplus                  " yank/paste through the system clipboard
 set cmdheight=2                            " command line is two rows tall
 set encoding=utf-8                         " internal character encoding
@@ -18,7 +17,7 @@ set ignorecase                             " case-insensitive search
 set incsearch                              " jump to matches while typing
 set laststatus=2                           " always show the statusline
 set mouse=a                                " enable mouse in all modes
-set noerrorbells visualbell t_vb=          " no beep, no flash
+set noerrorbells                           " no beep, no flash
 set nobackup                               " no backup files
 set noswapfile                             " no swap files
 set noundofile                             " no persistent undo files
@@ -38,6 +37,7 @@ set t_vb=                                  " clear visual bell terminal code
 set tabstop=4                              " a tab renders as 4 columns
 set tags=./tags,tags                       " tag files: file dir first, then cwd
 set timeout timeoutlen=500 ttimeoutlen=10  " mapping / key-code timeouts (ms)
+set visualbell                             " no beep, no flash
 set wildmenu                               " enhanced command-line completion menu
 set wildmode=list:longest,full             " complete longest match, then cycle full
 
@@ -117,8 +117,8 @@ let g:rooter_patterns = ['.git', 'CMakeLists.txt', 'Makefile', 'pom.xml']
 " lsp
 let s:lspServers = [
     \ #{ name: 'clangd', filetype: ['c', 'cpp'], path: 'clangd', args: ['--background-index'] },
+    \ #{ name: 'jdtls', filetype: 'java', path: $HOME . '/.config/jdtls/bin/jdtls', args: ['-data', $HOME . '/.cache/jdtls/workspace'] }
     \ ]
-
 " how terminal emulator runs a command:
 "   gnome-terminal : ['gnome-terminal', '--']
 "   konsole        : ['konsole', '-e']
@@ -142,11 +142,12 @@ let $RIPGREP_CONFIG_PATH = expand('~/.config/ripgrep/ripgreprc')  " ripgrep conf
 augroup CustomAutomation
     au!
 
-    " NASM x86-64
+    " NASM / DASM assembly
     autocmd BufRead,BufNewFile *.asm set filetype=nasm
-    autocmd FileType nasm setlocal noexpandtab
-    autocmd FileType nasm setlocal commentstring=;\ %s
-    autocmd FileType nasm setlocal makeprg=make
+    autocmd BufRead,BufNewFile *.dasm set filetype=dasm
+    autocmd FileType nasm,dasm setlocal noexpandtab tabstop=8 shiftwidth=8 softtabstop=8
+    autocmd FileType nasm,dasm setlocal commentstring=;\ %s
+    autocmd FileType nasm,dasm setlocal makeprg=make
 
     " C/C++
     autocmd FileType c,cpp setlocal commentstring=//\ %s
@@ -215,7 +216,7 @@ function! s:OnLspBufferEnabled() abort
     nnoremap <buffer> <silent> gt :LspGotoTypeDef<CR>
     nnoremap <buffer> <silent> gu :LspSuperTypeHierarchy<CR>
     " info
-    nnoremap <buffer> <silent> K  :LspHover<CR>
+    nnoremap <buffer> <silent> K :LspHover<CR>
     nnoremap <buffer> <silent> <leader>k :LspShowSignature<CR>
     " symbols / structure
     nnoremap <buffer> <silent> <F12> :LspDocumentSymbol<CR>
@@ -224,11 +225,16 @@ function! s:OnLspBufferEnabled() abort
     nnoremap <buffer> <silent> <leader>oc :LspOutgoingCalls<CR>
     " refactor / edit
     nnoremap <buffer> <silent> <leader>rr :LspRename<CR>
-    nnoremap <buffer> <silent> <leader>l :LspFormat<CR>:LspOrganizeImports<CR>
+    nnoremap <buffer> <silent> <leader>l :LspFormat<CR>
     nnoremap <buffer> <silent> <leader>ca :LspCodeAction<CR>
     nnoremap <buffer> <silent> <leader>cf :LspFixAll<CR>
     xnoremap <buffer> <silent> <leader>v :LspSelectionExpand<CR>
     xnoremap <buffer> <silent> <leader>V :LspSelectionShrink<CR>
+
+    " Java-specific LSP commands
+    if &filetype ==# 'java'
+        nnoremap <buffer> <silent> <leader>o :LspOrganizeImports<CR>
+    endif
 endfunction
 
 " build debug binary, open gdb in an external terminal, stopped at first instruction
@@ -285,12 +291,12 @@ nnoremap <leader>N :e <C-r>=empty(expand('%')) ? '' : expand('%:h').'/'<CR>
 nnoremap <silent> <leader>b :ls<CR>
 nnoremap <silent> <leader>e :Buffers<CR>
 
-" show messages
-nnoremap <silent> <leader>1 :messages<CR>
-
 " show terminal
 nnoremap <silent> <leader>2 :term<CR>
 nnoremap <silent> <leader>3 :vert term<CR>
+
+" show messages
+nnoremap <silent> <leader>4 :messages<CR>
 
 " show structure / outline
 nnoremap <silent> <leader>7 :LspOutline<CR>
@@ -386,10 +392,10 @@ nnoremap <silent> <A-F12> :e!<CR>
 nnoremap <silent> <leader>a :FSSplitRight<CR>
 
 " set random mark at current buffer line
-nnoremap <silent> <leader>mm :call SetMarkAtCurrentLine()<CR>
+nnoremap <silent> <leader><A-F2> :call SetMarkAtCurrentLine()<CR>
 
 " show marks
 nnoremap <silent> <leader>ml :Marks<CR>
 
 " delete all marks
-nnoremap <silent> <leader>mr :delmarks!<CR>:delmark A-Z<CR>:echo "All marks deleted"<CR>
+nnoremap <silent> <leader>md :delmarks!<CR>:delmark A-Z<CR>:echo "All marks deleted"<CR>
