@@ -77,7 +77,6 @@
                (display-buffer-reuse-window display-buffer-below-selected)
                (window-height . 0.33)))
 
-
 ;; ============================================================================
 ;; 4. EVIL MODE & VIM EMULATION PACKAGES
 ;; ============================================================================
@@ -118,7 +117,6 @@
   :config
   (editorconfig-mode 1))
 
-
 ;; ============================================================================
 ;; 5. LEADER KEY INFRASTRUCTURE
 ;; ============================================================================
@@ -134,7 +132,6 @@
     :states '(normal visual)
     :keymaps 'override
     :prefix ","))
-
 
 ;; ============================================================================
 ;; 6. COMPLETION UI & CENTRALIZED SEARCH (VERTICO / FZF ECOSYSTEM)
@@ -186,7 +183,6 @@
   (add-to-list 'completion-at-point-functions #'cape-dabbrev)
   (add-to-list 'completion-at-point-functions #'cape-file))
 
-
 ;; ============================================================================
 ;; 7. LANGUAGE SERVER PROTOCOL (LSP) & TOOLS VIA EGLOT
 ;; ============================================================================
@@ -211,8 +207,19 @@
 
 (use-package expand-region)
 
+;; NASM and DASM configurations for 8-column hardware tabs
 (use-package nasm-mode
-  :mode "\\.asm\\'")
+  :mode "\\.\\(asm\\|inc\\)\\'"
+  :hook (nasm-mode . (lambda ()
+                       (setq indent-tabs-mode t
+                             tab-width 8
+                             evil-shift-width 8))))
+
+(add-to-list 'auto-mode-alist '("\\.dasm\\'" . asm-mode))
+(add-hook 'asm-mode-hook (lambda ()
+                           (setq indent-tabs-mode t
+                                 tab-width 8
+                                 evil-shift-width 8)))
 
 (use-package avy
   :bind (("C-;" . avy-goto-char-timer)))
@@ -221,10 +228,9 @@
 ;; 8. KEYBINDINGS & MAPPINGS
 ;; ============================================================================
 
-(defun cfg/format-and-organize ()
-  "Format buffer and organize imports (eglot)."
+(defun cfg/organize-imports ()
+  "Organize imports (eglot), suppressing errors if unsupported (e.g. clangd)."
   (interactive)
-  (eglot-format-buffer)
   (ignore-errors
     (eglot-code-actions nil nil "source.organizeImports" t)))
 
@@ -245,7 +251,8 @@
   "C"  #'vc-print-root-log
   "i"  #'consult-ripgrep
   "d"  (general-simulate-key "yyp")
-  "l"  #'cfg/format-and-organize
+  "l"  #'eglot-format-buffer
+  "L"  #'cfg/organize-imports
   "O"  #'dired-jump
   "rr" #'eglot-rename
   "j"  #'evil-ex-search-forward
@@ -254,7 +261,9 @@
   "<escape>" #'delete-other-windows
   "a"  #'ff-find-other-file
   "k"  #'eldoc-doc-buffer
-  "m"  #'consult-eglot-symbols
+  "M"  #'consult-eglot-symbols
+  "mm" #'evil-set-marker
+  "ml" #'consult-mark
   "1"  (lambda () (interactive) (pop-to-buffer "*scratch*" '(display-buffer-below-selected (window-height . 0.33))))
   "0"  (lambda () (interactive) (pop-to-buffer "*Messages*" '(display-buffer-below-selected (window-height . 0.33)))))
 
@@ -276,7 +285,6 @@
 (global-set-key (kbd "<f1>")    #'consult-info)
 (global-set-key (kbd "<f3>")    #'consult-recent-file)
 (global-set-key (kbd "<f4>")    #'kill-current-buffer)
-(global-set-key (kbd "<f6>")    #'project-compile)
 (global-set-key (kbd "<f8>")    #'flymake-goto-next-error)
 (global-set-key (kbd "<S-f8>")  #'flymake-goto-prev-error)
 (global-set-key (kbd "<M-f8>")  #'consult-flymake)
@@ -290,13 +298,20 @@
       '("." ".." "../include" "include" "../inc" "inc" "../src" "src"
         "/usr/include" "/usr/local/include"))
 
-(defun cfg/build-and-run ()
-  "Clean-build and execute the project interactively."
+;; Build commands mapped to Vim parity
+(defun cfg/build-clean ()
   (interactive)
   (let ((default-directory (project-root (project-current t))))
-    (compile "make clean all && make run" t)))
+    (compile "make clean all" t)))
 
-(global-set-key (kbd "<f7>") #'cfg/build-and-run)
+(defun cfg/build-run ()
+  (interactive)
+  (let ((default-directory (project-root (project-current t))))
+    (compile "make run" t)))
+
+(global-set-key (kbd "<f6>")   #'project-compile) ;; defaults to make
+(global-set-key (kbd "<S-f6>") #'cfg/build-clean)
+(global-set-key (kbd "<f7>")   #'cfg/build-run)
 
 ;; ============================================================================
 ;; 9. DEBUGGER (external gdb in konsole)
@@ -309,7 +324,6 @@
     (start-process "gdb-external" nil
                    "konsole" "-e" "bash" "-c"
                    (format "gdb -ex 'break _start' -ex run ./%s; exec bash" bin))))
-
 (global-set-key (kbd "<f5>") #'cfg/debug-external)
 
 ;; ============================================================================
